@@ -1,0 +1,629 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>長興國小六年級英文句型練習</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+:root{--ld:#F9A825;--text:#3D2B1F;--textm:#5D4037;}
+*{margin:0;padding:0;box-sizing:border-box;}
+body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-gradient(180deg,#667eea 0%,#a8c8f8 55%,#d4ecd4 100%);min-height:100vh;width:100vw;display:flex;flex-direction:column;align-items:center;justify-content:center;overflow:hidden;}
+.cloud{position:absolute;background:#fff;border-radius:50px;opacity:.75;animation:floatC linear infinite;}
+.cloud::before,.cloud::after{content:'';position:absolute;background:#fff;border-radius:50%;}
+.c1{width:130px;height:42px;top:9%;left:-150px;animation-duration:32s;}.c1::before{width:65px;height:65px;top:-32px;left:14px;}.c1::after{width:44px;height:44px;top:-22px;left:54px;}
+.c2{width:95px;height:30px;top:18%;left:-115px;animation-duration:24s;animation-delay:-10s;opacity:.5;}.c2::before{width:48px;height:48px;top:-24px;left:12px;}.c2::after{width:32px;height:32px;top:-16px;left:40px;}
+.c3{width:110px;height:36px;top:5%;left:-130px;animation-duration:28s;animation-delay:-18s;}.c3::before{width:55px;height:55px;top:-28px;left:10px;}.c3::after{width:36px;height:36px;top:-18px;left:46px;}
+@keyframes floatC{from{transform:translateX(0)}to{transform:translateX(110vw)}}
+.deco{position:absolute;font-size:clamp(1rem,1.5vw,1.5rem);animation:twinkle 2.5s ease-in-out infinite;pointer-events:none;}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.2)}}
+
+/* CARD */
+.card{
+  background:#fff;border-radius:clamp(16px,2vw,26px);
+  padding:clamp(14px,1.8vh,22px) clamp(16px,2vw,28px) clamp(12px,1.4vh,20px);
+  width:97vw;max-width:1150px;
+  height:clamp(500px,97vh,860px);
+  box-shadow:0 8px 36px rgba(0,0,0,.2);
+  display:flex;flex-direction:column;gap:clamp(8px,1.2vh,14px);
+  position:relative;z-index:10;overflow:hidden;
+}
+
+/* HEADER */
+.hdr{display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:6px;}
+.hdr-l{display:flex;align-items:center;gap:10px;}
+.hicon{font-size:clamp(1.6rem,2.6vw,2.4rem);}
+.htitle{font-size:clamp(1.05rem,1.55vw,1.5rem);font-weight:900;color:var(--text);}
+.hsub{font-size:clamp(.68rem,.88vw,.88rem);color:#aaa;font-weight:600;}
+.tabs{display:flex;gap:7px;flex-wrap:wrap;}
+.tab{padding:clamp(5px,.7vh,9px) clamp(10px,1.2vw,17px);border-radius:18px;border:2.5px solid transparent;font-family:'Nunito',sans-serif;font-size:clamp(.8rem,1.05vw,1rem);font-weight:800;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#bbb;line-height:1.3;}
+.tl1{background:linear-gradient(135deg,#90CAF9,#1976D2);color:#fff;border-color:#1976D2;box-shadow:0 3px 10px rgba(25,118,210,.4);}
+.tl2{background:linear-gradient(135deg,#FFCC80,#F57C00);color:#fff;border-color:#F57C00;box-shadow:0 3px 10px rgba(245,124,0,.4);}
+.tlmix{background:linear-gradient(135deg,#CE93D8,#7B1FA2);color:#fff;border-color:#7B1FA2;box-shadow:0 3px 10px rgba(123,31,162,.4);}
+
+/* PROGRESS */
+.prog-wrap{flex-shrink:0;}
+.prog-row{display:flex;align-items:center;gap:7px;margin-bottom:5px;flex-wrap:wrap;}
+.dbadge{padding:3px 13px;border-radius:11px;font-size:clamp(.7rem,.95vw,.92rem);font-weight:800;opacity:.32;transition:all .3s;}
+.dbadge.active{opacity:1;transform:scale(1.08);}
+.dbadge.done{opacity:.65;}
+.de{background:#BBDEFB;color:#0D47A1;}.dm{background:#FFF9C4;color:#827717;}.dh{background:#FCE4EC;color:#880E4F;}
+.rbadge{margin-left:auto;font-size:clamp(.72rem,.95vw,.92rem);font-weight:800;color:#bbb;}
+.prog-bg{height:8px;background:#F0F0F0;border-radius:8px;overflow:hidden;}
+.prog-fill{height:100%;border-radius:8px;transition:width .5s ease;}
+
+/* QUESTION */
+.qbox{border-radius:14px;padding:clamp(10px,1.3vh,16px) clamp(12px,1.5vw,20px);flex-shrink:0;border:2.5px dashed var(--ld);background:#FFFDE7;}
+.qlabel{font-size:clamp(.68rem,.88vw,.84rem);font-weight:800;color:var(--ld);text-transform:uppercase;letter-spacing:1px;margin-bottom:3px;}
+.qzh{font-size:clamp(1.2rem,1.75vw,1.65rem);font-weight:900;color:var(--text);}
+.qtip{font-size:clamp(.7rem,.88vw,.86rem);color:#ccc;margin-top:3px;}
+
+/* SENTENCE AREA */
+.sent-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#F8F9FA;border-radius:14px;padding:clamp(11px,1.4vh,17px) clamp(12px,1.5vw,20px);flex-shrink:0;min-height:clamp(60px,8vh,80px);}
+.sent-wrap.two-lines{flex-direction:column;align-items:flex-start;gap:10px;}
+.sent-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;}
+.line-label{font-size:clamp(.68rem,.82vw,.8rem);font-weight:800;color:#bbb;text-transform:uppercase;letter-spacing:.5px;min-width:32px;}
+.slabel{font-size:clamp(.68rem,.88vw,.84rem);font-weight:800;color:#ccc;text-transform:uppercase;letter-spacing:1px;width:100%;margin-bottom:2px;}
+.sword{font-size:clamp(1.05rem,1.4vw,1.32rem);font-weight:800;color:var(--text);}
+
+/* SLOT */
+.slot{min-width:clamp(75px,9vw,105px);height:clamp(46px,6.5vh,58px);border-radius:12px;border:2.5px dashed #CCC;background:#FAFAFA;display:inline-flex;align-items:center;justify-content:center;font-size:clamp(.98rem,1.25vw,1.2rem);font-weight:800;color:var(--text);transition:all .2s;cursor:default;padding:0 10px;}
+.slot.occupied{border:2.5px solid #1976D2;background:#DDEEFF;cursor:pointer;}
+.slot.occupied:hover{background:#BBDEFB;transform:scale(1.03);}
+.slot.drag-over{border-color:#26C6DA;background:#E0F7FA;transform:scale(1.05);}
+.slot.ok{border-color:#4CAF50!important;background:#C8F5CA!important;animation:bSlot .4s ease;}
+.slot.bad{border-color:#F44336!important;background:#FFCDD2!important;animation:sSlot .4s ease;}
+.slot.hinted{border-color:#AB47BC!important;background:#F3E5F5!important;cursor:default;}
+@keyframes bSlot{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
+@keyframes sSlot{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
+
+/* CHIPS */
+.chips-wrap{flex:1;min-height:0;overflow:hidden;}
+.clabel{font-size:clamp(.68rem,.88vw,.84rem);font-weight:800;color:#ccc;text-transform:uppercase;letter-spacing:1px;margin-bottom:6px;}
+.chips-row{display:flex;gap:9px;flex-wrap:wrap;align-items:flex-start;}
+.chip{padding:clamp(9px,1.1vh,14px) clamp(13px,1.5vw,20px);border-radius:12px;font-size:clamp(.98rem,1.25vw,1.2rem);font-weight:800;cursor:grab;user-select:none;transition:all .2s;touch-action:none;box-shadow:0 3px 8px rgba(0,0,0,.1);border:2.5px solid transparent;}
+.chip:active{cursor:grabbing;transform:scale(1.07) rotate(2deg);}
+.chip.dragging{opacity:.4;transform:scale(.93);}
+.chip.used{opacity:.18;cursor:not-allowed;pointer-events:none;}
+.cc0{background:#BBDEFB;border-color:#64B5F6;color:#0D47A1;}
+.cc1{background:#C8E6C9;border-color:#81C784;color:#1B5E20;}
+.cc2{background:#FFE0B2;border-color:#FFB74D;color:#6D3B00;}
+.cc3{background:#F8BBD9;border-color:#F48FB1;color:#880E4F;}
+.cc4{background:#E1BEE7;border-color:#CE93D8;color:#4A148C;}
+.cc5{background:#B2EBF2;border-color:#80DEEA;color:#006064;}
+.cc6{background:#FFF9C4;border-color:#FFF176;color:#5D4037;}
+.drag-ghost{position:fixed;pointer-events:none;z-index:9999;transform:scale(1.12) rotate(3deg);opacity:.9;}
+
+/* BUTTONS */
+.btn-row{display:flex;gap:10px;justify-content:flex-end;align-items:center;flex-shrink:0;}
+.btn{padding:clamp(9px,1.1vh,13px) clamp(17px,2vw,26px);border-radius:13px;border:none;font-family:'Nunito',sans-serif;font-size:clamp(.88rem,1.1vw,1.08rem);font-weight:800;cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:6px;}
+.btn:hover{transform:translateY(-2px);}.btn:active{transform:scale(.97);}
+.bclear{background:linear-gradient(135deg,#FFCDD2,#EF9A9A);color:#C62828;box-shadow:0 4px 12px rgba(239,154,154,.35);}
+.bhint{background:linear-gradient(135deg,#FFF9C4,#FFD54F);color:#5D3A00;box-shadow:0 4px 12px rgba(255,213,79,.4);}
+.bhint:disabled{opacity:.4;cursor:not-allowed;transform:none;}
+.bconf{background:linear-gradient(135deg,#90CAF9,#1976D2);color:#fff;font-size:clamp(.92rem,1.15vw,1.12rem);padding:clamp(10px,1.2vh,14px) clamp(20px,2.4vw,32px);box-shadow:0 4px 12px rgba(25,118,210,.4);}
+.bconf.l2{background:linear-gradient(135deg,#FFCC80,#F57C00);box-shadow:0 4px 12px rgba(245,124,0,.4);}
+.bconf.lmix{background:linear-gradient(135deg,#CE93D8,#7B1FA2);box-shadow:0 4px 12px rgba(123,31,162,.4);}
+.hint-count{background:#F44336;color:#fff;border-radius:50%;width:20px;height:20px;font-size:.7rem;display:inline-flex;align-items:center;justify-content:center;margin-left:2px;}
+
+/* FEEDBACK */
+.feedback{position:absolute;inset:0;border-radius:26px;display:flex;flex-direction:column;align-items:center;justify-content:center;z-index:100;opacity:0;pointer-events:none;transition:opacity .3s;}
+.feedback.show{opacity:1;pointer-events:all;}
+.fb-ok{background:rgba(200,245,202,.96);}.fb-bad{background:rgba(255,205,210,.96);}
+.fb-emoji{font-size:clamp(3.5rem,7vw,5.5rem);animation:popIn .4s ease;}
+.fb-msg{font-size:clamp(1.4rem,2.6vw,2.2rem);font-weight:900;margin-top:10px;color:var(--text);animation:popIn .4s ease .08s both;}
+.fb-sent{font-size:clamp(.98rem,1.3vw,1.25rem);font-weight:700;color:var(--textm);margin-top:6px;max-width:86%;text-align:center;animation:popIn .4s ease .16s both;background:#fff;padding:10px 22px;border-radius:14px;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+@keyframes popIn{from{transform:scale(.35);opacity:0}to{transform:scale(1);opacity:1}}
+.btn-next{margin-top:18px;padding:clamp(11px,1.3vh,16px) clamp(26px,3.5vw,42px);border-radius:15px;border:none;background:linear-gradient(135deg,#80DEEA,#26C6DA);color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(1rem,1.3vw,1.2rem);font-weight:800;cursor:pointer;box-shadow:0 5px 16px rgba(38,198,218,.4);transition:all .2s;}
+.btn-next:hover{transform:translateY(-3px) scale(1.04);}
+
+/* ROUND COMPLETE */
+.rcscreen{position:absolute;inset:0;border-radius:26px;background:rgba(240,248,255,.97);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:200;animation:popIn .5s ease;}
+.rcscreen.show{display:flex;}
+.rc-emoji{font-size:clamp(4rem,7vw,6rem);}
+.rc-title{font-size:clamp(1.5rem,2.6vw,2.4rem);font-weight:900;color:var(--text);margin:12px 0 5px;}
+.rc-sub{font-size:clamp(.9rem,1.2vw,1.15rem);color:#aaa;}
+.rc-stars{display:flex;gap:12px;margin:12px 0;}
+.rc-star{font-size:clamp(1.9rem,3vw,2.6rem);animation:starPop .4s ease both;}
+.rc-star:nth-child(2){animation-delay:.15s;}.rc-star:nth-child(3){animation-delay:.3s;}
+@keyframes starPop{from{transform:scale(0) rotate(-30deg);opacity:0}to{transform:scale(1) rotate(0);opacity:1}}
+.btn-cont{margin-top:12px;padding:clamp(12px,1.4vh,18px) clamp(28px,3.5vw,44px);border-radius:17px;border:none;background:linear-gradient(135deg,#90CAF9,#1976D2);color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(1rem,1.3vw,1.25rem);font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(25,118,210,.45);transition:all .2s;}
+.btn-cont:hover{transform:translateY(-3px) scale(1.03);}
+.btn-cont.l2{background:linear-gradient(135deg,#FFCC80,#F57C00);box-shadow:0 6px 18px rgba(245,124,0,.45);}
+.btn-cont.lmix{background:linear-gradient(135deg,#CE93D8,#7B1FA2);box-shadow:0 6px 18px rgba(123,31,162,.45);}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+@media(max-width:600px){
+  .card{height:98vh;border-radius:0;width:100vw;padding:12px 14px 10px;}
+  .hdr{flex-direction:column;align-items:flex-start;}
+  .tabs{width:100%;}
+  .tab{flex:1;text-align:center;}
+}
+@media(min-width:600px) and (max-width:900px){
+  .card{height:97vh;}
+}
+@media(min-width:1024px){
+  .card{gap:13px;}
+  .qzh{font-size:1.6rem;}
+  .sword{font-size:1.3rem;}
+  .chip{font-size:1.18rem;padding:12px 18px;}
+  .slot{font-size:1.18rem;height:56px;min-width:100px;}
+  .htitle{font-size:1.45rem;}
+  .tab{font-size:1rem;padding:7px 16px;}
+  .btn{font-size:1.05rem;padding:11px 24px;}
+  .bconf{font-size:1.1rem;padding:12px 30px;}
+}
+</style>
+</head>
+<body>
+<div class="cloud c1"></div><div class="cloud c2"></div><div class="cloud c3"></div>
+<div class="deco" style="top:9%;left:5%;animation-delay:0s">🕐</div>
+<div class="deco" style="top:18%;right:5%;animation-delay:.7s">📍</div>
+<div class="deco" style="bottom:14%;left:4%;animation-delay:1.3s">⭐</div>
+<div class="deco" style="bottom:18%;right:4%;animation-delay:.4s">✨</div>
+
+<div class="card" id="mainCard">
+  <!-- Header -->
+  <div class="hdr">
+    <div class="hdr-l">
+      <div class="hicon">📝</div>
+      <div><div class="htitle">Sentence Practice 句型重組練習</div><div class="hsub">長興國小六年級英語・過去式 Was / Were</div></div>
+    </div>
+    <div class="tabs">
+      <button class="tab tl1" id="tab1" onclick="switchLesson(1)">🧑 Lesson 1<br><small style="font-size:.58rem;font-weight:600">I / You + were/was</small></button>
+      <button class="tab" id="tab2" onclick="switchLesson(2)">👫 Lesson 2<br><small style="font-size:.58rem;font-weight:600">He / She + was</small></button>
+      <button class="tab" id="tabMix" onclick="switchLesson('mix')">🔀 Mix<br><small style="font-size:.58rem;font-weight:600">綜合練習</small></button>
+    </div>
+  </div>
+
+  <!-- Progress -->
+  <div class="prog-wrap">
+    <div class="prog-row">
+      <span class="dbadge de active" id="bd-e">⭐ Easy</span>
+      <span class="dbadge dm" id="bd-m">⭐⭐ Medium</span>
+      <span class="dbadge dh" id="bd-h">⭐⭐⭐ Challenge</span>
+      <span class="rbadge" id="rbadge">Round 1</span>
+    </div>
+    <div class="prog-bg"><div class="prog-fill" id="progFill" style="width:0%;background:linear-gradient(90deg,#90CAF9,#1976D2)"></div></div>
+  </div>
+
+  <!-- Question -->
+  <div class="qbox">
+    <div class="qlabel">📖 中文提示</div>
+    <div class="qzh" id="qZh">—</div>
+    <div class="qtip" id="qTip"></div>
+  </div>
+
+  <!-- Sentence display -->
+  <div class="sent-wrap" id="sentWrap"><div class="slabel">✏️ 排列答案</div></div>
+
+  <!-- Chips -->
+  <div class="chips-wrap" id="chipsWrap">
+    <div class="clabel">🎯 Word Chips 單字模塊</div>
+    <div class="chips-row" id="chipsRow"></div>
+  </div>
+
+  <!-- Buttons -->
+  <div class="btn-row">
+    <button class="btn bhint" id="btnHint" onclick="useHint()" style="display:none">
+      💡 Hint 提示 <span class="hint-count" id="hintCount">3</span>
+    </button>
+    <button class="btn bclear" onclick="clearAll()">🔄 Clear 清除</button>
+    <button class="btn bconf" id="btnConf" onclick="checkAnswer()">✅ Confirm 確認</button>
+  </div>
+
+  <!-- Feedback -->
+  <div class="feedback" id="fbOverlay">
+    <div class="fb-emoji" id="fbEmoji"></div>
+    <div class="fb-msg" id="fbMsg"></div>
+    <div class="fb-sent" id="fbSent"></div>
+    <button class="btn-next" id="btnNext" onclick="nextQ()">▶ Next 下一題</button>
+  </div>
+
+  <!-- Round Complete -->
+  <div class="rcscreen" id="rcScreen">
+    <div class="rc-emoji">🎉</div>
+    <div class="rc-title" id="rcTitle">Round 1 Complete!</div>
+    <div class="rc-stars"><div class="rc-star">⭐</div><div class="rc-star">⭐</div><div class="rc-star">⭐</div></div>
+    <div class="rc-sub" id="rcSub">三個難度全部完成！繼續下一輪！</div>
+    <button class="btn-cont" id="btnCont" onclick="nextRound()">🔁 Continue 繼續下一輪</button>
+  </div>
+</div>
+
+<script>
+// =====================================================================
+// QUESTION BANK  六年級 過去式 Was / Were
+// easy:   1 slot, 3 chips (1 correct + 2 decoys)
+// medium: 2-3 slots, chips = correct words + 1 decoy
+// hard:   all slots split into Q line / A line, no decoys
+// =====================================================================
+
+const QB = {
+  // ==================================================================
+  // LESSON 1 — I / You + was / were
+  // ==================================================================
+  1:{
+    easy:[
+      // Where were you ___? → I was at the ___.  (fill the location)
+      {zh:"你昨天在哪裡？→ 我在公園。",            stem:[{t:'w',v:"Where were you yesterday? I was"},{t:'s',v:"at the park"},{t:'w',v:"."}],            chips:[{v:"at the park"},{v:"at the zoo",d:1},{v:"at home",d:1}]},
+      {zh:"你上星期天在哪裡？→ 我在動物園。",       stem:[{t:'w',v:"Where were you last Sunday? I was"},{t:'s',v:"at the zoo"},{t:'w',v:"."}],             chips:[{v:"at the zoo"},{v:"at school",d:1},{v:"at the park",d:1}]},
+      {zh:"你今天早上在哪裡？→ 我在學校。",         stem:[{t:'w',v:"Where were you this morning? I was"},{t:'s',v:"at school"},{t:'w',v:"."}],             chips:[{v:"at school"},{v:"at home",d:1},{v:"at the bookstore",d:1}]},
+      {zh:"你一小時前在哪裡？→ 我在家。",           stem:[{t:'w',v:"Where were you an hour ago? I was"},{t:'s',v:"at home"},{t:'w',v:"."}],               chips:[{v:"at home"},{v:"at the museum",d:1},{v:"at the zoo",d:1}]},
+      {zh:"你十分鐘前在哪裡？→ 我在書店。",         stem:[{t:'w',v:"Where were you ten minutes ago? I was"},{t:'s',v:"at the bookstore"},{t:'w',v:"."}],   chips:[{v:"at the bookstore"},{v:"at home",d:1},{v:"at school",d:1}]},
+      // Were you at ___? → Yes/No answers  (fill was/wasn't)
+      {zh:"你昨天在動物園嗎？→ 是的，我是。",       stem:[{t:'w',v:"Were you at the zoo yesterday? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],                chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+      {zh:"你上星期天在博物館嗎？→ 不，我不是。",   stem:[{t:'w',v:"Were you at the museum last Sunday? No, I"},{t:'s',v:"wasn't"},{t:'w',v:"."}],         chips:[{v:"wasn't"},{v:"was",d:1},{v:"weren't",d:1}]},
+      {zh:"你今天早上在公園嗎？→ 是的，我是。",     stem:[{t:'w',v:"Were you at the park this morning? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],            chips:[{v:"was"},{v:"weren't",d:1},{v:"wasn't",d:1}]},
+      {zh:"你一小時前在超市嗎？→ 不，我不是。",     stem:[{t:'w',v:"Were you at the supermarket an hour ago? No, I"},{t:'s',v:"wasn't"},{t:'w',v:"."}],    chips:[{v:"wasn't"},{v:"was",d:1},{v:"were",d:1}]},
+      {zh:"你十分鐘前在茶店嗎？→ 是的，我是。",     stem:[{t:'w',v:"Were you at the tea shop ten minutes ago? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],     chips:[{v:"was"},{v:"wasn't",d:1},{v:"weren't",d:1}]},
+    ],
+    medium:[
+      // fill 2–3 key words
+      {zh:"你昨天在哪裡？→ 我在公園。",            stem:[{t:'w',v:"Where"},{t:'s',v:"were"},{t:'w',v:"you yesterday? I"},{t:'s',v:"was"},{t:'w',v:"at the park ."}],                       chips:[{v:"were"},{v:"was"},{v:"am",d:1}]},
+      {zh:"你上星期天在哪裡？→ 我在動物園。",       stem:[{t:'w',v:"Where were you last Sunday? I was"},{t:'s',v:"at the zoo"},{t:'s',v:"."} ],                                              chips:[{v:"at the zoo"},{v:"."},{v:"at school",d:1}]},
+      {zh:"你一小時前在哪裡？→ 我在博物館。",       stem:[{t:'w',v:"Where were you"},{t:'s',v:"an hour ago"},{t:'w',v:"? I was at the museum ."}],                                           chips:[{v:"an hour ago"},{v:"yesterday",d:1},{v:"last Sunday",d:1}]},
+      {zh:"你十分鐘前在哪裡？→ 我在家。",           stem:[{t:'w',v:"Where were you ten minutes ago? I"},{t:'s',v:"was"},{t:'w',v:"at"},{t:'s',v:"home"},{t:'w',v:"."}],                      chips:[{v:"was"},{v:"home"},{v:"were",d:1}]},
+      {zh:"你今天早上在哪裡？→ 我在超市。",         stem:[{t:'w',v:"Where were you this morning? I was"},{t:'s',v:"at the supermarket"},{t:'w',v:"."}],                                      chips:[{v:"at the supermarket"},{v:"at the park",d:1},{v:"at home",d:1}]},
+      {zh:"你昨天在書店嗎？→ 不，我在遊樂園。",     stem:[{t:'w',v:"Were you at the bookstore yesterday? No, I"},{t:'s',v:"wasn't"},{t:'w',v:". I was"},{t:'s',v:"at the amusement park"},{t:'w',v:"."}], chips:[{v:"wasn't"},{v:"at the amusement park"},{v:"was",d:1}]},
+      {zh:"你上星期天在茶店嗎？→ 是的，我是。",     stem:[{t:'w',v:"Were you at the tea shop last Sunday? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],                                           chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+      {zh:"你一小時前在百貨公司嗎？→ 不，我不是。", stem:[{t:'w',v:"Were you at the department store an hour ago? No, I"},{t:'s',v:"wasn't"},{t:'w',v:"."}],                                 chips:[{v:"wasn't"},{v:"was",d:1},{v:"weren't",d:1}]},
+      {zh:"你今天早上在動物園嗎？→ 不，我在博物館。",stem:[{t:'w',v:"Were you at the zoo this morning? No, I wasn't. I was"},{t:'s',v:"at the museum"},{t:'w',v:"."}],                       chips:[{v:"at the museum"},{v:"at the park",d:1},{v:"at home",d:1}]},
+      {zh:"你十分鐘前在學校嗎？→ 是的，我是。",     stem:[{t:'w',v:"Were you at school ten minutes ago? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],                                            chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+    ],
+    hard:[
+      // WHERE questions — full sentence split Q / A
+      {zh:"你昨天在哪裡？→ 我在公園。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"yesterday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the park"},{t:'s',v:"."}],              chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"yesterday?"},{v:"I"},{v:"was"},{v:"at the park"},{v:"."}]},
+      {zh:"你上星期天在哪裡？→ 我在動物園。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"last Sunday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the zoo"},{t:'s',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"last Sunday?"},{v:"I"},{v:"was"},{v:"at the zoo"},{v:"."}]},
+      {zh:"你今天早上在哪裡？→ 我在學校。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"this morning?"}],                     aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at school"},{t:'s',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"this morning?"},{v:"I"},{v:"was"},{v:"at school"},{v:"."}]},
+      {zh:"你一小時前在哪裡？→ 我在博物館。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"an hour ago?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'s',v:"."}],            chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"an hour ago?"},{v:"I"},{v:"was"},{v:"at the museum"},{v:"."}]},
+      {zh:"你十分鐘前在哪裡？→ 我在書店。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"ten minutes ago?"}],                   aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the bookstore"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"ten minutes ago?"},{v:"I"},{v:"was"},{v:"at the bookstore"},{v:"."}]},
+      // YES/NO questions — full sentence Q + short A
+      {zh:"你昨天在動物園嗎？→ 不，我在遊樂園。",   qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the zoo"},{t:'s',v:"yesterday?"}],                   aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the amusement park"},{t:'s',v:"."}], chips:[{v:"Were"},{v:"you"},{v:"at the zoo"},{v:"yesterday?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the amusement park"},{v:"."}]},
+      {zh:"你上星期天在博物館嗎？→ 是的，我是。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the museum"},{t:'s',v:"last Sunday?"}],               aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the museum"},{v:"last Sunday?"},{v:"Yes,"},{v:"I"},{v:"was"},{v:"."}]},
+      {zh:"你今天早上在超市嗎？→ 不，我在茶店。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the supermarket"},{t:'s',v:"this morning?"}],         aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the tea shop"},{t:'s',v:"."}],    chips:[{v:"Were"},{v:"you"},{v:"at the supermarket"},{v:"this morning?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the tea shop"},{v:"."}]},
+      {zh:"你一小時前在百貨公司嗎？→ 是的，我是。",  qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],     aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"I"},{v:"was"},{v:"."}]},
+      {zh:"你十分鐘前在學校嗎？→ 不，我在家。",      qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at school"},{t:'s',v:"ten minutes ago?"}],               aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at home"},{t:'s',v:"."}],          chips:[{v:"Were"},{v:"you"},{v:"at school"},{v:"ten minutes ago?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at home"},{v:"."}]},
+    ]
+  },
+
+  // ==================================================================
+  // LESSON 2 — He / She + was
+  // ==================================================================
+  2:{
+    easy:[
+      {zh:"他昨天在哪裡？→ 他在餐廳。",             stem:[{t:'w',v:"Where was he yesterday? He was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}],           chips:[{v:"at the restaurant"},{v:"at the park",d:1},{v:"at home",d:1}]},
+      {zh:"她上星期天在哪裡？→ 她在博物館。",        stem:[{t:'w',v:"Where was she last Sunday? She was"},{t:'s',v:"at the museum"},{t:'w',v:"."}],            chips:[{v:"at the museum"},{v:"at school",d:1},{v:"at the zoo",d:1}]},
+      {zh:"他今天早上在哪裡？→ 他在遊樂園。",        stem:[{t:'w',v:"Where was he this morning? He was"},{t:'s',v:"at the amusement park"},{t:'w',v:"."}],     chips:[{v:"at the amusement park"},{v:"at home",d:1},{v:"at the museum",d:1}]},
+      {zh:"她一小時前在哪裡？→ 她在超市。",          stem:[{t:'w',v:"Where was she an hour ago? She was"},{t:'s',v:"at the supermarket"},{t:'w',v:"."}],       chips:[{v:"at the supermarket"},{v:"at the zoo",d:1},{v:"at school",d:1}]},
+      {zh:"他十分鐘前在哪裡？→ 他在百貨公司。",      stem:[{t:'w',v:"Where was he ten minutes ago? He was"},{t:'s',v:"at the department store"},{t:'w',v:"."}], chips:[{v:"at the department store"},{v:"at the bookstore",d:1},{v:"at home",d:1}]},
+      {zh:"她昨天在博物館嗎？→ 是的，她是。",        stem:[{t:'w',v:"Was she at the museum yesterday? Yes, she"},{t:'s',v:"was"},{t:'w',v:"."}],               chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+      {zh:"他上星期天在學校嗎？→ 不，他不是。",      stem:[{t:'w',v:"Was he at school last Sunday? No, he"},{t:'s',v:"wasn't"},{t:'w',v:"."}],                 chips:[{v:"wasn't"},{v:"was",d:1},{v:"weren't",d:1}]},
+      {zh:"她今天早上在公園嗎？→ 是的，她是。",      stem:[{t:'w',v:"Was she at the park this morning? Yes, she"},{t:'s',v:"was"},{t:'w',v:"."}],              chips:[{v:"was"},{v:"weren't",d:1},{v:"wasn't",d:1}]},
+      {zh:"他一小時前在動物園嗎？→ 不，他不是。",    stem:[{t:'w',v:"Was he at the zoo an hour ago? No, he"},{t:'s',v:"wasn't"},{t:'w',v:"."}],               chips:[{v:"wasn't"},{v:"was",d:1},{v:"were",d:1}]},
+      {zh:"她十分鐘前在茶店嗎？→ 是的，她是。",      stem:[{t:'w',v:"Was she at the tea shop ten minutes ago? Yes, she"},{t:'s',v:"was"},{t:'w',v:"."}],       chips:[{v:"was"},{v:"wasn't",d:1},{v:"weren't",d:1}]},
+    ],
+    medium:[
+      {zh:"他昨天在哪裡？→ 他在餐廳。",              stem:[{t:'w',v:"Where"},{t:'s',v:"was"},{t:'w',v:"he yesterday? He was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}],                  chips:[{v:"was"},{v:"at the restaurant"},{v:"were",d:1}]},
+      {zh:"她上星期天在哪裡？→ 她在遊樂園。",         stem:[{t:'w',v:"Where was she last Sunday? She was"},{t:'s',v:"at the amusement park"},{t:'w',v:"."}],                                   chips:[{v:"at the amusement park"},{v:"at school",d:1},{v:"at home",d:1}]},
+      {zh:"他今天早上在哪裡？→ 他在書店。",           stem:[{t:'w',v:"Where was he"},{t:'s',v:"this morning"},{t:'w',v:"? He was at the bookstore ."}],                                        chips:[{v:"this morning"},{v:"yesterday",d:1},{v:"last Sunday",d:1}]},
+      {zh:"她一小時前在哪裡？→ 她在百貨公司。",       stem:[{t:'w',v:"Where was she an hour ago? She"},{t:'s',v:"was"},{t:'w',v:"at"},{t:'s',v:"the department store"},{t:'w',v:"."}],         chips:[{v:"was"},{v:"the department store"},{v:"were",d:1}]},
+      {zh:"他十分鐘前在哪裡？→ 他在家。",             stem:[{t:'w',v:"Where was he ten minutes ago? He was"},{t:'s',v:"at home"},{t:'w',v:"."}],                                               chips:[{v:"at home"},{v:"at school",d:1},{v:"at the park",d:1}]},
+      {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",       stem:[{t:'w',v:"Was she at the museum yesterday? No, she"},{t:'s',v:"wasn't"},{t:'w',v:". She was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}], chips:[{v:"wasn't"},{v:"at the restaurant"},{v:"was",d:1}]},
+      {zh:"他上星期天在動物園嗎？→ 是的，他是。",     stem:[{t:'w',v:"Was he at the zoo last Sunday? Yes, he"},{t:'s',v:"was"},{t:'w',v:"."}],                                                 chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+      {zh:"她今天早上在遊樂園嗎？→ 不，她在超市。",   stem:[{t:'w',v:"Was she at the amusement park this morning? No, she wasn't. She was"},{t:'s',v:"at the supermarket"},{t:'w',v:"."}],      chips:[{v:"at the supermarket"},{v:"at home",d:1},{v:"at school",d:1}]},
+      {zh:"他一小時前在茶店嗎？→ 不，他不是。",       stem:[{t:'w',v:"Was he at the tea shop an hour ago? No, he"},{t:'s',v:"wasn't"},{t:'w',v:"."}],                                          chips:[{v:"wasn't"},{v:"was",d:1},{v:"weren't",d:1}]},
+      {zh:"她十分鐘前在學校嗎？→ 是的，她是。",       stem:[{t:'w',v:"Was she at school ten minutes ago? Yes, she"},{t:'s',v:"was"},{t:'w',v:"."}],                                           chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+    ],
+    hard:[
+      {zh:"他昨天在哪裡？→ 他在餐廳。",              qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"yesterday?"}],                          aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the restaurant"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"yesterday?"},{v:"He"},{v:"was"},{v:"at the restaurant"},{v:"."}]},
+      {zh:"她上星期天在哪裡？→ 她在博物館。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"last Sunday?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'s',v:"."}],             chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"last Sunday?"},{v:"She"},{v:"was"},{v:"at the museum"},{v:"."}]},
+      {zh:"他今天早上在哪裡？→ 他在遊樂園。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"this morning?"}],                        aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the amusement park"},{t:'s',v:"."}],      chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"this morning?"},{v:"He"},{v:"was"},{v:"at the amusement park"},{v:"."}]},
+      {zh:"她一小時前在哪裡？→ 她在超市。",            qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"an hour ago?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the supermarket"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"an hour ago?"},{v:"She"},{v:"was"},{v:"at the supermarket"},{v:"."}]},
+      {zh:"他十分鐘前在哪裡？→ 他在百貨公司。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"ten minutes ago?"}],                     aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the department store"},{t:'s',v:"."}],     chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"ten minutes ago?"},{v:"He"},{v:"was"},{v:"at the department store"},{v:"."}]},
+      {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",        qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the museum"},{t:'s',v:"yesterday?"}],                  aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at the restaurant"},{t:'s',v:"."}], chips:[{v:"Was"},{v:"she"},{v:"at the museum"},{v:"yesterday?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at the restaurant"},{v:"."}]},
+      {zh:"他上星期天在動物園嗎？→ 是的，他是。",      qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the zoo"},{t:'s',v:"last Sunday?"}],                    aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'s',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the zoo"},{v:"last Sunday?"},{v:"Yes,"},{v:"he"},{v:"was"},{v:"."}]},
+      {zh:"她今天早上在超市嗎？→ 不，她在學校。",      qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the supermarket"},{t:'s',v:"this morning?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at school"},{t:'s',v:"."}],        chips:[{v:"Was"},{v:"she"},{v:"at the supermarket"},{v:"this morning?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at school"},{v:"."}]},
+      {zh:"他一小時前在百貨公司嗎？→ 是的，他是。",    qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],       aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'s',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"he"},{v:"was"},{v:"."}]},
+      {zh:"她十分鐘前在茶店嗎？→ 不，她在家。",        qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the tea shop"},{t:'s',v:"ten minutes ago?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at home"},{t:'s',v:"."}],          chips:[{v:"Was"},{v:"she"},{v:"at the tea shop"},{v:"ten minutes ago?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at home"},{v:"."}]},
+    ]
+  }
+};
+
+// ==================================================================
+// MIX BANK — 5 from L1 + 5 from L2 each difficulty
+// ==================================================================
+const QB_MIX = {
+  easy:[
+    // L1
+    {zh:"你昨天在哪裡？→ 我在公園。",            stem:[{t:'w',v:"Where were you yesterday? I was"},{t:'s',v:"at the park"},{t:'w',v:"."}],            chips:[{v:"at the park"},{v:"at the zoo",d:1},{v:"at home",d:1}]},
+    {zh:"你今天早上在哪裡？→ 我在學校。",         stem:[{t:'w',v:"Where were you this morning? I was"},{t:'s',v:"at school"},{t:'w',v:"."}],             chips:[{v:"at school"},{v:"at home",d:1},{v:"at the bookstore",d:1}]},
+    {zh:"你昨天在動物園嗎？→ 是的，我是。",       stem:[{t:'w',v:"Were you at the zoo yesterday? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],                chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+    {zh:"你一小時前在超市嗎？→ 不，我不是。",     stem:[{t:'w',v:"Were you at the supermarket an hour ago? No, I"},{t:'s',v:"wasn't"},{t:'w',v:"."}],    chips:[{v:"wasn't"},{v:"was",d:1},{v:"were",d:1}]},
+    {zh:"你十分鐘前在書店嗎？→ 是的，我是。",     stem:[{t:'w',v:"Were you at the bookstore ten minutes ago? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],    chips:[{v:"was"},{v:"wasn't",d:1},{v:"weren't",d:1}]},
+    // L2
+    {zh:"他昨天在哪裡？→ 他在餐廳。",             stem:[{t:'w',v:"Where was he yesterday? He was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}],         chips:[{v:"at the restaurant"},{v:"at the park",d:1},{v:"at home",d:1}]},
+    {zh:"她今天早上在哪裡？→ 她在遊樂園。",        stem:[{t:'w',v:"Where was she this morning? She was"},{t:'s',v:"at the amusement park"},{t:'w',v:"."}], chips:[{v:"at the amusement park"},{v:"at home",d:1},{v:"at the museum",d:1}]},
+    {zh:"她昨天在博物館嗎？→ 是的，她是。",        stem:[{t:'w',v:"Was she at the museum yesterday? Yes, she"},{t:'s',v:"was"},{t:'w',v:"."}],             chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+    {zh:"他一小時前在動物園嗎？→ 不，他不是。",    stem:[{t:'w',v:"Was he at the zoo an hour ago? No, he"},{t:'s',v:"wasn't"},{t:'w',v:"."}],             chips:[{v:"wasn't"},{v:"was",d:1},{v:"were",d:1}]},
+    {zh:"她十分鐘前在茶店嗎？→ 是的，她是。",      stem:[{t:'w',v:"Was she at the tea shop ten minutes ago? Yes, she"},{t:'s',v:"was"},{t:'w',v:"."}],     chips:[{v:"was"},{v:"wasn't",d:1},{v:"weren't",d:1}]},
+  ],
+  medium:[
+    // L1
+    {zh:"你昨天在哪裡？→ 我在公園。",            stem:[{t:'w',v:"Where"},{t:'s',v:"were"},{t:'w',v:"you yesterday? I"},{t:'s',v:"was"},{t:'w',v:"at the park ."}],                    chips:[{v:"were"},{v:"was"},{v:"am",d:1}]},
+    {zh:"你昨天在書店嗎？→ 不，我在遊樂園。",     stem:[{t:'w',v:"Were you at the bookstore yesterday? No, I"},{t:'s',v:"wasn't"},{t:'w',v:". I was"},{t:'s',v:"at the amusement park"},{t:'w',v:"."}], chips:[{v:"wasn't"},{v:"at the amusement park"},{v:"was",d:1}]},
+    {zh:"你今天早上在超市嗎？→ 是的，我是。",     stem:[{t:'w',v:"Were you at the supermarket this morning? Yes, I"},{t:'s',v:"was"},{t:'w',v:"."}],                                  chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+    {zh:"你一小時前在哪裡？→ 我在博物館。",       stem:[{t:'w',v:"Where were you"},{t:'s',v:"an hour ago"},{t:'w',v:"? I was at the museum ."}],                                      chips:[{v:"an hour ago"},{v:"yesterday",d:1},{v:"last Sunday",d:1}]},
+    {zh:"你十分鐘前在百貨公司嗎？→ 不，我不是。", stem:[{t:'w',v:"Were you at the department store ten minutes ago? No, I"},{t:'s',v:"wasn't"},{t:'w',v:"."}],                        chips:[{v:"wasn't"},{v:"was",d:1},{v:"weren't",d:1}]},
+    // L2
+    {zh:"他昨天在哪裡？→ 他在餐廳。",             stem:[{t:'w',v:"Where"},{t:'s',v:"was"},{t:'w',v:"he yesterday? He was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}],             chips:[{v:"was"},{v:"at the restaurant"},{v:"were",d:1}]},
+    {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",      stem:[{t:'w',v:"Was she at the museum yesterday? No, she"},{t:'s',v:"wasn't"},{t:'w',v:". She was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}], chips:[{v:"wasn't"},{v:"at the restaurant"},{v:"was",d:1}]},
+    {zh:"他上星期天在動物園嗎？→ 是的，他是。",    stem:[{t:'w',v:"Was he at the zoo last Sunday? Yes, he"},{t:'s',v:"was"},{t:'w',v:"."}],                                          chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
+    {zh:"她一小時前在哪裡？→ 她在百貨公司。",      stem:[{t:'w',v:"Where was she an hour ago? She"},{t:'s',v:"was"},{t:'w',v:"at"},{t:'s',v:"the department store"},{t:'w',v:"."}],   chips:[{v:"was"},{v:"the department store"},{v:"were",d:1}]},
+    {zh:"他十分鐘前在家嗎？→ 不，他不是。",        stem:[{t:'w',v:"Was he at home ten minutes ago? No, he"},{t:'s',v:"wasn't"},{t:'w',v:"."}],                                        chips:[{v:"wasn't"},{v:"was",d:1},{v:"weren't",d:1}]},
+  ],
+  hard:[
+    // L1
+    {zh:"你昨天在哪裡？→ 我在公園。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"yesterday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the park"},{t:'s',v:"."}],              chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"yesterday?"},{v:"I"},{v:"was"},{v:"at the park"},{v:"."}]},
+    {zh:"你今天早上在哪裡？→ 我在學校。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"this morning?"}],                     aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at school"},{t:'s',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"this morning?"},{v:"I"},{v:"was"},{v:"at school"},{v:"."}]},
+    {zh:"你昨天在動物園嗎？→ 不，我在遊樂園。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the zoo"},{t:'s',v:"yesterday?"}],                   aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the amusement park"},{t:'s',v:"."}], chips:[{v:"Were"},{v:"you"},{v:"at the zoo"},{v:"yesterday?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the amusement park"},{v:"."}]},
+    {zh:"你一小時前在博物館嗎？→ 是的，我是。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the museum"},{t:'s',v:"an hour ago?"}],              aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the museum"},{v:"an hour ago?"},{v:"Yes,"},{v:"I"},{v:"was"},{v:"."}]},
+    {zh:"你十分鐘前在學校嗎？→ 不，我在家。",      qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at school"},{t:'s',v:"ten minutes ago?"}],              aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at home"},{t:'s',v:"."}],          chips:[{v:"Were"},{v:"you"},{v:"at school"},{v:"ten minutes ago?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at home"},{v:"."}]},
+    // L2
+    {zh:"他昨天在哪裡？→ 他在餐廳。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"yesterday?"}],                          aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the restaurant"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"yesterday?"},{v:"He"},{v:"was"},{v:"at the restaurant"},{v:"."}]},
+    {zh:"她上星期天在哪裡？→ 她在博物館。",         qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"last Sunday?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'s',v:"."}],             chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"last Sunday?"},{v:"She"},{v:"was"},{v:"at the museum"},{v:"."}]},
+    {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",       qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the museum"},{t:'s',v:"yesterday?"}],                  aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at the restaurant"},{t:'s',v:"."}], chips:[{v:"Was"},{v:"she"},{v:"at the museum"},{v:"yesterday?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at the restaurant"},{v:"."}]},
+    {zh:"他一小時前在百貨公司嗎？→ 是的，他是。",   qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],       aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'s',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"he"},{v:"was"},{v:"."}]},
+    {zh:"她十分鐘前在茶店嗎？→ 不，她在家。",       qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the tea shop"},{t:'s',v:"ten minutes ago?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at home"},{t:'s',v:"."}],          chips:[{v:"Was"},{v:"she"},{v:"at the tea shop"},{v:"ten minutes ago?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at home"},{v:"."}]},
+  ]
+};
+
+// =====================================================================
+// STATE
+// =====================================================================
+let les=1, diffIdx=0, roundNum=1;
+const DIFFS=['easy','medium','hard'];
+let usedIdx={1:{easy:[],medium:[],hard:[]},2:{easy:[],medium:[],hard:[]},'mix':{easy:[],medium:[],hard:[]}};
+let curQ=null, slotVals=[], slotEls=[];
+let dragIdx=-1, dragGhost=null, touchSlot=null;
+let hintsLeft=3;
+
+function cDiff(){ return DIFFS[diffIdx]; }
+
+function pickQ(l,d){
+  const pool=(l==='mix')?QB_MIX[d]:QB[l][d];
+  const used=usedIdx[l][d];
+  let av=pool.map((_,i)=>i).filter(i=>!used.includes(i));
+  if(!av.length){ usedIdx[l][d]=[]; av=pool.map((_,i)=>i); }
+  const i=av[~~(Math.random()*av.length)];
+  usedIdx[l][d].push(i);
+  return pool[i];
+}
+
+function switchLesson(n){
+  les=n; diffIdx=0; roundNum=1;
+  document.getElementById('tab1').className='tab'+(n===1?' tl1':'');
+  document.getElementById('tab2').className='tab'+(n===2?' tl2':'');
+  document.getElementById('tabMix').className='tab'+(n==='mix'?' tlmix':'');
+  const sfx=n===2?' l2':n==='mix'?' lmix':'';
+  document.getElementById('btnConf').className='btn bconf'+sfx;
+  document.getElementById('btnCont').className='btn-cont'+sfx;
+  document.getElementById('rcScreen').className='rcscreen';
+  document.getElementById('progFill').style.background=
+    n===1?'linear-gradient(90deg,#90CAF9,#1976D2)':
+    n===2?'linear-gradient(90deg,#FFCC80,#F57C00)':
+          'linear-gradient(90deg,#CE93D8,#7B1FA2)';
+  loadQ();
+}
+
+function loadQ(){
+  const d=cDiff();
+  curQ=pickQ(les,d); slotVals=[]; slotEls=[]; dragIdx=-1; hintsLeft=3;
+
+  ['e','m','h'].forEach((k,i)=>{
+    const el=document.getElementById('bd-'+k);
+    el.className='dbadge d'+k;
+    if(i<diffIdx) el.classList.add('done');
+    if(i===diffIdx) el.classList.add('active');
+  });
+  document.getElementById('progFill').style.width=(diffIdx/3*100)+'%';
+  document.getElementById('rbadge').textContent='Round '+roundNum;
+  document.getElementById('qZh').textContent=curQ.zh;
+  document.getElementById('qTip').textContent=
+    d==='easy' ?'🖐 拖曳正確的單字填入空格':
+    d==='medium'?'🖐 拖曳模塊填入空格（注意誘答選項！）':
+                 '🖐 把所有模塊排成完整句子（可用提示）';
+
+  const btnHint=document.getElementById('btnHint');
+  if(d==='hard'){
+    btnHint.style.display='flex'; btnHint.disabled=false;
+    document.getElementById('hintCount').textContent=hintsLeft;
+  } else {
+    btnHint.style.display='none';
+  }
+
+  if(d==='hard') buildStemTwoLines(); else buildStemSingle(curQ.stem);
+  buildChips(curQ.chips);
+  document.getElementById('fbOverlay').className='feedback';
+  document.getElementById('btnNext').style.display='';
+}
+
+function buildStemSingle(stemArr){
+  const wrap=document.getElementById('sentWrap');
+  wrap.className='sent-wrap';
+  wrap.innerHTML='<div class="slabel">✏️ 排列答案</div>';
+  let si=0;
+  stemArr.forEach(p=>{
+    if(p.t==='w'){
+      const sp=document.createElement('span'); sp.className='sword'; sp.textContent=p.v; wrap.appendChild(sp);
+    } else { const slot=makeSlot(si); wrap.appendChild(slot); si++; }
+  });
+}
+
+function buildStemTwoLines(){
+  const wrap=document.getElementById('sentWrap');
+  wrap.className='sent-wrap two-lines';
+  wrap.innerHTML='<div class="slabel">✏️ 排列答案（問句 + 答句）</div>';
+  let si=0;
+  const qRow=document.createElement('div'); qRow.className='sent-line';
+  const qL=document.createElement('span'); qL.className='line-label'; qL.textContent='Q:'; qRow.appendChild(qL);
+  curQ.qLine.forEach(()=>{ qRow.appendChild(makeSlot(si)); si++; });
+  wrap.appendChild(qRow);
+  const aRow=document.createElement('div'); aRow.className='sent-line';
+  const aL=document.createElement('span'); aL.className='line-label'; aL.textContent='A:'; aRow.appendChild(aL);
+  curQ.aLine.forEach(()=>{ aRow.appendChild(makeSlot(si)); si++; });
+  wrap.appendChild(aRow);
+}
+
+function makeSlot(si){
+  const slot=document.createElement('div');
+  slot.className='slot'; slot.dataset.si=si;
+  slotVals.push(null); slotEls.push(slot);
+  const mi=si;
+  slot.addEventListener('dragover',e=>{e.preventDefault();slot.classList.add('drag-over');});
+  slot.addEventListener('dragleave',()=>slot.classList.remove('drag-over'));
+  slot.addEventListener('drop',e=>{e.preventDefault();slot.classList.remove('drag-over');dropOn(mi);});
+  slot.addEventListener('click',()=>{ if(slot.classList.contains('occupied')&&!slot.classList.contains('hinted')) returnChip(mi); });
+  return slot;
+}
+
+function buildChips(arr){
+  document.getElementById('chipsWrap').style.display='';
+  const row=document.getElementById('chipsRow'); row.innerHTML='';
+  [...arr].sort(()=>Math.random()-.5).forEach((c,i)=>{
+    const chip=document.createElement('div');
+    chip.className='chip cc'+(i%7);
+    chip.textContent=c.v; chip.dataset.ci=i; chip.dataset.word=c.v;
+    chip.draggable=true;
+    chip.addEventListener('dragstart',e=>{dragIdx=i;chip.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
+    chip.addEventListener('dragend',()=>chip.classList.remove('dragging'));
+    chip.addEventListener('touchstart',e=>tStart(e,i),{passive:false});
+    chip.addEventListener('touchmove',e=>tMove(e),{passive:false});
+    chip.addEventListener('touchend',e=>tEnd(e,i));
+    row.appendChild(chip);
+  });
+}
+
+function dropOn(si){
+  if(dragIdx<0) return;
+  const chips=document.querySelectorAll('#chipsRow .chip'), chip=chips[dragIdx];
+  if(!chip||chip.classList.contains('used')) return;
+  if(slotVals[si]!==null) returnChip(si);
+  const w=chip.dataset.word;
+  slotVals[si]=w; chip.classList.add('used');
+  slotEls[si].textContent=w; slotEls[si].className='slot occupied'; dragIdx=-1;
+}
+function returnChip(si){
+  const w=slotVals[si]; if(!w) return;
+  slotVals[si]=null; slotEls[si].textContent=''; slotEls[si].className='slot';
+  const chips=document.querySelectorAll('#chipsRow .chip');
+  for(const c of chips){ if(c.dataset.word===w&&c.classList.contains('used')){ c.classList.remove('used'); break; } }
+}
+
+function tStart(e,ci){
+  e.preventDefault(); dragIdx=ci;
+  const ch=e.currentTarget,t=e.touches[0];
+  dragGhost=ch.cloneNode(true); dragGhost.className=ch.className+' drag-ghost';
+  dragGhost.style.width=ch.offsetWidth+'px';
+  dragGhost.style.left=(t.clientX-ch.offsetWidth/2)+'px';
+  dragGhost.style.top=(t.clientY-ch.offsetHeight/2)+'px';
+  document.body.appendChild(dragGhost);
+}
+function tMove(e){
+  e.preventDefault(); if(!dragGhost) return;
+  const t=e.touches[0];
+  dragGhost.style.left=(t.clientX-dragGhost.offsetWidth/2)+'px';
+  dragGhost.style.top=(t.clientY-dragGhost.offsetHeight/2)+'px';
+  const el=document.elementFromPoint(t.clientX,t.clientY);
+  document.querySelectorAll('.slot').forEach(s=>s.classList.remove('drag-over'));
+  if(el&&el.classList.contains('slot')){ el.classList.add('drag-over'); touchSlot=parseInt(el.dataset.si); }
+  else touchSlot=null;
+}
+function tEnd(e,ci){
+  if(dragGhost){dragGhost.remove();dragGhost=null;}
+  document.querySelectorAll('.slot').forEach(s=>s.classList.remove('drag-over'));
+  if(touchSlot!==null){ dropOn(touchSlot); touchSlot=null; }
+  dragIdx=-1;
+}
+
+function useHint(){
+  if(hintsLeft<=0) return;
+  const answers=[...curQ.qLine,...curQ.aLine].map(p=>p.v);
+  for(let i=0;i<slotVals.length;i++){
+    if(slotVals[i]!==null) continue;
+    const ans=answers[i];
+    slotVals[i]=ans; slotEls[i].textContent=ans; slotEls[i].className='slot occupied hinted';
+    slotEls[i].style.borderColor='#AB47BC'; slotEls[i].style.background='#F3E5F5';
+    const chips=document.querySelectorAll('#chipsRow .chip');
+    for(const c of chips){ if(c.dataset.word===ans&&!c.classList.contains('used')){ c.classList.add('used'); break; } }
+    hintsLeft--;
+    document.getElementById('hintCount').textContent=hintsLeft;
+    if(hintsLeft===0) document.getElementById('btnHint').disabled=true;
+    break;
+  }
+}
+
+function clearAll(){
+  for(let i=0;i<slotVals.length;i++){
+    if(slotEls[i]&&slotEls[i].classList.contains('hinted')) continue;
+    if(slotVals[i]) returnChip(i);
+  }
+}
+
+function checkAnswer(){
+  const d=cDiff();
+  const answers=d==='hard'
+    ?[...curQ.qLine,...curQ.aLine].map(p=>p.v)
+    :curQ.stem.filter(p=>p.t==='s').map(p=>p.v);
+  let ok=true;
+  for(let i=0;i<answers.length;i++) if(slotVals[i]!==answers[i]){ok=false;break;}
+  slotEls.forEach(s=>{ if(s.classList.contains('hinted')) return; s.classList.remove('occupied'); s.classList.add(ok?'ok':'bad'); });
+  const ov=document.getElementById('fbOverlay');
+  ov.className='feedback show '+(ok?'fb-ok':'fb-bad');
+  document.getElementById('fbEmoji').textContent=ok?['🎉','🌟','🥳','✨','🎊'][~~(Math.random()*5)]:['😅','🤔','💪','🙈'][~~(Math.random()*4)];
+  const okM=['Excellent! 太厲害了！','Great Job! 好棒喔！','Perfect! 完美！','Amazing! 真棒！'];
+  const bdM=['Almost! 再試一次！','Keep Going! 重新排排看！','Try Again! 你可以的！'];
+  document.getElementById('fbMsg').textContent=ok?okM[~~(Math.random()*okM.length)]:bdM[~~(Math.random()*bdM.length)];
+  let fullAns=d==='hard'
+    ?curQ.qLine.map(p=>p.v).join(' ')+'  /  '+curQ.aLine.map(p=>p.v).join(' ')
+    :curQ.stem.map(p=>p.v).join(' ');
+  document.getElementById('fbSent').textContent=fullAns;
+
+  if(ok){
+    document.getElementById('btnNext').style.display='';
+  } else {
+    document.getElementById('btnNext').style.display='none';
+    setTimeout(()=>{
+      ov.className='feedback';
+      retryQ();
+    }, 2000);
+  }
+}
+
+function retryQ(){
+  slotEls.forEach((s,i)=>{
+    if(s.classList.contains('hinted')) return;
+    s.classList.remove('ok','bad');
+    if(slotVals[i]!==null) returnChip(i);
+    s.className='slot';
+  });
+}
+
+function nextQ(){
+  document.getElementById('fbOverlay').className='feedback';
+  diffIdx++;
+  if(diffIdx>=3) showRC(); else loadQ();
+}
+function showRC(){
+  document.getElementById('rcTitle').textContent='Round '+roundNum+' Complete! 🎊';
+  document.getElementById('rcScreen').className='rcscreen show';
+}
+function nextRound(){
+  roundNum++; diffIdx=0;
+  document.getElementById('rcScreen').className='rcscreen';
+  loadQ();
+}
+
+loadQ();
+</script>
+</body>
+</html>

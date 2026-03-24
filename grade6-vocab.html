@@ -1,0 +1,793 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+    <title>長興國小六年級英文單字翻翻樂</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            -webkit-tap-highlight-color: transparent;
+        }
+
+        html {
+            font-size: clamp(14px, 1.5vw, 17px);
+        }
+
+        /* 允許整頁滾動 */
+        html, body {
+            width: 100%;
+            min-height: 100%;
+            overflow-x: hidden;
+            overflow-y: auto;
+        }
+
+        body {
+            font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            display: flex;
+            justify-content: center;
+            align-items: flex-start;
+            padding: 12px;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        /* ── HEADER ── */
+        .header {
+            background: white;
+            padding: 12px 18px;
+            border-radius: 14px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+
+        .title-section { flex: 1; min-width: 0; }
+
+        .title {
+            font-size: clamp(1.1rem, 1.8vw, 1.65rem);
+            color: #667eea;
+            font-weight: bold;
+            line-height: 1.2;
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+        }
+
+        .subtitle {
+            font-size: clamp(0.75rem, 1vw, 0.92rem);
+            color: #666;
+            margin-top: 2px;
+        }
+
+        .unit-selector {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap;
+        }
+
+        .unit-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: clamp(8px, 1vh, 11px) clamp(14px, 1.5vw, 20px);
+            border-radius: 9px;
+            font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
+            white-space: nowrap;
+        }
+
+        .unit-btn:hover { transform: translateY(-2px); }
+
+        .unit-btn.selected {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            transform: scale(1.05);
+        }
+
+        /* ── MAIN LAYOUT ── */
+        .main-content {
+            display: grid;
+            grid-template-columns: 1fr auto;
+            gap: 12px;
+            align-items: start;
+        }
+
+        /* ── GAME AREA ── */
+        .game-area {
+            background: white;
+            padding: clamp(14px, 2vh, 22px);
+            border-radius: 16px;
+            box-shadow: 0 8px 25px rgba(0,0,0,0.2);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .game-info {
+            display: flex;
+            gap: 15px;
+            margin-bottom: 18px;
+        }
+
+        .info-item {
+            background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
+            padding: 10px 20px;
+            border-radius: 10px;
+            text-align: center;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: clamp(0.78rem, 1vw, 0.92rem);
+            margin-bottom: 2px;
+        }
+
+        .info-value {
+            color: #667eea;
+            font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+            font-weight: bold;
+        }
+
+        /* ── GAME BOARD: auto-fit 卡片自適應 ── */
+        .game-board {
+            display: grid;
+            grid-template-columns: repeat(3, minmax(120px, 160px));
+            grid-auto-rows: minmax(120px, 160px);
+            gap: clamp(8px, 1.2vw, 14px);
+            width: 100%;
+            justify-content: center;
+        }
+
+        /* ── FLIP CARD ── */
+        .flip-card {
+            perspective: 1000px;
+            cursor: pointer;
+            min-height: 120px;
+        }
+
+        .card-inner {
+            position: relative;
+            width: 100%;
+            height: 100%;
+            min-height: 120px;
+            transition: transform 0.6s;
+            transform-style: preserve-3d;
+        }
+
+        .flip-card.flipped .card-inner,
+        .flip-card.matched .card-inner {
+            transform: rotateY(180deg);
+        }
+
+        .card-face {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            backface-visibility: hidden;
+            border-radius: 12px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+            box-shadow: 0 3px 12px rgba(0,0,0,0.2);
+            padding: 8px;
+        }
+
+        .card-front {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+        }
+
+        .card-back {
+            background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
+            color: white;
+            transform: rotateY(180deg);
+        }
+
+        /* emoji 卡自適應 */
+        .card-emoji {
+            font-size: clamp(3rem, 6vw, 5rem);
+            line-height: 1;
+        }
+
+        /* 文字卡：自動換行、字型自適應 */
+        .card-text {
+            font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+            text-align: center;
+            line-height: 1.25;
+            word-break: break-word;
+            hyphens: auto;
+            padding: 4px;
+            width: 100%;
+        }
+
+        .flip-card.matched .card-back {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            animation: matchPulse 0.6s ease;
+        }
+
+        @keyframes matchPulse {
+            0%, 100% { transform: rotateY(180deg) scale(1); }
+            50% { transform: rotateY(180deg) scale(1.05); }
+        }
+
+        .card-back.mine {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            font-size: clamp(3rem, 5vw, 4.5rem);
+        }
+
+        .flip-card.mine-hit .card-inner {
+            animation: mineShake 0.5s ease;
+        }
+
+        @keyframes mineShake {
+            0%, 100% { transform: rotateY(180deg) translateX(0); }
+            25% { transform: rotateY(180deg) translateX(-10px); }
+            75% { transform: rotateY(180deg) translateX(10px); }
+        }
+
+        /* ── CONTROL PANEL ── */
+        .control-panel {
+            width: clamp(150px, 18vw, 200px);
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 12px;
+        }
+
+        .control-btn {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            border: none;
+            padding: clamp(11px, 1.4vh, 16px) 14px;
+            border-radius: 11px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
+            text-align: center;
+            font-family: inherit;
+        }
+
+        .control-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(102, 126, 234, 0.5);
+        }
+
+        .btn-en {
+            font-size: clamp(0.88rem, 1.1vw, 1rem);
+            display: block;
+        }
+
+        .btn-ch {
+            font-size: clamp(0.68rem, 0.85vw, 0.78rem);
+            opacity: 0.85;
+            display: block;
+            margin-top: 2px;
+        }
+
+        .control-btn.start  { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
+        .control-btn.restart{ background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+
+        /* ── OVERLAYS ── */
+        .success-overlay, .freeze-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .success-overlay.show, .freeze-overlay.show { display: flex; }
+
+        .success-message, .freeze-message {
+            background: white;
+            padding: 36px 42px;
+            border-radius: 22px;
+            text-align: center;
+            animation: popIn 0.5s ease;
+            max-width: 90vw;
+        }
+
+        @keyframes popIn {
+            0%   { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1);   opacity: 1; }
+        }
+
+        .success-icon, .freeze-icon { font-size: 4.2rem; margin-bottom: 14px; }
+
+        .success-title {
+            font-size: clamp(1.4rem, 2.2vw, 2rem);
+            color: #11998e;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .success-stats {
+            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+            color: #666;
+            margin-bottom: 22px;
+        }
+
+        .freeze-icon { animation: freezeShake 0.5s infinite; }
+
+        @keyframes freezeShake {
+            0%, 100% { transform: rotate(0deg); }
+            25%       { transform: rotate(-15deg); }
+            75%       { transform: rotate(15deg); }
+        }
+
+        .freeze-title {
+            font-size: clamp(1.4rem, 2.2vw, 2rem);
+            color: #f5576c;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .freeze-countdown {
+            font-size: clamp(2rem, 3vw, 2.8rem);
+            color: #667eea;
+            font-weight: bold;
+        }
+
+        .countdown-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.5);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 999;
+        }
+
+        .countdown-overlay.show { display: flex; }
+
+        .countdown-number {
+            font-size: clamp(6rem, 12vw, 10rem);
+            color: white;
+            font-weight: bold;
+            text-shadow: 0 0 30px rgba(255,255,255,0.8);
+            animation: countdownPulse 1s ease;
+        }
+
+        @keyframes countdownPulse {
+            0%   { transform: scale(0.5); opacity: 0; }
+            50%  { transform: scale(1.2); }
+            100% { transform: scale(1);   opacity: 1; }
+        }
+
+        .waiting-message {
+            text-align: center;
+            color: #999;
+            font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+            padding: 40px 20px;
+            grid-column: 1 / -1;
+        }
+
+        .waiting-icon { font-size: 3rem; margin-bottom: 10px; }
+
+        /* ── RESPONSIVE ── */
+        @media (max-width: 600px) {
+            body { padding: 8px; }
+            .main-content { grid-template-columns: 1fr; }
+            .control-panel {
+                width: 100%;
+                flex-direction: row;
+                flex-wrap: wrap;
+                position: static;
+            }
+            .control-btn { flex: 1; min-width: 100px; }
+            .header { flex-direction: column; align-items: flex-start; }
+            .unit-selector { width: 100%; }
+            .game-board {
+                grid-template-columns: repeat(3, 1fr);
+                grid-auto-rows: clamp(90px, 25vw, 130px);
+            }
+        }
+
+        @media (min-width: 600px) and (max-width: 900px) {
+            .game-board {
+                grid-template-columns: repeat(3, minmax(110px, 145px));
+                grid-auto-rows: minmax(110px, 145px);
+            }
+        }
+
+        @media (min-width: 1024px) {
+            body { padding: 14px; }
+            .game-board {
+                grid-template-columns: repeat(3, minmax(140px, 175px));
+                grid-auto-rows: minmax(140px, 175px);
+            }
+            .card-emoji  { font-size: 4.8rem; }
+            .card-text   { font-size: 1.3rem; }
+        }
+
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <div class="title-section">
+                <div class="title">🎮 Grade 6 Vocabulary Game 六年級單字翻翻樂</div>
+                <div class="subtitle">Match pictures with words! 配對圖片與單字！</div>
+            </div>
+
+            <div class="unit-selector">
+                <button class="unit-btn" onclick="selectUnit('lesson1')">Lesson 1</button>
+                <button class="unit-btn" onclick="selectUnit('lesson2')">Lesson 2</button>
+                <button class="unit-btn" onclick="selectUnit('lesson3')">Lesson 3</button>
+                <button class="unit-btn" onclick="selectUnit('lesson4')">Lesson 4</button>
+            </div>
+        </div>
+
+        <div class="main-content">
+            <div class="game-area">
+                <div class="game-info">
+                    <div class="info-item">
+                        <div class="info-label">Moves 移動</div>
+                        <div class="info-value" id="moves">0</div>
+                    </div>
+                    <div class="info-item">
+                        <div class="info-label">Matched 配對</div>
+                        <div class="info-value"><span id="matches">0</span>/4</div>
+                    </div>
+                </div>
+
+                <div class="game-board" id="gameBoard">
+                    <div class="waiting-message" style="grid-column: 1/-1;">
+                        <div class="waiting-icon">👉</div>
+                        <div>請選擇單元並點擊「Start 開始」</div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="control-panel">
+                <button class="control-btn start" onclick="startGame()">
+                    <span class="btn-en">▶️ Start</span>
+                    <span class="btn-ch">開始</span>
+                </button>
+                <button class="control-btn restart" onclick="restartRound()">
+                    <span class="btn-en">🔄 Restart</span>
+                    <span class="btn-ch">重新開始</span>
+                </button>
+                <button class="control-btn" onclick="newRound()">
+                    <span class="btn-en">🎲 New Round</span>
+                    <span class="btn-ch">新題目</span>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <div class="countdown-overlay" id="countdownOverlay">
+        <div class="countdown-number" id="countdownNumber">3</div>
+    </div>
+
+    <div class="freeze-overlay" id="freezeOverlay">
+        <div class="freeze-message">
+            <div class="freeze-icon">💣</div>
+            <div class="freeze-title">BOOM! Hit a Mine! 踩到地雷！</div>
+            <div class="freeze-countdown" id="freezeCountdown">3</div>
+        </div>
+    </div>
+
+    <div class="success-overlay" id="successOverlay">
+        <div class="success-message">
+            <div class="success-icon">🎉</div>
+            <div class="success-title">Congratulations! 恭喜過關！</div>
+            <div class="success-stats" id="successStats"></div>
+            <button class="control-btn" onclick="closeSuccess()">Continue 繼續</button>
+        </div>
+    </div>
+
+    <script>
+        let currentUnit = null;
+        let currentCards = [];
+        let flippedCards = [];
+        let matchedPairs = 0;
+        let moves = 0;
+        let minePosition = -1;
+        let gameStarted = false;
+        let canFlip = true;
+
+        const vocabularyData = {
+            lesson1: [
+                { emoji: '📅', text: 'last Sunday' },
+                { emoji: '📆', text: 'yesterday' },
+                { emoji: '☀️', text: 'this morning' },
+                { emoji: '⏰', text: 'an hour ago' },
+                { emoji: '⏱️', text: 'ten minutes ago' }
+            ],
+            lesson2: [
+                { emoji: '🏠', text: 'at home' },
+                { emoji: '🏫', text: 'at school' },
+                { emoji: '🏛️', text: 'at museum' },
+                { emoji: '🍽️', text: 'at restaurant' },
+                { emoji: '🎢', text: 'at amusement park' },
+                { emoji: '🏬', text: 'at department store' }
+            ],
+            lesson3: [
+                { emoji: '🚒', text: 'firefighter' },
+                { emoji: '👮', text: 'police officer' },
+                { emoji: '⚾', text: 'baseball player' },
+                { emoji: '📰', text: 'reporter' },
+                { emoji: '🎤', text: 'singer' },
+                { emoji: '📹', text: 'YouTuber' },
+                { emoji: '⚙️', text: 'engineer' },
+                { emoji: '🔬', text: 'scientist' }
+            ],
+            lesson4: [
+                { emoji: '📱', text: 'phone' },
+                { emoji: '🧥', text: 'jacket' },
+                { emoji: '🎒', text: 'lunch bag' },
+                { emoji: '☂️', text: 'umbrella' },
+                { emoji: '⌚', text: 'watch' },
+                { emoji: '🔑', text: 'key' },
+                { emoji: '👓', text: 'glasses' },
+                { emoji: '👟', text: 'shoes' }
+            ]
+        };
+
+        function selectUnit(unit) {
+            currentUnit = unit;
+            document.querySelectorAll('.unit-btn').forEach(btn => {
+                btn.classList.remove('selected');
+            });
+            event.target.classList.add('selected');
+            gameStarted = false;
+        }
+
+        function getRandomCards() {
+            if (!currentUnit) return [];
+            
+            const vocab = vocabularyData[currentUnit];
+            const shuffled = [...vocab].sort(() => Math.random() - 0.5);
+            return shuffled.slice(0, 4);
+        }
+
+        function generateGameBoard() {
+            const selectedVocab = getRandomCards();
+            currentCards = [];
+            
+            selectedVocab.forEach((item, index) => {
+                currentCards.push({
+                    id: index,
+                    type: 'emoji',
+                    content: item.emoji,
+                    pairId: index
+                });
+                currentCards.push({
+                    id: index + 100,
+                    type: 'text',
+                    content: item.text,
+                    pairId: index
+                });
+            });
+
+            currentCards = shuffle(currentCards);
+            
+            minePosition = Math.floor(Math.random() * 9);
+        }
+
+        function shuffle(array) {
+            const arr = [...array];
+            for (let i = arr.length - 1; i > 0; i--) {
+                const j = Math.floor(Math.random() * (i + 1));
+                [arr[i], arr[j]] = [arr[j], arr[i]];
+            }
+            return arr;
+        }
+
+        function displayBoard() {
+            const board = document.getElementById('gameBoard');
+            board.innerHTML = '';
+
+            for (let i = 0; i < 9; i++) {
+                const card = document.createElement('div');
+                card.className = 'flip-card';
+                card.dataset.index = i;
+
+                if (i === minePosition) {
+                    card.innerHTML = `
+                        <div class="card-inner">
+                            <div class="card-face card-front">?</div>
+                            <div class="card-face card-back mine">💣</div>
+                        </div>
+                    `;
+                } else {
+                    const cardData = currentCards.shift();
+                    if (cardData) {
+                        card.dataset.pairId = cardData.pairId;
+                        const isEmoji = cardData.type === 'emoji';
+                        const displayContent = isEmoji 
+                            ? `<div class="card-emoji">${cardData.content}</div>`
+                            : `<div class="card-text">${cardData.content}</div>`;
+                        
+                        card.innerHTML = `
+                            <div class="card-inner">
+                                <div class="card-face card-front">?</div>
+                                <div class="card-face card-back">${displayContent}</div>
+                            </div>
+                        `;
+                    }
+                }
+
+                card.onclick = () => flipCard(card, i);
+                board.appendChild(card);
+            }
+        }
+
+        async function startGame() {
+            if (!currentUnit) {
+                alert('Please select a lesson first! 請先選擇單元！');
+                return;
+            }
+
+            moves = 0;
+            matchedPairs = 0;
+            flippedCards = [];
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('matches').textContent = '0';
+
+            generateGameBoard();
+            displayBoard();
+
+            await showCountdown();
+            await peekCards();
+            
+            gameStarted = true;
+        }
+
+        async function showCountdown() {
+            const overlay = document.getElementById('countdownOverlay');
+            const number = document.getElementById('countdownNumber');
+            
+            for (let i = 3; i > 0; i--) {
+                number.textContent = i;
+                overlay.classList.add('show');
+                await sleep(1000);
+                overlay.classList.remove('show');
+                await sleep(100);
+            }
+        }
+
+        async function peekCards() {
+            const cards = document.querySelectorAll('.flip-card');
+            cards.forEach(card => card.classList.add('flipped'));
+            await sleep(3000);
+            cards.forEach(card => card.classList.remove('flipped'));
+        }
+
+        function flipCard(card, index) {
+            if (!gameStarted || !canFlip) return;
+            if (card.classList.contains('flipped') || card.classList.contains('matched')) return;
+            if (flippedCards.length >= 2) return;
+
+            if (index === minePosition) {
+                card.classList.add('flipped');
+                card.classList.add('mine-hit');
+                hitMine();
+                return;
+            }
+
+            card.classList.add('flipped');
+            flippedCards.push(card);
+
+            if (flippedCards.length === 2) {
+                moves++;
+                document.getElementById('moves').textContent = moves;
+                setTimeout(checkMatch, 800);
+            }
+        }
+
+        function checkMatch() {
+            const [card1, card2] = flippedCards;
+            const pair1 = card1.dataset.pairId;
+            const pair2 = card2.dataset.pairId;
+
+            if (pair1 === pair2) {
+                card1.classList.add('matched');
+                card2.classList.add('matched');
+                matchedPairs++;
+                document.getElementById('matches').textContent = matchedPairs;
+
+                if (matchedPairs === 4) {
+                    setTimeout(showSuccess, 500);
+                }
+            } else {
+                setTimeout(() => {
+                    card1.classList.remove('flipped');
+                    card2.classList.remove('flipped');
+                }, 1000);
+            }
+
+            flippedCards = [];
+        }
+
+        async function hitMine() {
+            canFlip = false;
+            const overlay = document.getElementById('freezeOverlay');
+            const countdown = document.getElementById('freezeCountdown');
+            
+            overlay.classList.add('show');
+
+            if (navigator.vibrate) {
+                navigator.vibrate([200, 100, 200]);
+            }
+
+            for (let i = 3; i > 0; i--) {
+                countdown.textContent = i;
+                await sleep(1000);
+            }
+
+            overlay.classList.remove('show');
+            
+            const cards = document.querySelectorAll('.flip-card');
+            cards[minePosition].classList.remove('flipped');
+            cards[minePosition].classList.remove('mine-hit');
+            
+            canFlip = true;
+        }
+
+        function showSuccess() {
+            const stats = `Moves: ${moves} | 移動次數: ${moves}`;
+            document.getElementById('successStats').textContent = stats;
+            document.getElementById('successOverlay').classList.add('show');
+        }
+
+        function closeSuccess() {
+            document.getElementById('successOverlay').classList.remove('show');
+        }
+
+        function restartRound() {
+            if (!gameStarted) return;
+            
+            moves = 0;
+            matchedPairs = 0;
+            flippedCards = [];
+            document.getElementById('moves').textContent = '0';
+            document.getElementById('matches').textContent = '0';
+
+            const cards = document.querySelectorAll('.flip-card');
+            cards.forEach(card => {
+                card.classList.remove('flipped', 'matched', 'mine-hit');
+            });
+
+            peekCards();
+        }
+
+        function newRound() {
+            if (!currentUnit) {
+                alert('Please select a lesson first! 請先選擇單元！');
+                return;
+            }
+            startGame();
+        }
+
+        function sleep(ms) {
+            return new Promise(resolve => setTimeout(resolve, ms));
+        }
+    </script>
+</body>
+</html>

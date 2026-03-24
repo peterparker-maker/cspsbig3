@@ -1,0 +1,277 @@
+<!DOCTYPE html>
+<html lang="zh-TW">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>長興國小英文互動學習中心</title>
+<link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
+<style>
+*{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
+html,body{width:100%;height:100%;overflow:hidden;}
+body{
+  font-family:'Nunito','Microsoft JhengHei',sans-serif;
+  background:linear-gradient(145deg,#1a1a2e 0%,#16213e 40%,#0f3460 100%);
+  min-height:100vh;
+  display:flex;flex-direction:column;
+  align-items:center;justify-content:center;
+  position:relative;
+}
+
+/* stars */
+.stars{position:fixed;inset:0;pointer-events:none;z-index:0;}
+.star-dot{position:absolute;background:#fff;border-radius:50%;animation:twinkle var(--d,3s) ease-in-out infinite var(--delay,0s);}
+@keyframes twinkle{0%,100%{opacity:.15}50%{opacity:.9}}
+
+/* hub */
+.hub{
+  position:relative;z-index:10;
+  width:96vw;max-width:1200px;
+  display:flex;flex-direction:column;
+  align-items:center;gap:clamp(8px,1.4vh,18px);
+  padding:clamp(8px,1.2vh,16px) clamp(8px,1.5vw,16px);
+  height:100vh;
+  overflow-y:auto;
+  justify-content:center;
+}
+.hub::-webkit-scrollbar{display:none;}
+
+/* title */
+.title-block{text-align:center;}
+.school-name{font-size:clamp(.75rem,1.1vw,1.05rem);font-weight:700;color:#90CAF9;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
+.main-title{font-size:clamp(1.6rem,3.2vw,2.6rem);font-weight:900;color:#fff;line-height:1.15;text-shadow:0 0 30px rgba(144,202,249,.5);}
+.main-title span{color:#FFD54F;}
+.tagline{font-size:clamp(.78rem,1vw,1rem);color:#78909C;margin-top:3px;font-weight:600;}
+
+/* grade sections */
+.grades-row{display:flex;gap:clamp(10px,1.5vw,20px);width:100%;align-items:flex-start;}
+.grade-col{flex:1;display:flex;flex-direction:column;gap:clamp(7px,1vh,12px);}
+
+.grade-label{
+  display:flex;align-items:center;gap:10px;
+  padding:clamp(8px,1.1vh,14px) clamp(12px,1.5vw,22px);
+  border-radius:14px;font-weight:900;
+  font-size:clamp(.9rem,1.25vw,1.25rem);
+}
+.g5-label{background:linear-gradient(135deg,#1B5E20,#43A047);color:#fff;box-shadow:0 4px 14px rgba(67,160,71,.4);}
+.g6-label{background:linear-gradient(135deg,#0D47A1,#1976D2);color:#fff;box-shadow:0 4px 14px rgba(25,118,210,.4);}
+.grade-icon{font-size:clamp(1.3rem,1.8vw,1.9rem);}
+.grade-text{font-size:clamp(.9rem,1.25vw,1.25rem);}
+
+/* cards */
+.cards-row{display:flex;flex-direction:column;gap:clamp(7px,1vh,13px);}
+.card{
+  border-radius:18px;
+  padding:clamp(13px,1.7vh,22px) clamp(14px,1.6vw,22px);
+  display:flex;align-items:center;gap:clamp(12px,1.4vw,20px);
+  cursor:pointer;transition:all .22s;
+  border:2px solid transparent;
+  position:relative;overflow:hidden;
+}
+.card::before{content:'';position:absolute;inset:0;background:rgba(255,255,255,.05);opacity:0;transition:opacity .2s;}
+.card:hover::before{opacity:1;}
+.card:hover{transform:translateY(-3px) scale(1.01);box-shadow:0 10px 28px rgba(0,0,0,.35);}
+.card:active{transform:scale(.98);}
+
+.c5-vocab  {background:linear-gradient(135deg,#1B5E20,#2E7D32);border-color:#43A047;box-shadow:0 4px 14px rgba(27,94,32,.5);}
+.c5-phonics{background:linear-gradient(135deg,#004D40,#00695C);border-color:#00897B;box-shadow:0 4px 14px rgba(0,77,64,.5);}
+.c5-sentence{background:linear-gradient(135deg,#1A237E,#283593);border-color:#3949AB;box-shadow:0 4px 14px rgba(26,35,126,.5);}
+.c6-vocab  {background:linear-gradient(135deg,#0D47A1,#1565C0);border-color:#1976D2;box-shadow:0 4px 14px rgba(13,71,161,.5);}
+.c6-phonics{background:linear-gradient(135deg,#01579B,#0277BD);border-color:#0288D1;box-shadow:0 4px 14px rgba(1,87,155,.5);}
+.c6-sentence{background:linear-gradient(135deg,#4A148C,#6A1B9A);border-color:#7B1FA2;box-shadow:0 4px 14px rgba(74,20,140,.5);}
+
+.card-icon{font-size:clamp(1.9rem,2.8vw,3rem);flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));}
+.card-info{flex:1;min-width:0;}
+.card-title{font-size:clamp(1rem,1.35vw,1.35rem);font-weight:900;color:#fff;line-height:1.2;}
+.card-sub{font-size:clamp(.72rem,.92vw,.95rem);color:rgba(255,255,255,.65);margin-top:3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-badge{padding:4px 12px;border-radius:9px;font-size:clamp(.68rem,.88vw,.88rem);font-weight:800;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);flex-shrink:0;}
+.card-badge.new{background:rgba(255,213,79,.25);color:#FFD54F;}
+.card-arrow{font-size:clamp(1.2rem,1.5vw,1.6rem);color:rgba(255,255,255,.5);flex-shrink:0;transition:transform .2s;}
+.card:hover .card-arrow{transform:translateX(4px);}
+
+/* divider */
+.vdivider{width:2px;background:rgba(255,255,255,.07);border-radius:2px;align-self:stretch;}
+
+/* footer */
+.footer{font-size:clamp(.68rem,.85vw,.88rem);color:#37474F;font-weight:600;text-align:center;}
+
+/* GAME FRAME */
+.game-frame{position:fixed;inset:0;z-index:100;background:#000;display:none;flex-direction:column;}
+.game-frame.open{display:flex;}
+.frame-bar{display:flex;align-items:center;gap:12px;padding:clamp(6px,.8vh,10px) clamp(10px,1.5vw,18px);background:#111;flex-shrink:0;}
+.frame-title{flex:1;font-size:clamp(.78rem,1vw,.95rem);font-weight:800;color:#fff;}
+.back-btn{
+  padding:clamp(6px,.8vh,9px) clamp(12px,1.5vw,20px);
+  border-radius:10px;border:none;
+  background:linear-gradient(135deg,#EF9A9A,#E53935);
+  color:#fff;font-family:'Nunito',sans-serif;
+  font-size:clamp(.72rem,.9vw,.88rem);font-weight:800;
+  cursor:pointer;transition:all .2s;display:flex;align-items:center;gap:5px;
+}
+.back-btn:hover{transform:scale(1.04);}
+iframe{flex:1;border:none;width:100%;background:#fff;}
+
+/* ── RESPONSIVE BREAKPOINTS ── */
+
+/* 手機直式 < 600px */
+@media(max-width:600px){
+  .grades-row{flex-direction:column;}
+  .vdivider{width:100%;height:2px;align-self:auto;}
+  .hub{justify-content:flex-start;padding-top:16px;}
+  .card-sub{white-space:normal;}
+}
+
+/* 手機橫式 / 小平板 600–900px */
+@media(min-width:600px) and (max-width:900px){
+  .card-icon{font-size:1.6rem;}
+  .card-title{font-size:.88rem;}
+}
+
+/* 11吋平板橫式 主要目標 1024–1200px */
+@media(min-width:1024px){
+  .hub{gap:16px;}
+  .card{padding:16px 22px;}
+  .card-icon{font-size:2.8rem;}
+  .card-title{font-size:1.3rem;}
+  .card-sub{font-size:.92rem;}
+  .card-badge{font-size:.86rem;padding:5px 14px;}
+  .card-arrow{font-size:1.55rem;}
+  .main-title{font-size:2.5rem;}
+  .school-name{font-size:1rem;}
+  .tagline{font-size:.98rem;}
+  .grade-text{font-size:1.2rem;}
+  .grade-icon{font-size:1.8rem;}
+  .grade-label{padding:10px 20px;}
+}
+</style>
+</head>
+<body>
+
+<!-- Star background -->
+<div class="stars" id="stars"></div>
+
+<div class="hub">
+  <!-- Title -->
+  <div class="title-block">
+    <div class="school-name">長興國小・English Learning Center</div>
+    <div class="main-title">英文互動<span>學習中心</span></div>
+    <div class="tagline">選擇年級與活動，開始練習！</div>
+  </div>
+
+  <!-- Grade columns -->
+  <div class="grades-row">
+
+    <!-- Grade 5 -->
+    <div class="grade-col">
+      <div class="grade-label g5-label">
+        <span class="grade-icon">🌱</span>
+        <span class="grade-text">五年級 Grade 5</span>
+      </div>
+      <div class="cards-row">
+        <div class="card c5-vocab" onclick="openGame('grade5-vocab.html','🃏 五年級・單字翻翻樂')">
+          <div class="card-icon">🃏</div>
+          <div class="card-info">
+            <div class="card-title">單字翻翻樂</div>
+            <div class="card-sub">Vocabulary Matching・配對記憶遊戲</div>
+          </div>
+          <div class="card-badge">L1–L4</div>
+          <div class="card-arrow">›</div>
+        </div>
+        <div class="card c5-phonics" onclick="openGame('grade5-phonics.html','🎧 五年級・Phonics 發音聽力')">
+          <div class="card-icon">🎧</div>
+          <div class="card-info">
+            <div class="card-title">Phonics 發音聽力</div>
+            <div class="card-sub">Listening Practice・聽音辨字練習</div>
+          </div>
+          <div class="card-badge">Phonics</div>
+          <div class="card-arrow">›</div>
+        </div>
+        <div class="card c5-sentence" onclick="openGame('sentence_game_v3.html','📝 五年級・句型重組練習')">
+          <div class="card-icon">📝</div>
+          <div class="card-info">
+            <div class="card-title">句型重組練習</div>
+            <div class="card-sub">Sentence Unscramble・拖曳排列句子</div>
+          </div>
+          <div class="card-badge new">L1 · L2 · Mix</div>
+          <div class="card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Vertical divider -->
+    <div class="vdivider"></div>
+
+    <!-- Grade 6 -->
+    <div class="grade-col">
+      <div class="grade-label g6-label">
+        <span class="grade-icon">🌟</span>
+        <span class="grade-text">六年級 Grade 6</span>
+      </div>
+      <div class="cards-row">
+        <div class="card c6-vocab" onclick="openGame('grade6-vocab.html','🃏 六年級・單字翻翻樂')">
+          <div class="card-icon">🃏</div>
+          <div class="card-info">
+            <div class="card-title">單字翻翻樂</div>
+            <div class="card-sub">Vocabulary Matching・配對記憶遊戲</div>
+          </div>
+          <div class="card-badge">L1–L4</div>
+          <div class="card-arrow">›</div>
+        </div>
+        <div class="card c6-phonics" onclick="openGame('grade6-phonics.html','🎧 六年級・Phonics 發音聽力')">
+          <div class="card-icon">🎧</div>
+          <div class="card-info">
+            <div class="card-title">Phonics 發音聽力</div>
+            <div class="card-sub">Listening Practice・聽音辨字練習</div>
+          </div>
+          <div class="card-badge">Phonics</div>
+          <div class="card-arrow">›</div>
+        </div>
+        <div class="card c6-sentence" onclick="openGame('grade6_sentence_game.html','📝 六年級・句型重組練習')">
+          <div class="card-icon">📝</div>
+          <div class="card-info">
+            <div class="card-title">句型重組練習</div>
+            <div class="card-sub">Sentence Unscramble・Was / Were 過去式</div>
+          </div>
+          <div class="card-badge new">L1 · L2 · Mix</div>
+          <div class="card-arrow">›</div>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="footer">長興國小英語科・互動教學工具 ✦ 所有檔案請放同一資料夾</div>
+</div>
+
+<!-- Game iframe overlay -->
+<div class="game-frame" id="gameFrame">
+  <div class="frame-bar">
+    <div class="frame-title" id="frameTitle">—</div>
+    <button class="back-btn" onclick="closeGame()">← 返回首頁 Home</button>
+  </div>
+  <iframe id="gameIframe" src="" allowfullscreen></iframe>
+</div>
+
+<script>
+// Generate starfield
+const starsEl=document.getElementById('stars');
+for(let i=0;i<80;i++){
+  const s=document.createElement('div');
+  s.className='star-dot';
+  const size=Math.random()*2.5+0.5;
+  s.style.cssText=`width:${size}px;height:${size}px;top:${Math.random()*100}%;left:${Math.random()*100}%;--d:${2+Math.random()*4}s;--delay:-${Math.random()*5}s;`;
+  starsEl.appendChild(s);
+}
+
+function openGame(src, title){
+  document.getElementById('frameTitle').textContent=title;
+  document.getElementById('gameIframe').src=src;
+  document.getElementById('gameFrame').classList.add('open');
+}
+function closeGame(){
+  document.getElementById('gameFrame').classList.remove('open');
+  document.getElementById('gameIframe').src='';
+}
+document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeGame(); });
+</script>
+</body>
+</html>
