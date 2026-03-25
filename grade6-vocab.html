@@ -136,9 +136,9 @@
 
         .game-board {
             display: grid;
-            grid-template-columns: repeat(3, clamp(110px, 17vmin, 180px));
-            grid-template-rows: repeat(3, clamp(110px, 17vmin, 180px));
-            gap: clamp(8px, 1.2vmin, 14px);
+            grid-template-columns: repeat(3, clamp(130px, 19vmin, 210px));
+            grid-template-rows: repeat(3, clamp(130px, 19vmin, 210px));
+            gap: clamp(10px, 1.4vmin, 16px);
         }
 
         .flip-card {
@@ -177,7 +177,7 @@
         .card-front {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: clamp(1.8rem, 4vmin, 3.5rem);
+            font-size: clamp(2.2rem, 5vmin, 4.2rem);
         }
 
         .card-back {
@@ -187,12 +187,12 @@
         }
 
         .card-emoji {
-            font-size: clamp(2.8rem, 6vmin, 5.5rem);
+            font-size: clamp(3.5rem, 7.5vmin, 6.5rem);
             line-height: 1;
         }
 
         .card-text {
-            font-size: clamp(0.85rem, 1.8vmin, 1.35rem);
+            font-size: clamp(1rem, 2.2vmin, 1.6rem);
             text-align: center;
             line-height: 1.2;
             font-weight: 800;
@@ -210,7 +210,7 @@
 
         .card-back.mine {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-            font-size: clamp(3rem, 6vmin, 5.5rem);
+            font-size: clamp(3.5rem, 7.5vmin, 6.5rem);
         }
 
         .flip-card.mine-hit .card-inner {
@@ -394,17 +394,23 @@
             .title { font-size: 1.1rem; }
             .subtitle { font-size: 0.68rem; }
             .unit-btn { padding: 6px 10px; font-size: 0.75rem; }
-            .game-board { grid-template-columns: repeat(3, clamp(90px, 26vw, 130px)); grid-template-rows: repeat(3, clamp(90px, 26vw, 130px)); }
+            .game-board { grid-template-columns: repeat(3, clamp(95px, 28vw, 140px)); grid-template-rows: repeat(3, clamp(95px, 28vw, 140px)); }
+            .card-emoji { font-size: clamp(2.5rem, 6vw, 4rem); }
+            .card-text { font-size: clamp(0.8rem, 2vw, 1.1rem); }
         }
 
         @media (min-width: 600px) and (max-width: 900px) {
             .title { font-size: 1.15rem; }
             .unit-btn { padding: 7px 12px; font-size: 0.78rem; }
+            .game-board { grid-template-columns: repeat(3, clamp(120px, 18vmin, 170px)); grid-template-rows: repeat(3, clamp(120px, 18vmin, 170px)); }
         }
 
         @media (min-width: 1024px) {
             .container { padding: 12px; }
             .title { font-size: 1.3rem; }
+            .game-board { grid-template-columns: repeat(3, clamp(150px, 20vmin, 210px)); grid-template-rows: repeat(3, clamp(150px, 20vmin, 210px)); }
+            .card-emoji { font-size: clamp(4rem, 8vmin, 7rem); }
+            .card-text { font-size: clamp(1.1rem, 2.4vmin, 1.7rem); }
         }
 
         </style>
