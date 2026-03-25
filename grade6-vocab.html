@@ -12,160 +12,144 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html {
-            font-size: clamp(14px, 1.5vw, 17px);
-        }
-
-        /* 允許整頁滾動 */
         html, body {
             width: 100%;
-            min-height: 100%;
-            overflow-x: hidden;
-            overflow-y: auto;
+            height: 100%;
+            overflow: hidden;
         }
 
         body {
             font-family: 'Microsoft JhengHei', 'PingFang TC', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            background-attachment: fixed;
             display: flex;
             justify-content: center;
-            align-items: flex-start;
-            padding: 12px;
+            align-items: center;
         }
 
         .container {
-            width: 100%;
-            max-width: 1200px;
+            width: 100vw;
+            height: 100vh;
             display: flex;
             flex-direction: column;
-            gap: 12px;
+            padding: 10px;
         }
 
-        /* ── HEADER ── */
         .header {
             background: white;
-            padding: 12px 18px;
-            border-radius: 14px;
+            padding: 10px 15px;
+            border-radius: 12px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.2);
+            margin-bottom: 10px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            flex-wrap: wrap;
-            gap: 10px;
+            flex-shrink: 0;
         }
 
-        .title-section { flex: 1; min-width: 0; }
+        .title-section {
+            flex: 1;
+        }
 
         .title {
-            font-size: clamp(1.1rem, 1.8vw, 1.65rem);
+            font-size: 1.3rem;
             color: #667eea;
             font-weight: bold;
             line-height: 1.2;
-            white-space: nowrap;
-            overflow: hidden;
-            text-overflow: ellipsis;
         }
 
         .subtitle {
-            font-size: clamp(0.75rem, 1vw, 0.92rem);
+            font-size: 0.75rem;
             color: #666;
             margin-top: 2px;
         }
 
         .unit-selector {
             display: flex;
-            gap: 7px;
-            flex-wrap: wrap;
+            gap: 6px;
         }
 
         .unit-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: clamp(8px, 1vh, 11px) clamp(14px, 1.5vw, 20px);
-            border-radius: 9px;
-            font-size: clamp(0.88rem, 1.1vw, 1.05rem);
+            padding: 8px 15px;
+            border-radius: 8px;
+            font-size: 0.85rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 2px 8px rgba(102, 126, 234, 0.3);
-            white-space: nowrap;
         }
 
-        .unit-btn:hover { transform: translateY(-2px); }
+        .unit-btn:hover {
+            transform: translateY(-2px);
+        }
 
         .unit-btn.selected {
             background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
             transform: scale(1.05);
         }
 
-        /* ── MAIN LAYOUT ── */
         .main-content {
+            flex: 1;
             display: grid;
             grid-template-columns: 1fr auto;
-            gap: 12px;
-            align-items: start;
+            gap: 10px;
+            min-height: 0;
         }
 
-        /* ── GAME AREA ── */
         .game-area {
             background: white;
-            padding: clamp(14px, 2vh, 22px);
-            border-radius: 16px;
+            padding: 15px;
+            border-radius: 15px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
+            justify-content: center;
         }
 
         .game-info {
             display: flex;
             gap: 15px;
-            margin-bottom: 18px;
+            margin-bottom: 15px;
         }
 
         .info-item {
             background: linear-gradient(135deg, #667eea15 0%, #764ba215 100%);
-            padding: 10px 20px;
-            border-radius: 10px;
+            padding: 8px 15px;
+            border-radius: 8px;
             text-align: center;
         }
 
         .info-label {
             color: #666;
-            font-size: clamp(0.78rem, 1vw, 0.92rem);
+            font-size: 0.75rem;
             margin-bottom: 2px;
         }
 
         .info-value {
             color: #667eea;
-            font-size: clamp(1.3rem, 1.8vw, 1.6rem);
+            font-size: 1.3rem;
             font-weight: bold;
         }
 
-        /* ── GAME BOARD: auto-fit 卡片自適應 ── */
         .game-board {
             display: grid;
-            grid-template-columns: repeat(3, minmax(120px, 160px));
-            grid-auto-rows: minmax(120px, 160px);
-            gap: clamp(8px, 1.2vw, 14px);
-            width: 100%;
-            justify-content: center;
+            grid-template-columns: repeat(3, 110px);
+            grid-template-rows: repeat(3, 110px);
+            gap: 10px;
         }
 
-        /* ── FLIP CARD ── */
         .flip-card {
             perspective: 1000px;
             cursor: pointer;
-            min-height: 120px;
         }
 
         .card-inner {
             position: relative;
             width: 100%;
             height: 100%;
-            min-height: 120px;
             transition: transform 0.6s;
             transform-style: preserve-3d;
         }
@@ -180,20 +164,20 @@
             width: 100%;
             height: 100%;
             backface-visibility: hidden;
-            border-radius: 12px;
+            border-radius: 10px;
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
             font-weight: bold;
             box-shadow: 0 3px 12px rgba(0,0,0,0.2);
-            padding: 8px;
+            padding: 5px;
         }
 
         .card-front {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+            font-size: 2rem;
         }
 
         .card-back {
@@ -202,21 +186,15 @@
             transform: rotateY(180deg);
         }
 
-        /* emoji 卡自適應 */
         .card-emoji {
-            font-size: clamp(3rem, 6vw, 5rem);
+            font-size: 4.5rem;
             line-height: 1;
         }
 
-        /* 文字卡：自動換行、字型自適應 */
         .card-text {
-            font-size: clamp(0.95rem, 1.5vw, 1.35rem);
+            font-size: 1.2rem;
             text-align: center;
-            line-height: 1.25;
-            word-break: break-word;
-            hyphens: auto;
-            padding: 4px;
-            width: 100%;
+            line-height: 1.1;
         }
 
         .flip-card.matched .card-back {
@@ -231,7 +209,7 @@
 
         .card-back.mine {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-            font-size: clamp(3rem, 5vw, 4.5rem);
+            font-size: 5rem;
         }
 
         .flip-card.mine-hit .card-inner {
@@ -244,29 +222,25 @@
             75% { transform: rotateY(180deg) translateX(10px); }
         }
 
-        /* ── CONTROL PANEL ── */
         .control-panel {
-            width: clamp(150px, 18vw, 200px);
+            width: 160px;
             display: flex;
             flex-direction: column;
             gap: 10px;
             flex-shrink: 0;
-            position: sticky;
-            top: 12px;
         }
 
         .control-btn {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: clamp(11px, 1.4vh, 16px) 14px;
-            border-radius: 11px;
+            padding: 12px 15px;
+            border-radius: 10px;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             box-shadow: 0 3px 12px rgba(102, 126, 234, 0.3);
             text-align: center;
-            font-family: inherit;
         }
 
         .control-btn:hover {
@@ -275,24 +249,31 @@
         }
 
         .btn-en {
-            font-size: clamp(0.88rem, 1.1vw, 1rem);
+            font-size: 0.95rem;
             display: block;
         }
 
         .btn-ch {
-            font-size: clamp(0.68rem, 0.85vw, 0.78rem);
+            font-size: 0.7rem;
             opacity: 0.85;
             display: block;
             margin-top: 2px;
         }
 
-        .control-btn.start  { background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%); }
-        .control-btn.restart{ background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%); }
+        .control-btn.start {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+        }
 
-        /* ── OVERLAYS ── */
+        .control-btn.restart {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+        }
+
         .success-overlay, .freeze-overlay {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0,0,0,0.85);
             display: none;
             justify-content: center;
@@ -300,61 +281,70 @@
             z-index: 1000;
         }
 
-        .success-overlay.show, .freeze-overlay.show { display: flex; }
+        .success-overlay.show, .freeze-overlay.show {
+            display: flex;
+        }
 
         .success-message, .freeze-message {
             background: white;
-            padding: 36px 42px;
-            border-radius: 22px;
+            padding: 35px;
+            border-radius: 20px;
             text-align: center;
             animation: popIn 0.5s ease;
-            max-width: 90vw;
         }
 
         @keyframes popIn {
-            0%   { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1);   opacity: 1; }
+            0% { transform: scale(0.5); opacity: 0; }
+            100% { transform: scale(1); opacity: 1; }
         }
 
-        .success-icon, .freeze-icon { font-size: 4.2rem; margin-bottom: 14px; }
+        .success-icon, .freeze-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
 
         .success-title {
-            font-size: clamp(1.4rem, 2.2vw, 2rem);
+            font-size: 1.8rem;
             color: #11998e;
             margin-bottom: 12px;
             font-weight: bold;
         }
 
         .success-stats {
-            font-size: clamp(0.9rem, 1.2vw, 1.1rem);
+            font-size: 1rem;
             color: #666;
-            margin-bottom: 22px;
+            margin-bottom: 20px;
         }
 
-        .freeze-icon { animation: freezeShake 0.5s infinite; }
+        .freeze-icon {
+            animation: freezeShake 0.5s infinite;
+        }
 
         @keyframes freezeShake {
             0%, 100% { transform: rotate(0deg); }
-            25%       { transform: rotate(-15deg); }
-            75%       { transform: rotate(15deg); }
+            25% { transform: rotate(-15deg); }
+            75% { transform: rotate(15deg); }
         }
 
         .freeze-title {
-            font-size: clamp(1.4rem, 2.2vw, 2rem);
+            font-size: 1.8rem;
             color: #f5576c;
             margin-bottom: 10px;
             font-weight: bold;
         }
 
         .freeze-countdown {
-            font-size: clamp(2rem, 3vw, 2.8rem);
+            font-size: 2.5rem;
             color: #667eea;
             font-weight: bold;
         }
 
         .countdown-overlay {
             position: fixed;
-            inset: 0;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
             background: rgba(0,0,0,0.5);
             display: none;
             justify-content: center;
@@ -362,10 +352,12 @@
             z-index: 999;
         }
 
-        .countdown-overlay.show { display: flex; }
+        .countdown-overlay.show {
+            display: flex;
+        }
 
         .countdown-number {
-            font-size: clamp(6rem, 12vw, 10rem);
+            font-size: 8rem;
             color: white;
             font-weight: bold;
             text-shadow: 0 0 30px rgba(255,255,255,0.8);
@@ -373,58 +365,63 @@
         }
 
         @keyframes countdownPulse {
-            0%   { transform: scale(0.5); opacity: 0; }
-            50%  { transform: scale(1.2); }
-            100% { transform: scale(1);   opacity: 1; }
+            0% { transform: scale(0.5); opacity: 0; }
+            50% { transform: scale(1.2); }
+            100% { transform: scale(1); opacity: 1; }
         }
 
         .waiting-message {
             text-align: center;
             color: #999;
-            font-size: clamp(0.95rem, 1.3vw, 1.15rem);
+            font-size: 1.1rem;
             padding: 40px 20px;
-            grid-column: 1 / -1;
         }
 
-        .waiting-icon { font-size: 3rem; margin-bottom: 10px; }
-
+        .waiting-icon {
+            font-size: 3rem;
+            margin-bottom: 10px;
+        }
+    
         /* ── RESPONSIVE ── */
+        html { font-size: clamp(13px, 1.4vw, 16px); }
+
         @media (max-width: 600px) {
-            body { padding: 8px; }
-            .main-content { grid-template-columns: 1fr; }
-            .control-panel {
-                width: 100%;
-                flex-direction: row;
-                flex-wrap: wrap;
-                position: static;
-            }
-            .control-btn { flex: 1; min-width: 100px; }
-            .header { flex-direction: column; align-items: flex-start; }
-            .unit-selector { width: 100%; }
-            .game-board {
-                grid-template-columns: repeat(3, 1fr);
-                grid-auto-rows: clamp(90px, 25vw, 130px);
-            }
+            body { padding: 6px; }
+            .container { padding: 6px; }
+            .header { flex-direction: column; align-items: flex-start; gap: 8px; padding: 8px 10px; }
+            .unit-selector { flex-wrap: wrap; }
+            .title { font-size: 1.1rem; }
+            .subtitle { font-size: 0.68rem; }
+            .unit-btn { padding: 6px 10px; font-size: 0.75rem; }
         }
 
         @media (min-width: 600px) and (max-width: 900px) {
-            .game-board {
-                grid-template-columns: repeat(3, minmax(110px, 145px));
-                grid-auto-rows: minmax(110px, 145px);
-            }
+            .title { font-size: 1.15rem; }
+            .unit-btn { padding: 7px 12px; font-size: 0.78rem; }
         }
 
         @media (min-width: 1024px) {
-            body { padding: 14px; }
-            .game-board {
-                grid-template-columns: repeat(3, minmax(140px, 175px));
-                grid-auto-rows: minmax(140px, 175px);
-            }
-            .card-emoji  { font-size: 4.8rem; }
-            .card-text   { font-size: 1.3rem; }
+            .container { padding: 12px; }
+            .title { font-size: 1.3rem; }
         }
 
-    </style>
+    
+        /* FULLSCREEN BUTTON */
+        .fullscreen-btn {
+            background: rgba(255,255,255,0.15);
+            border: 2px solid rgba(255,255,255,0.4);
+            color: white;
+            border-radius: 10px;
+            padding: 6px 12px;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: all 0.2s;
+            display: flex; align-items: center; gap: 5px;
+            font-family: inherit;
+        }
+        .fullscreen-btn:hover { background: rgba(255,255,255,0.28); transform: scale(1.06); }
+
+        </style>
 </head>
 <body>
     <div class="container">
@@ -435,8 +432,8 @@
             </div>
 
             <div class="unit-selector">
-                <button class="unit-btn" onclick="selectUnit('lesson1')">Lesson 1</button>
-                <button class="unit-btn" onclick="selectUnit('lesson2')">Lesson 2</button>
+                <button class="fullscreen-btn" onclick="toggleFullscreen()" title="全螢幕">⛶</button>
+                <button class="unit-btn" onclick="selectUnit('lesson2')">Locations 地點</button>
                 <button class="unit-btn" onclick="selectUnit('lesson3')">Lesson 3</button>
                 <button class="unit-btn" onclick="selectUnit('lesson4')">Lesson 4</button>
             </div>
@@ -512,20 +509,18 @@
         let canFlip = true;
 
         const vocabularyData = {
-            lesson1: [
-                { emoji: '📅', text: 'last Sunday' },
-                { emoji: '📆', text: 'yesterday' },
-                { emoji: '☀️', text: 'this morning' },
-                { emoji: '⏰', text: 'an hour ago' },
-                { emoji: '⏱️', text: 'ten minutes ago' }
-            ],
             lesson2: [
-                { emoji: '🏠', text: 'at home' },
-                { emoji: '🏫', text: 'at school' },
-                { emoji: '🏛️', text: 'at museum' },
-                { emoji: '🍽️', text: 'at restaurant' },
-                { emoji: '🎢', text: 'at amusement park' },
-                { emoji: '🏬', text: 'at department store' }
+                { emoji: '🏠', text: 'home' },
+                { emoji: '🏫', text: 'school' },
+                { emoji: '🏛️', text: 'museum' },
+                { emoji: '🍽️', text: 'restaurant' },
+                { emoji: '🎢', text: 'amusement park' },
+                { emoji: '🏬', text: 'department store' },
+                { emoji: '🦁', text: 'zoo' },
+                { emoji: '🏞️', text: 'park' },
+                { emoji: '🧋', text: 'tea shop' },
+                { emoji: '📖', text: 'bookstore' },
+                { emoji: '🛒', text: 'supermarket' }
             ],
             lesson3: [
                 { emoji: '🚒', text: 'firefighter' },
@@ -710,6 +705,7 @@
                 card1.classList.add('matched');
                 card2.classList.add('matched');
                 matchedPairs++;
+                playMatchSound();
                 document.getElementById('matches').textContent = matchedPairs;
 
                 if (matchedPairs === 4) {
@@ -751,6 +747,7 @@
         }
 
         function showSuccess() {
+            playSuccessSound();
             const stats = `Moves: ${moves} | 移動次數: ${moves}`;
             document.getElementById('successStats').textContent = stats;
             document.getElementById('successOverlay').classList.add('show');
@@ -788,6 +785,60 @@
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
         }
+    
+        // ── SOUND EFFECTS (Web Audio API) ──
+        function playMatchSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const freqs = [523, 659, 784]; // C E G
+                freqs.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    const t = ctx.currentTime + i * 0.12;
+                    gain.gain.setValueAtTime(0.35, t);
+                    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.25);
+                    osc.start(t); osc.stop(t + 0.25);
+                });
+            } catch(e) {}
+        }
+
+        function playSuccessSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const melody = [523,659,784,1047]; // C E G C(high)
+                melody.forEach((freq, i) => {
+                    const osc = ctx.createOscillator();
+                    const gain = ctx.createGain();
+                    osc.connect(gain); gain.connect(ctx.destination);
+                    osc.type = 'sine';
+                    osc.frequency.value = freq;
+                    const t = ctx.currentTime + i * 0.15;
+                    gain.gain.setValueAtTime(0.35, t);
+                    gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
+                    osc.start(t); osc.stop(t + 0.3);
+                });
+            } catch(e) {}
+        }
+
+        // FULLSCREEN
+        function toggleFullscreen() {
+            const btn = document.querySelector('.fullscreen-btn');
+            if (!document.fullscreenElement) {
+                document.documentElement.requestFullscreen().catch(()=>{});
+                if(btn) btn.textContent = '✕';
+            } else {
+                document.exitFullscreen().catch(()=>{});
+                if(btn) btn.textContent = '⛶';
+            }
+        }
+        document.addEventListener('fullscreenchange', () => {
+            const btn = document.querySelector('.fullscreen-btn');
+            if(btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
+        });
+
     </script>
 </body>
 </html>
