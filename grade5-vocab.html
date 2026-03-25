@@ -136,9 +136,9 @@
 
         .game-board {
             display: grid;
-            grid-template-columns: repeat(3, 110px);
-            grid-template-rows: repeat(3, 110px);
-            gap: 10px;
+            grid-template-columns: repeat(3, clamp(110px, 17vmin, 180px));
+            grid-template-rows: repeat(3, clamp(110px, 17vmin, 180px));
+            gap: clamp(8px, 1.2vmin, 14px);
         }
 
         .flip-card {
@@ -177,7 +177,7 @@
         .card-front {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: 2rem;
+            font-size: clamp(1.8rem, 4vmin, 3.5rem);
         }
 
         .card-back {
@@ -187,14 +187,15 @@
         }
 
         .card-emoji {
-            font-size: 4.5rem;
+            font-size: clamp(2.8rem, 6vmin, 5.5rem);
             line-height: 1;
         }
 
         .card-text {
-            font-size: 1.2rem;
+            font-size: clamp(0.85rem, 1.8vmin, 1.35rem);
             text-align: center;
-            line-height: 1.1;
+            line-height: 1.2;
+            font-weight: 800;
         }
 
         .flip-card.matched .card-back {
@@ -209,7 +210,7 @@
 
         .card-back.mine {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-            font-size: 5rem;
+            font-size: clamp(3rem, 6vmin, 5.5rem);
         }
 
         .flip-card.mine-hit .card-inner {
@@ -393,6 +394,7 @@
             .title { font-size: 1.1rem; }
             .subtitle { font-size: 0.68rem; }
             .unit-btn { padding: 6px 10px; font-size: 0.75rem; }
+            .game-board { grid-template-columns: repeat(3, clamp(90px, 26vw, 130px)); grid-template-rows: repeat(3, clamp(90px, 26vw, 130px)); }
         }
 
         @media (min-width: 600px) and (max-width: 900px) {
@@ -404,24 +406,6 @@
             .container { padding: 12px; }
             .title { font-size: 1.3rem; }
         }
-
-    
-        /* FULLSCREEN BUTTON */
-        .fullscreen-btn {
-            background: linear-gradient(135deg, #FFD700, #FFA500);
-            border: 2px solid #FF8C00;
-            color: #3D1C00;
-            border-radius: 10px;
-            padding: 6px 12px;
-            font-size: 1.1rem;
-            cursor: pointer;
-            transition: all 0.2s;
-            display: flex; align-items: center; gap: 5px;
-            font-family: inherit;
-            font-weight: 800;
-            box-shadow: 0 3px 10px rgba(255,165,0,0.45);
-        }
-        .fullscreen-btn:hover { filter: brightness(1.1); transform: scale(1.06); box-shadow: 0 5px 14px rgba(255,165,0,0.6); }
 
         </style>
 </head>
@@ -439,7 +423,6 @@
                 <button class="unit-btn" onclick="selectUnit('lesson3')">Lesson 3</button>
                 <button class="unit-btn" onclick="selectUnit('lesson4')">Lesson 4</button>
             </div>
-            <button class="fullscreen-btn" onclick="toggleFullscreen()" title="全螢幕 Fullscreen">⛶ <span style="font-size:.7rem;font-weight:700">Full</span></button>
         </div>
 
         <div class="main-content">
@@ -833,22 +816,6 @@
                 });
             } catch(e) {}
         }
-
-        // FULLSCREEN
-        function toggleFullscreen() {
-            const btn = document.querySelector('.fullscreen-btn');
-            if (!document.fullscreenElement) {
-                document.documentElement.requestFullscreen().catch(()=>{});
-                if(btn) btn.textContent = '✕';
-            } else {
-                document.exitFullscreen().catch(()=>{});
-                if(btn) btn.textContent = '⛶';
-            }
-        }
-        document.addEventListener('fullscreenchange', () => {
-            const btn = document.querySelector('.fullscreen-btn');
-            if(btn) btn.textContent = document.fullscreenElement ? '✕' : '⛶';
-        });
 
     </script>
 </body>
