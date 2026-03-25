@@ -4,6 +4,13 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <title>長興國小英文互動學習中心</title>
+<!-- PWA -->
+<link rel="manifest" href="./manifest.json">
+<meta name="theme-color" content="#1a1a2e">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="英文學習">
+<link rel="apple-touch-icon" href="./icon-192.png">
 <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700;800;900&display=swap" rel="stylesheet">
 <style>
 *{margin:0;padding:0;box-sizing:border-box;-webkit-tap-highlight-color:transparent;}
@@ -27,8 +34,8 @@ body{
   position:relative;z-index:10;
   width:96vw;max-width:1200px;
   display:flex;flex-direction:column;
-  align-items:center;gap:clamp(8px,1.4vh,18px);
-  padding:clamp(8px,1.2vh,16px) clamp(8px,1.5vw,16px);
+  align-items:center;gap:clamp(10px,1.8vh,22px);
+  padding:clamp(12px,2vh,24px) clamp(8px,1.5vw,16px);
   height:100vh;
   overflow-y:auto;
   justify-content:center;
@@ -37,32 +44,32 @@ body{
 
 /* title */
 .title-block{text-align:center;}
-.school-name{font-size:clamp(.75rem,1.1vw,1.05rem);font-weight:700;color:#90CAF9;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
-.main-title{font-size:clamp(1.6rem,3.2vw,2.6rem);font-weight:900;color:#fff;line-height:1.15;text-shadow:0 0 30px rgba(144,202,249,.5);}
+.school-name{font-size:clamp(.65rem,.9vw,.9rem);font-weight:700;color:#90CAF9;letter-spacing:3px;text-transform:uppercase;margin-bottom:4px;}
+.main-title{font-size:clamp(1.3rem,3vw,2.2rem);font-weight:900;color:#fff;line-height:1.15;text-shadow:0 0 30px rgba(144,202,249,.5);}
 .main-title span{color:#FFD54F;}
-.tagline{font-size:clamp(.78rem,1vw,1rem);color:#78909C;margin-top:3px;font-weight:600;}
+.tagline{font-size:clamp(.65rem,.85vw,.85rem);color:#78909C;margin-top:3px;font-weight:600;}
 
 /* grade sections */
 .grades-row{display:flex;gap:clamp(10px,1.5vw,20px);width:100%;align-items:flex-start;}
 .grade-col{flex:1;display:flex;flex-direction:column;gap:clamp(7px,1vh,12px);}
 
 .grade-label{
-  display:flex;align-items:center;gap:10px;
-  padding:clamp(8px,1.1vh,14px) clamp(12px,1.5vw,22px);
+  display:flex;align-items:center;gap:8px;
+  padding:clamp(6px,.8vh,10px) clamp(10px,1.2vw,18px);
   border-radius:14px;font-weight:900;
-  font-size:clamp(.9rem,1.25vw,1.25rem);
+  font-size:clamp(.78rem,1vw,1rem);
 }
 .g5-label{background:linear-gradient(135deg,#1B5E20,#43A047);color:#fff;box-shadow:0 4px 14px rgba(67,160,71,.4);}
 .g6-label{background:linear-gradient(135deg,#0D47A1,#1976D2);color:#fff;box-shadow:0 4px 14px rgba(25,118,210,.4);}
-.grade-icon{font-size:clamp(1.3rem,1.8vw,1.9rem);}
-.grade-text{font-size:clamp(.9rem,1.25vw,1.25rem);}
+.grade-icon{font-size:clamp(1.1rem,1.4vw,1.5rem);}
+.grade-text{font-size:clamp(.78rem,1vw,1rem);}
 
 /* cards */
-.cards-row{display:flex;flex-direction:column;gap:clamp(7px,1vh,13px);}
+.cards-row{display:flex;flex-direction:column;gap:clamp(6px,.9vh,11px);}
 .card{
-  border-radius:18px;
-  padding:clamp(13px,1.7vh,22px) clamp(14px,1.6vw,22px);
-  display:flex;align-items:center;gap:clamp(12px,1.4vw,20px);
+  border-radius:16px;
+  padding:clamp(10px,1.3vh,16px) clamp(12px,1.4vw,18px);
+  display:flex;align-items:center;gap:clamp(10px,1.2vw,16px);
   cursor:pointer;transition:all .22s;
   border:2px solid transparent;
   position:relative;overflow:hidden;
@@ -79,20 +86,20 @@ body{
 .c6-phonics{background:linear-gradient(135deg,#01579B,#0277BD);border-color:#0288D1;box-shadow:0 4px 14px rgba(1,87,155,.5);}
 .c6-sentence{background:linear-gradient(135deg,#4A148C,#6A1B9A);border-color:#7B1FA2;box-shadow:0 4px 14px rgba(74,20,140,.5);}
 
-.card-icon{font-size:clamp(1.9rem,2.8vw,3rem);flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));}
+.card-icon{font-size:clamp(1.5rem,2.2vw,2.4rem);flex-shrink:0;filter:drop-shadow(0 2px 4px rgba(0,0,0,.3));}
 .card-info{flex:1;min-width:0;}
-.card-title{font-size:clamp(1rem,1.35vw,1.35rem);font-weight:900;color:#fff;line-height:1.2;}
-.card-sub{font-size:clamp(.72rem,.92vw,.95rem);color:rgba(255,255,255,.65);margin-top:3px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.card-badge{padding:4px 12px;border-radius:9px;font-size:clamp(.68rem,.88vw,.88rem);font-weight:800;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);flex-shrink:0;}
+.card-title{font-size:clamp(.82rem,1.1vw,1.1rem);font-weight:900;color:#fff;line-height:1.2;}
+.card-sub{font-size:clamp(.6rem,.75vw,.78rem);color:rgba(255,255,255,.65);margin-top:2px;font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.card-badge{padding:3px 9px;border-radius:9px;font-size:clamp(.58rem,.72vw,.72rem);font-weight:800;background:rgba(255,255,255,.15);color:rgba(255,255,255,.9);flex-shrink:0;}
 .card-badge.new{background:rgba(255,213,79,.25);color:#FFD54F;}
-.card-arrow{font-size:clamp(1.2rem,1.5vw,1.6rem);color:rgba(255,255,255,.5);flex-shrink:0;transition:transform .2s;}
+.card-arrow{font-size:clamp(1rem,1.2vw,1.3rem);color:rgba(255,255,255,.5);flex-shrink:0;transition:transform .2s;}
 .card:hover .card-arrow{transform:translateX(4px);}
 
 /* divider */
 .vdivider{width:2px;background:rgba(255,255,255,.07);border-radius:2px;align-self:stretch;}
 
 /* footer */
-.footer{font-size:clamp(.68rem,.85vw,.88rem);color:#37474F;font-weight:600;text-align:center;}
+.footer{font-size:clamp(.58rem,.7vw,.72rem);color:#37474F;font-weight:600;text-align:center;}
 
 /* GAME FRAME */
 .game-frame{position:fixed;inset:0;z-index:100;background:#000;display:none;flex-direction:column;}
@@ -128,93 +135,13 @@ iframe{flex:1;border:none;width:100%;background:#fff;}
 
 /* 11吋平板橫式 主要目標 1024–1200px */
 @media(min-width:1024px){
-  .hub{gap:16px;}
-  .card{padding:16px 22px;}
-  .card-icon{font-size:2.8rem;}
-  .card-title{font-size:1.3rem;}
-  .card-sub{font-size:.92rem;}
-  .card-badge{font-size:.86rem;padding:5px 14px;}
-  .card-arrow{font-size:1.55rem;}
-  .main-title{font-size:2.5rem;}
-  .school-name{font-size:1rem;}
-  .tagline{font-size:.98rem;}
-  .grade-text{font-size:1.2rem;}
-  .grade-icon{font-size:1.8rem;}
-  .grade-label{padding:10px 20px;}
+  .hub{gap:20px;}
+  .card{padding:14px 18px;}
+  .card-icon{font-size:2.2rem;}
+  .card-title{font-size:1.05rem;}
+  .card-sub{font-size:.74rem;}
+  .main-title{font-size:2rem;}
 }
-  /* Home Button */
-.home-btn {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  background-color: #ff5722;
-  color: white;
-  font-size: 24px;
-  text-align: center;
-  line-height: 55px;
-  border-radius: 50%;
-  text-decoration: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: 0.3s;
-  z-index: 999;
-}
-
-/* Back to Top Button */
-.top-btn {
-  position: fixed;
-  bottom: 85px; /* sits above home button */
-  right: 20px;
-  width: 55px;
-  height: 55px;
-  background-color: #007BFF;
-  color: white;
-  font-size: 22px;
-  text-align: center;
-  line-height: 55px;
-  border-radius: 50%;
-  text-decoration: none;
-  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
-  transition: 0.3s;
-  display: none; /* hidden by default */
-  z-index: 999;
-}
-
-.home-btn:hover {
-  background-color: #e64a19;
-  transform: scale(1.1);
-}
-
-.top-btn:hover {
-  background-color: #0056b3;
-  transform: scale(1.1);
-}
-</style>
-
-<!-- Back to Top -->
-<a href="#" class="top-btn" id="topBtn" title="Back to Top">⬆</a>
-
-<!-- Home Button -->
-<a href="https://peterparker-maker.github.io/cspsbig3/" class="home-btn" title="Home">🏠</a>
-
-<script>
-// Show button when scrolling down
-window.onscroll = function() {
-  let btn = document.getElementById("topBtn");
-  if (document.body.scrollTop > 200 || document.documentElement.scrollTop > 200) {
-    btn.style.display = "block";
-  } else {
-    btn.style.display = "none";
-  }
-};
-
-// Smooth scroll to top
-document.getElementById("topBtn").onclick = function(e) {
-  e.preventDefault();
-  window.scrollTo({ top: 0, behavior: 'smooth' });
-};
-</script>
 </style>
 </head>
 <body>
@@ -345,6 +272,15 @@ function closeGame(){
   document.getElementById('gameIframe').src='';
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeGame(); });
+
+// PWA Service Worker 註冊
+if ('serviceWorker' in navigator) {
+  window.addEventListener('load', () => {
+    navigator.serviceWorker.register('./service-worker.js')
+      .then(reg => console.log('SW registered:', reg.scope))
+      .catch(err => console.log('SW registration failed:', err));
+  });
+}
 </script>
 </body>
 </html>
