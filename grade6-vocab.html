@@ -408,9 +408,9 @@
     
         /* FULLSCREEN BUTTON */
         .fullscreen-btn {
-            background: rgba(255,255,255,0.15);
-            border: 2px solid rgba(255,255,255,0.4);
-            color: white;
+            background: linear-gradient(135deg, #FFD700, #FFA500);
+            border: 2px solid #FF8C00;
+            color: #3D1C00;
             border-radius: 10px;
             padding: 6px 12px;
             font-size: 1.1rem;
@@ -418,8 +418,10 @@
             transition: all 0.2s;
             display: flex; align-items: center; gap: 5px;
             font-family: inherit;
+            font-weight: 800;
+            box-shadow: 0 3px 10px rgba(255,165,0,0.45);
         }
-        .fullscreen-btn:hover { background: rgba(255,255,255,0.28); transform: scale(1.06); }
+        .fullscreen-btn:hover { filter: brightness(1.1); transform: scale(1.06); box-shadow: 0 5px 14px rgba(255,165,0,0.6); }
 
         </style>
 </head>
@@ -432,11 +434,11 @@
             </div>
 
             <div class="unit-selector">
-                <button class="fullscreen-btn" onclick="toggleFullscreen()" title="全螢幕">⛶</button>
                 <button class="unit-btn" onclick="selectUnit('lesson2')">Locations 地點</button>
                 <button class="unit-btn" onclick="selectUnit('lesson3')">Lesson 3</button>
                 <button class="unit-btn" onclick="selectUnit('lesson4')">Lesson 4</button>
             </div>
+            <button class="fullscreen-btn" onclick="toggleFullscreen()" title="全螢幕 Fullscreen">⛶ <span style="font-size:.7rem;font-weight:700">Full</span></button>
         </div>
 
         <div class="main-content">
