@@ -142,6 +142,55 @@ iframe{flex:1;border:none;width:100%;background:#fff;}
   .grade-icon{font-size:1.8rem;}
   .grade-label{padding:10px 20px;}
 }
+
+  /* Home Button */
+.home-btn {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background-color: #ff5722;
+  color: white;
+  font-size: 24px;
+  text-align: center;
+  line-height: 55px;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  z-index: 999;
+}
+
+/* Back to Top Button */
+.top-btn {
+  position: fixed;
+  bottom: 85px;
+  right: 20px;
+  width: 55px;
+  height: 55px;
+  background-color: #007BFF;
+  color: white;
+  font-size: 22px;
+  text-align: center;
+  line-height: 55px;
+  border-radius: 50%;
+  text-decoration: none;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.3);
+  transition: 0.3s;
+  display: none;
+  z-index: 999;
+}
+
+.home-btn:hover {
+  background-color: #e64a19;
+  transform: scale(1.1);
+}
+
+.top-btn:hover {
+  background-color: #0056b3;
+  transform: scale(1.1);
+}
 </style>
 </head>
 <body>
