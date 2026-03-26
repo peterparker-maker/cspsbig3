@@ -327,6 +327,7 @@
             word-break: break-word;
             overflow-wrap: break-word;
             hyphens: auto;
+            transform: none;
         }
 
         .option-btn:hover {
@@ -844,7 +845,12 @@
 
             options = options.sort(() => Math.random() - 0.5);
 
-            displayOptions(options);
+            // 先清空，讓瀏覽器完整渲染後再建立新按鈕，避免動畫殘留
+            document.getElementById('optionsArea').innerHTML = '';
+            requestAnimationFrame(() => {
+                displayOptions(options);
+            });
+
             document.getElementById('feedback').textContent = '';
             document.getElementById('feedback').className = 'feedback';
             
@@ -857,7 +863,10 @@
 
             options.forEach(option => {
                 const btn = document.createElement('button');
+                // 明確重置：只套用基礎 class，清除任何殘留狀態
                 btn.className = 'option-btn';
+                btn.classList.remove('correct', 'wrong');
+                btn.style.transform = 'none';
                 btn.textContent = option;
                 btn.onclick = () => checkAnswer(option, btn);
                 optionsArea.appendChild(btn);
