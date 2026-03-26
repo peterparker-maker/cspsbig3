@@ -97,13 +97,15 @@
 
         .game-area {
             background: white;
-            padding: 15px;
+            padding: 10px;
             border-radius: 15px;
             box-shadow: 0 8px 25px rgba(0,0,0,0.2);
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            container-type: inline-size;
+            container-name: game-area;
         }
 
         .game-info {
@@ -133,9 +135,9 @@
 
         .game-board {
             display: grid;
-            grid-template-columns: repeat(3, clamp(150px, 22vmin, 240px));
-            grid-template-rows: repeat(3, clamp(150px, 22vmin, 240px));
-            gap: clamp(12px, 1.6vmin, 18px);
+            grid-template-columns: repeat(3, 25vmin);
+            grid-template-rows: repeat(3, 25vmin);
+            gap: clamp(10px, 1.4vmin, 16px);
         }
 
         .flip-card {
@@ -174,7 +176,7 @@
         .card-front {
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
-            font-size: clamp(2.5rem, 6vmin, 5rem);
+            font-size: 12vmin;
         }
 
         .card-back {
@@ -184,15 +186,19 @@
         }
 
         .card-emoji {
-            font-size: clamp(4rem, 9vmin, 8rem);
+            font-size: 12vmin;
             line-height: 1;
         }
 
         .card-text {
-            font-size: clamp(1.1rem, 2.6vmin, 2rem);
+            font-size: clamp(0.7rem, 2.2vmin, 1.6rem);
             text-align: center;
             line-height: 1.2;
             font-weight: 800;
+            overflow-wrap: break-word;
+            word-break: break-word;
+            max-width: 100%;
+            padding: 0 4px;
         }
 
         .flip-card.matched .card-back {
@@ -207,7 +213,7 @@
 
         .card-back.mine {
             background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
-            font-size: clamp(4rem, 9vmin, 8rem);
+            font-size: 12vmin;
         }
 
         .flip-card.mine-hit .card-inner {
@@ -383,33 +389,66 @@
         /* ── RESPONSIVE ── */
         html { font-size: clamp(13px, 1.4vw, 16px); }
 
-        @media (max-width: 600px) {
-            .container { padding: 8px; }
-            .header { flex-direction: column; align-items: flex-start; gap: 8px; padding: 8px 10px; }
-            .main-content { grid-template-columns: 1fr; }
-            .control-panel { width: 100%; flex-direction: row; flex-wrap: wrap; }
-            .unit-selector { flex-wrap: wrap; }
-            .title { font-size: 1rem; }
-            .unit-btn { padding: 6px 10px; font-size: 0.75rem; }
-            .game-board { grid-template-columns: repeat(3, clamp(100px, 30vw, 160px)); grid-template-rows: repeat(3, clamp(100px, 30vw, 160px)); }
-            .card-emoji { font-size: clamp(2.8rem, 7vw, 4.5rem); }
-            .card-text { font-size: clamp(0.85rem, 2.2vw, 1.2rem); }
+        /* Container Query：卡片內文字依卡片寬度自動縮放 */
+        @container game-area (min-width: 500px) {
+            .card-text { font-size: clamp(1rem, 3cqi, 1.8rem); }
         }
 
+        /* 手機直式 */
+        @media (max-width: 600px) {
+            .container { padding: 8px; padding-bottom: 24px; }
+            .header {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 8px;
+                padding: 8px 10px;
+            }
+            .unit-selector { flex-wrap: wrap; }
+            .main-content { grid-template-columns: 1fr; }
+            .control-panel { width: 100%; flex-direction: row; flex-wrap: wrap; }
+            .title { font-size: 1rem; }
+            .unit-btn { padding: 6px 10px; font-size: 0.75rem; }
+            .game-board {
+                grid-template-columns: repeat(3, 28vw);
+                grid-template-rows: repeat(3, 28vw);
+                gap: 8px;
+            }
+            .card-front { font-size: 10vw; }
+            .card-emoji { font-size: 10vw; }
+            .card-back.mine { font-size: 10vw; }
+            .card-text { font-size: clamp(0.65rem, 2.8vw, 1rem); }
+        }
+
+        /* 小平板 / 手機橫式 */
         @media (min-width: 600px) and (max-width: 900px) {
             .title { font-size: 1.15rem; }
             .unit-btn { padding: 7px 12px; font-size: 0.78rem; }
-            .game-board { grid-template-columns: repeat(3, clamp(130px, 20vmin, 190px)); grid-template-rows: repeat(3, clamp(130px, 20vmin, 190px)); }
-            .card-emoji { font-size: clamp(3.5rem, 8vmin, 6rem); }
-            .card-text { font-size: clamp(1rem, 2.4vmin, 1.5rem); }
+            .game-board {
+                grid-template-columns: repeat(3, 22vmin);
+                grid-template-rows: repeat(3, 22vmin);
+            }
+            .card-front { font-size: 10vmin; }
+            .card-emoji { font-size: 10vmin; }
+            .card-back.mine { font-size: 10vmin; }
+            .card-text { font-size: clamp(0.85rem, 2.4vmin, 1.4rem); }
         }
 
+        /* 11吋平板橫式（主要目標）*/
         @media (min-width: 1024px) {
-            .container { padding: 14px; }
+            .container { padding: 14px; padding-bottom: 24px; }
             .title { font-size: 1.3rem; }
-            .game-board { grid-template-columns: repeat(3, clamp(170px, 22vmin, 240px)); grid-template-rows: repeat(3, clamp(170px, 22vmin, 240px)); }
-            .card-emoji { font-size: clamp(4.5rem, 10vmin, 8rem); }
-            .card-text { font-size: clamp(1.2rem, 2.8vmin, 2rem); }
+            .unit-selector { flex-wrap: nowrap; }
+            .main-content { grid-template-columns: 1fr 180px; }
+            .game-area { padding: 10px 8px; }
+            .game-board {
+                grid-template-columns: repeat(3, 25vmin);
+                grid-template-rows: repeat(3, 25vmin);
+                gap: clamp(10px, 1.4vmin, 16px);
+            }
+            .card-front { font-size: 12vmin; }
+            .card-emoji { font-size: 12vmin; }
+            .card-back.mine { font-size: 12vmin; }
+            .card-text { font-size: clamp(1rem, 2.6vmin, 1.9rem); }
         }
 
         </style>
