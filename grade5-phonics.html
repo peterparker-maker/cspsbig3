@@ -14,12 +14,12 @@
         body {
             font-family: 'Microsoft JhengHei', 'Arial', sans-serif;
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
-            height: 100vh;
-            width: 100vw;
-            overflow: hidden;
+            min-height: 100vh;
+            width: 100%;
+            overflow-y: auto;
             display: flex;
             justify-content: center;
-            align-items: center;
+            align-items: flex-start;
             padding: 15px;
         }
 
@@ -28,9 +28,9 @@
             border-radius: 25px;
             padding: 20px;
             width: 100%;
-            height: 100%;
+            height: auto;
+            min-height: 90vh;
             max-width: 1400px;
-            max-height: 900px;
             box-shadow: 0 20px 60px rgba(0,0,0,0.3);
             display: flex;
             flex-direction: column;
@@ -49,13 +49,13 @@
         }
 
         .title {
-            font-size: 2.2rem;
+            font-size: 1.8rem;
             color: #667eea;
             margin-bottom: 5px;
         }
 
         .subtitle {
-            font-size: 1.05rem;
+            font-size: 0.9rem;
             color: #666;
         }
 
@@ -71,16 +71,15 @@
         }
 
         .difficulty-btn {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: white;
             border: 2px solid #667eea;
             border-radius: 10px;
             color: #667eea;
             font-weight: bold;
-            
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
-            font-size: 1.05rem;
             white-space: nowrap;
         }
 
@@ -99,13 +98,13 @@
         }
 
         .unit-button {
-            padding: 10px 20px;
+            padding: 8px 16px;
             background: white;
             border: 2px solid #667eea;
             border-radius: 10px;
             color: #667eea;
             font-weight: bold;
-            font-size: 1.05rem;
+            font-size: 0.9rem;
             cursor: pointer;
             transition: all 0.3s ease;
         }
@@ -122,7 +121,7 @@
         .main-content {
             flex: 1;
             display: grid;
-            grid-template-columns: 1fr 2fr;
+            grid-template-columns: 1fr 2.5fr;
             gap: 20px;
             min-height: 0;
         }
@@ -152,7 +151,7 @@
         }
 
         .score-label {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #333;
             font-weight: bold;
             display: flex;
@@ -162,17 +161,17 @@
         }
 
         .score-label-en {
-            font-size: 1.2rem;
+            font-size: 1rem;
             color: #333;
         }
 
         .score-label-ch {
-            font-size: 0.9rem;
+            font-size: 0.75rem;
             color: #999;
         }
 
         .score-value {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             color: #667eea;
         }
@@ -189,7 +188,7 @@
 
         .progress-label {
             text-align: center;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             color: #666;
             margin-bottom: 10px;
@@ -217,6 +216,7 @@
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            flex: 1;
         }
 
         .question-area {
@@ -224,14 +224,14 @@
         }
 
         .instruction {
-            font-size: 1.7rem;
+            font-size: 1.2rem;
             color: #333;
             margin-bottom: 15px;
         }
 
         .speaker-button {
-            width: 150px;
-            height: 150px;
+            width: clamp(80px, 10vmin, 120px);
+            height: clamp(80px, 10vmin, 120px);
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             border: none;
             border-radius: 50%;
@@ -254,7 +254,7 @@
         }
 
         .speaker-icon {
-            font-size: 4.5rem;
+            font-size: 3.5rem;
             animation: pulse 2s infinite;
         }
 
@@ -276,13 +276,13 @@
 
         .replay-hint {
             color: #999;
-            font-size: 1rem;
+            font-size: 0.85rem;
             margin-bottom: 10px;
         }
 
         .feedback {
             text-align: center;
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             font-weight: bold;
             height: 50px;
             display: flex;
@@ -303,21 +303,30 @@
             gap: 15px;
             justify-content: center;
             margin-bottom: 15px;
+            flex: 1;
+            align-items: stretch;
         }
 
         .option-btn {
             flex: 1;
-            max-width: 240px;
-            padding: 30px 18px;
+            min-height: 150px;
+            padding: 20px 15px;
             background: white;
             border: 4px solid #667eea;
             border-radius: 18px;
-            font-size: 2.5rem;
+            font-size: clamp(1.5rem, 8vmin, 4rem);
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
             color: #667eea;
             box-shadow: 0 5px 20px rgba(102, 126, 234, 0.2);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            word-break: break-word;
+            overflow-wrap: break-word;
+            hyphens: auto;
         }
 
         .option-btn:hover {
@@ -367,9 +376,9 @@
             background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
             color: white;
             border: none;
-            padding: 14px 28px;
+            padding: 12px 24px;
             border-radius: 12px;
-            font-size: 1.2rem;
+            font-size: 1rem;
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -392,6 +401,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 20px;
         }
 
         .punishment-overlay.show {
@@ -433,7 +443,7 @@
         }
 
         .punishment-title {
-            font-size: 2.5rem;
+            font-size: 1.8rem;
             color: #f5576c;
             margin-bottom: 15px;
             font-weight: bold;
@@ -464,6 +474,7 @@
             justify-content: center;
             align-items: center;
             z-index: 1000;
+            padding: 20px;
         }
 
         .success-overlay.show {
@@ -497,7 +508,7 @@
         }
 
         .success-message {
-            font-size: 1.7rem;
+            font-size: 1.2rem;
             color: #666;
             margin-bottom: 25px;
         }
@@ -529,43 +540,48 @@
             }
 
             .option-btn {
-                font-size: 1.5rem;
-                padding: 20px 12px;
+                font-size: clamp(1.2rem, 6vmin, 2.5rem);
+                min-height: 100px;
             }
 
             .speaker-button {
-                width: 100px;
-                height: 100px;
+                width: clamp(70px, 9vmin, 100px);
+                height: clamp(70px, 9vmin, 100px);
             }
 
             .speaker-icon {
-                font-size: 3rem;
+                font-size: clamp(2rem, 5vmin, 3rem);
             }
         }
-    
+
         /* ── RESPONSIVE ── */
-        html { font-size: clamp(15px, 1.65vw, 18px); }
+        html { font-size: clamp(13px, 1.4vw, 16px); }
 
         @media (max-width: 600px) {
-            body { padding: 6px; }
-            .game-container { padding: 12px; border-radius: 16px; max-height: 100vh; border-radius: 16px; }
+            body { padding: 8px; padding-bottom: 24px; }
+            .game-container { padding: 12px; border-radius: 16px; min-height: auto; }
             .top-section { flex-direction: column; align-items: flex-start; gap: 10px; margin-bottom: 10px; }
-            .title { font-size: 1.7rem; }
-            .subtitle { font-size: 0.9rem; }
+            .title { font-size: 1.2rem; }
+            .subtitle { font-size: 0.75rem; }
             .main-content { grid-template-columns: 1fr; }
-            .difficulty-btn, .unit-button { padding: 6px 10px; font-size: 0.9rem; }
+            .difficulty-btn, .unit-button { padding: 6px 10px; font-size: 0.75rem; }
+            .option-btn { min-height: 80px; font-size: clamp(1.2rem, 7vw, 2rem); }
         }
 
         @media (min-width: 600px) and (max-width: 900px) {
-            .game-container { padding: 14px; max-height: 100vh; border-radius: 16px; }
+            .game-container { padding: 14px; }
             .title { font-size: 1.4rem; }
-            .main-content { gap: 12px; }
+            .main-content { gap: 12px; grid-template-columns: 1fr 2fr; }
+            .option-btn { min-height: 120px; font-size: clamp(1.4rem, 6vmin, 2.8rem); }
         }
 
         @media (min-width: 1024px) {
-            .game-container { padding: 22px; }
-            .title { font-size: 2.2rem; }
-            .option-btn { max-width: 260px; padding: 32px 22px; font-size: 2.6rem; }
+            .game-container { padding: 20px; }
+            .title { font-size: 1.8rem; }
+            .main-content { grid-template-columns: 1fr 2.5fr; }
+            .option-btn { min-height: 150px; font-size: clamp(1.5rem, 8vmin, 4rem); }
+            .speaker-button { width: 120px; height: 120px; }
+            .speaker-icon { font-size: 3.5rem; }
         }
 
     </style>
