@@ -183,22 +183,38 @@
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
             transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         .card-emoji {
             font-size: 12vmin;
             line-height: 1;
+            flex-shrink: 0;
         }
 
         .card-text {
-            font-size: clamp(0.7rem, 2.2vmin, 1.6rem);
+            /* 基準字體大，用 clamp 控制範圍 */
+            font-size: clamp(1rem, 4vmin, 2.8rem);
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.15;
             font-weight: 800;
+            /* 超長單字自動斷行，不溢出 */
             overflow-wrap: break-word;
             word-break: break-word;
-            max-width: 100%;
-            padding: 0 4px;
+            hyphens: auto;
+            /* 撐滿卡片寬度，讓文字置中 */
+            width: 100%;
+            padding: 0 8px;
+            /* flex 讓文字垂直置中 */
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-shrink: 1;
+            min-height: 0;
         }
 
         .flip-card.matched .card-back {
@@ -391,7 +407,7 @@
 
         /* Container Query：卡片內文字依卡片寬度自動縮放 */
         @container game-area (min-width: 500px) {
-            .card-text { font-size: clamp(1rem, 3cqi, 1.8rem); }
+            .card-text { font-size: clamp(1.2rem, 4cqi, 2.4rem); }
         }
 
         /* 手機直式 */
@@ -416,7 +432,7 @@
             .card-front { font-size: 10vw; }
             .card-emoji { font-size: 10vw; }
             .card-back.mine { font-size: 10vw; }
-            .card-text { font-size: clamp(0.65rem, 2.8vw, 1rem); }
+            .card-text { font-size: clamp(0.85rem, 3.8vw, 1.5rem); }
         }
 
         /* 小平板 / 手機橫式 */
@@ -430,7 +446,7 @@
             .card-front { font-size: 10vmin; }
             .card-emoji { font-size: 10vmin; }
             .card-back.mine { font-size: 10vmin; }
-            .card-text { font-size: clamp(0.85rem, 2.4vmin, 1.4rem); }
+            .card-text { font-size: clamp(1.1rem, 4vmin, 2.2rem); }
         }
 
         /* 11吋平板橫式（主要目標）*/
@@ -448,7 +464,7 @@
             .card-front { font-size: 12vmin; }
             .card-emoji { font-size: 12vmin; }
             .card-back.mine { font-size: 12vmin; }
-            .card-text { font-size: clamp(1rem, 2.6vmin, 1.9rem); }
+            .card-text { font-size: clamp(1.4rem, 4.5vmin, 3rem); }
         }
 
         </style>
