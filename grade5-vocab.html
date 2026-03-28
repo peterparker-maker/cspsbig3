@@ -1135,8 +1135,7 @@
                 alert('Please select a lesson first! 請先選擇單元！');
                 return;
             }
-            stopTimer();
-            document.getElementById('progressBar').classList.remove('show');
+            stopTimer(); // 已包含隱藏進度條和計時顯示
             startGame();
         }
 
