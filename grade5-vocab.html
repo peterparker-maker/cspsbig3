@@ -1031,7 +1031,7 @@
             canFlip = false;
             const overlay = document.getElementById('freezeOverlay');
             const countdown = document.getElementById('freezeCountdown');
-            
+
             overlay.classList.add('show');
 
             if (navigator.vibrate) {
@@ -1044,11 +1044,11 @@
             }
 
             overlay.classList.remove('show');
-            
+
             const cards = document.querySelectorAll('.flip-card');
             cards[minePosition].classList.remove('flipped');
             cards[minePosition].classList.remove('mine-hit');
-            
+
             canFlip = true;
         }
 
