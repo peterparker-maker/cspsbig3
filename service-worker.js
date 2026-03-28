@@ -1,4 +1,4 @@
-const CACHE_NAME = 'changxing-english-v2';
+const CACHE_NAME = 'changxing-english-v3';
 
 const FILES_TO_CACHE = [
   './index.html',
