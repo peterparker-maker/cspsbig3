@@ -401,7 +401,229 @@
             font-size: 3rem;
             margin-bottom: 10px;
         }
-    
+
+        /* ── 進度條 ── */
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 6px;
+            background: rgba(102, 126, 234, 0.15);
+            z-index: 2000;
+            display: none;
+            overflow: hidden;
+        }
+
+        .progress-bar.show {
+            display: block;
+        }
+
+        .progress-fill {
+            height: 100%;
+            background: linear-gradient(90deg, #0d47a1 0%, #1976d2 50%, #4facfe 100%);
+            width: 100%;
+            transition: width 0.1s linear;
+            box-shadow: 0 0 12px rgba(79, 172, 254, 0.8), inset 0 0 6px rgba(255, 255, 255, 0.3);
+            border-radius: 3px;
+        }
+
+        .progress-fill.danger {
+            background: linear-gradient(90deg, #d32f2f 0%, #f44336 50%, #ff6b6b 100%);
+            box-shadow: 0 0 15px rgba(255, 107, 107, 0.9), inset 0 0 6px rgba(255, 255, 255, 0.3);
+            animation: blink 0.6s infinite;
+        }
+
+        @keyframes blink {
+            0%, 50%, 100% { opacity: 1; }
+            25%, 75% { opacity: 0.5; }
+        }
+
+        /* ── 計時顯示 ── */
+        .timer-display {
+            position: fixed;
+            top: 16px;
+            right: 20px;
+            font-size: clamp(1rem, 2.5vw, 1.4rem);
+            font-weight: 900;
+            color: #0d47a1;
+            z-index: 2001;
+            display: none;
+            letter-spacing: 1px;
+            text-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .timer-display.show {
+            display: block;
+        }
+
+        .timer-display.danger {
+            color: #d32f2f;
+            animation: timerBlink 0.6s infinite;
+        }
+
+        @keyframes timerBlink {
+            0%, 50%, 100% { opacity: 1; transform: scale(1); }
+            25%, 75% { opacity: 0.7; transform: scale(1.05); }
+        }
+
+        /* ── 模式選擇 Modal ── */
+        .mode-overlay {
+            position: fixed;
+            inset: 0;
+            background: rgba(0,0,0,0.8);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1500;
+        }
+
+        .mode-overlay.show {
+            display: flex;
+        }
+
+        .mode-dialog {
+            background: white;
+            padding: 40px;
+            border-radius: 20px;
+            text-align: center;
+            animation: popIn 0.5s ease;
+            max-width: 90%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+        }
+
+        .mode-title {
+            font-size: 1.8rem;
+            color: #667eea;
+            margin-bottom: 10px;
+            font-weight: bold;
+        }
+
+        .mode-subtitle {
+            font-size: 0.9rem;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .mode-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .mode-btn {
+            padding: 16px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 1rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            min-width: 160px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .mode-btn.relax {
+            background: linear-gradient(135deg, #11998e 0%, #38ef7d 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(17,153,142,0.3);
+        }
+
+        .mode-btn.relax:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(17,153,142,0.5);
+        }
+
+        .mode-btn.challenge {
+            background: linear-gradient(135deg, #ff6b6b 0%, #ee5a52 100%);
+            color: white;
+            box-shadow: 0 4px 15px rgba(255,107,107,0.3);
+        }
+
+        .mode-btn.challenge:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 20px rgba(255,107,107,0.5);
+        }
+
+        .mode-icon {
+            font-size: 2rem;
+        }
+
+        .mode-text {
+            line-height: 1.3;
+        }
+
+        .mode-label {
+            font-size: 0.85rem;
+            opacity: 0.85;
+        }
+
+        /* ── 時間結束 Overlay ── */
+        .timeout-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0,0,0,0.85);
+            display: none;
+            justify-content: center;
+            align-items: center;
+            z-index: 1000;
+        }
+
+        .timeout-overlay.show {
+            display: flex;
+        }
+
+        .timeout-message {
+            background: white;
+            padding: 35px;
+            border-radius: 20px;
+            text-align: center;
+            animation: popIn 0.5s ease;
+        }
+
+        .timeout-icon {
+            font-size: 4rem;
+            margin-bottom: 15px;
+        }
+
+        .timeout-title {
+            font-size: 1.8rem;
+            color: #ff6b6b;
+            margin-bottom: 12px;
+            font-weight: bold;
+        }
+
+        .timeout-stats {
+            font-size: 1rem;
+            color: #666;
+            margin-bottom: 20px;
+        }
+
+        .timeout-btn {
+            background: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 10px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-size: 0.95rem;
+            margin-top: 10px;
+        }
+
+        .timeout-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(245,87,108,0.3);
+        }
+
         /* ── RESPONSIVE ── */
         html { font-size: clamp(13px, 1.4vw, 16px); }
 
@@ -470,6 +692,50 @@
         </style>
 </head>
 <body>
+    <!-- 進度條 -->
+    <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- 計時顯示 -->
+    <div class="timer-display" id="timerDisplay">Time Left: 30s</div>
+
+    <!-- 模式選擇 Modal -->
+    <div class="mode-overlay" id="modeOverlay">
+        <div class="mode-dialog">
+            <div class="mode-title">🎮 選擇遊戲模式</div>
+            <div class="mode-subtitle">Choose your game mode</div>
+            <div class="mode-buttons">
+                <button class="mode-btn relax" onclick="selectMode('relax')">
+                    <div class="mode-icon">🌱</div>
+                    <div class="mode-text">
+                        <div>Relax Mode</div>
+                        <div class="mode-label">不計時・輕鬆練習</div>
+                    </div>
+                </button>
+                <button class="mode-btn challenge" onclick="selectMode('challenge')">
+                    <div class="mode-icon">🔥</div>
+                    <div class="mode-text">
+                        <div>Challenge Mode</div>
+                        <div class="mode-label">30秒挑戰・限時搶答</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 時間結束 Overlay -->
+    <div class="timeout-overlay" id="timeoutOverlay">
+        <div class="timeout-message">
+            <div class="timeout-icon">⏰</div>
+            <div class="timeout-title">Time Over! 時間到！</div>
+            <div class="timeout-stats" id="timeoutStats"></div>
+            <button class="timeout-btn" onclick="retryGame()">
+                🔄 重試・Retry
+            </button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
             <div class="title-section">
@@ -552,6 +818,9 @@
         let minePosition = -1;
         let gameStarted = false;
         let canFlip = true;
+        let gameMode = null; // 'relax' or 'challenge'
+        let timeRemaining = 30;
+        let timerInterval = null;
 
         const vocabularyData = {
             lesson2: [
@@ -690,18 +959,41 @@
                 return;
             }
 
+            // 顯示模式選擇
+            document.getElementById('modeOverlay').classList.add('show');
+        }
+
+        function selectMode(mode) {
+            gameMode = mode;
+            document.getElementById('modeOverlay').classList.remove('show');
+            startGameWithMode();
+        }
+
+        async function startGameWithMode() {
             moves = 0;
             matchedPairs = 0;
             flippedCards = [];
+            timeRemaining = 30;
             document.getElementById('moves').textContent = '0';
             document.getElementById('matches').textContent = '0';
 
             generateGameBoard();
             displayBoard();
 
+            // Challenge Mode：顯示進度條
+            if (gameMode === 'challenge') {
+                document.getElementById('progressBar').classList.add('show');
+                document.getElementById('timerDisplay').classList.add('show');
+            }
+
             await showCountdown();
             await peekCards();
-            
+
+            // Challenge Mode：學生開始操作時才正式啟動計時
+            if (gameMode === 'challenge') {
+                startTimer();
+            }
+
             gameStarted = true;
         }
 
@@ -806,14 +1098,18 @@
 
         function closeSuccess() {
             document.getElementById('successOverlay').classList.remove('show');
+            stopTimer(); // 已包含隱藏進度條和計時顯示
+            gameMode = null; // 重置模式
+            gameStarted = false;
         }
 
         function restartRound() {
             if (!gameStarted) return;
-            
+
             moves = 0;
             matchedPairs = 0;
             flippedCards = [];
+            timeRemaining = 30;
             document.getElementById('moves').textContent = '0';
             document.getElementById('matches').textContent = '0';
 
@@ -821,6 +1117,15 @@
             cards.forEach(card => {
                 card.classList.remove('flipped', 'matched', 'mine-hit');
             });
+
+            // Challenge Mode：重置進度條和計時顯示
+            if (gameMode === 'challenge') {
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('timerDisplay').textContent = 'Time Left: 30s';
+                document.getElementById('progressFill').classList.remove('danger');
+                document.getElementById('timerDisplay').classList.remove('danger');
+                startTimer();
+            }
 
             peekCards();
         }
@@ -830,6 +1135,7 @@
                 alert('Please select a lesson first! 請先選擇單元！');
                 return;
             }
+            stopTimer(); // 已包含隱藏進度條和計時顯示
             startGame();
         }
 
@@ -848,7 +1154,63 @@
                 element.style.fontSize = (currentSize - 1) + 'px';
             }
         }
-    
+
+        // ── 計時邏輯 ──
+        function startTimer() {
+            if (timerInterval) clearInterval(timerInterval);
+
+            timerInterval = setInterval(() => {
+                timeRemaining--;
+
+                // 更新進度條
+                const percentage = (timeRemaining / 30) * 100;
+                const fill = document.getElementById('progressFill');
+                fill.style.width = percentage + '%';
+
+                // 更新計時顯示
+                const timerDisplay = document.getElementById('timerDisplay');
+                timerDisplay.textContent = `Time Left: ${timeRemaining}s`;
+
+                // 5 秒時變紅並閃爍
+                if (timeRemaining <= 5) {
+                    fill.classList.add('danger');
+                    timerDisplay.classList.add('danger');
+                } else {
+                    fill.classList.remove('danger');
+                    timerDisplay.classList.remove('danger');
+                }
+
+                // 時間到
+                if (timeRemaining <= 0) {
+                    stopTimer();
+                    gameTimeout();
+                }
+            }, 1000);
+        }
+
+        function stopTimer() {
+            if (timerInterval) {
+                clearInterval(timerInterval);
+                timerInterval = null;
+            }
+            document.getElementById('progressBar').classList.remove('show');
+            document.getElementById('timerDisplay').classList.remove('show');
+            document.getElementById('progressFill').classList.remove('danger');
+            document.getElementById('timerDisplay').classList.remove('danger');
+        }
+
+        function gameTimeout() {
+            canFlip = false;
+            const stats = `Matched: ${matchedPairs}/4 配對: ${matchedPairs}/4 | Moves: ${moves}`;
+            document.getElementById('timeoutStats').textContent = stats;
+            document.getElementById('timeoutOverlay').classList.add('show');
+        }
+
+        function retryGame() {
+            document.getElementById('timeoutOverlay').classList.remove('show');
+            startGameWithMode();
+        }
+
         // ── SOUND EFFECTS (Web Audio API) ──
         function playMatchSound() {
             try {
