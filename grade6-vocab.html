@@ -197,15 +197,16 @@
         }
 
         .card-text {
-            /* 初始字體大小為 8vmin（約 100-120px），供 adjustFontSize 自動縮放 */
-            font-size: 8vmin;
+            /* 初始字體大小由 adjustFontSize 設定為 160px */
+            font-size: 160px;
             text-align: center;
-            line-height: 1.1;
+            line-height: 1.0;
             font-weight: 800;
-            /* 允許換行 */
+            /* 允許換行：優先在空格處換行，不強制擠成一行 */
             white-space: normal;
+            word-break: keep-all;
+            overflow-wrap: break-word;
             overflow: hidden;
-            text-overflow: ellipsis;
             /* 撐滿卡片寬度 */
             width: 100%;
             padding: 0 8px;
@@ -1216,12 +1217,12 @@
 
         // ── 自動縮放字體大小 ──
         function adjustFontSize(element) {
-            // 初始字體大小設為 8vmin（相應於 CSS 設定）
-            const initialSize = Math.max(100, window.innerWidth * 0.08);
-            element.style.fontSize = initialSize + 'px';
+            // 初始字體大小設為 160px，目的是讓所有單字都從「溢出狀態」開始縮小
+            element.style.fontSize = '160px';
 
             // 迴圈檢查：若文字寬度或高度溢出，逐一縮小字體
             // 檢查條件：scrollWidth > offsetWidth（寬度溢出）或 scrollHeight > offsetHeight（高度溢出）
+            // 長單字會自動折行成兩行，但如果高度仍然超出卡片，則繼續縮小字體
             while ((element.scrollWidth > element.offsetWidth || element.scrollHeight > element.offsetHeight) && parseInt(element.style.fontSize) > 12) {
                 const currentSize = parseInt(element.style.fontSize);
                 element.style.fontSize = (currentSize - 1) + 'px';
