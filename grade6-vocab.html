@@ -183,27 +183,38 @@
             background: linear-gradient(135deg, #4facfe 0%, #00f2fe 100%);
             color: white;
             transform: rotateY(180deg);
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            gap: 6px;
         }
 
         .card-emoji {
             font-size: 12vmin;
             line-height: 1;
+            flex-shrink: 0;
         }
 
         .card-text {
-            font-size: clamp(1rem, 3.2vmin, 2.2rem);
+            /* 初始字體非常大，供 adjustFontSize 自動縮放 */
+            font-size: 120px;
             text-align: center;
-            line-height: 1.2;
+            line-height: 1.15;
             font-weight: 800;
-            overflow-wrap: break-word;
-            word-break: break-word;
-            hyphens: auto;
-            max-width: 100%;
+            /* 不換行以進行溢出偵測 */
+            white-space: nowrap;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            /* 撐滿卡片寬度 */
             width: 100%;
-            padding: 0 6px;
+            padding: 0 8px;
+            /* flex 垂直置中 */
             display: flex;
             align-items: center;
             justify-content: center;
+            flex-shrink: 1;
+            min-height: 0;
         }
 
         .flip-card.matched .card-back {
@@ -421,7 +432,7 @@
             .card-front { font-size: 10vw; }
             .card-emoji { font-size: 10vw; }
             .card-back.mine { font-size: 10vw; }
-            .card-text { font-size: clamp(0.85rem, 3.2vw, 1.3rem); }
+            .card-text { font-size: 120px; }
         }
 
         /* 小平板 / 手機橫式 */
@@ -435,7 +446,7 @@
             .card-front { font-size: 10vmin; }
             .card-emoji { font-size: 10vmin; }
             .card-back.mine { font-size: 10vmin; }
-            .card-text { font-size: clamp(1rem, 3vmin, 1.7rem); }
+            .card-text { font-size: 120px; }
         }
 
         /* 11吋平板橫式（主要目標）*/
@@ -453,7 +464,7 @@
             .card-front { font-size: 12vmin; }
             .card-emoji { font-size: 12vmin; }
             .card-back.mine { font-size: 12vmin; }
-            .card-text { font-size: clamp(1.2rem, 3.4vmin, 2.4rem); }
+            .card-text { font-size: 120px; }
         }
 
         </style>
@@ -649,10 +660,10 @@
                     if (cardData) {
                         card.dataset.pairId = cardData.pairId;
                         const isEmoji = cardData.type === 'emoji';
-                        const displayContent = isEmoji 
+                        const displayContent = isEmoji
                             ? `<div class="card-emoji">${cardData.content}</div>`
                             : `<div class="card-text">${cardData.content}</div>`;
-                        
+
                         card.innerHTML = `
                             <div class="card-inner">
                                 <div class="card-face card-front">?</div>
@@ -665,6 +676,12 @@
                 card.onclick = () => flipCard(card, i);
                 board.appendChild(card);
             }
+
+            // 對所有文字卡片執行自動縮放
+            const textCards = board.querySelectorAll('.card-text');
+            textCards.forEach(element => {
+                adjustFontSize(element);
+            });
         }
 
         async function startGame() {
@@ -818,6 +835,18 @@
 
         function sleep(ms) {
             return new Promise(resolve => setTimeout(resolve, ms));
+        }
+
+        // ── 自動縮放字體大小 ──
+        function adjustFontSize(element) {
+            // 初始字體大小設為 120px
+            element.style.fontSize = '120px';
+
+            // 迴圈檢查：若文字溢出，逐一縮小字體
+            while (element.scrollWidth > element.offsetWidth && parseInt(element.style.fontSize) > 12) {
+                const currentSize = parseInt(element.style.fontSize);
+                element.style.fontSize = (currentSize - 1) + 'px';
+            }
         }
     
         // ── SOUND EFFECTS (Web Audio API) ──
