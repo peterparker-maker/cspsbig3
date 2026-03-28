@@ -1101,8 +1101,7 @@
 
         function closeSuccess() {
             document.getElementById('successOverlay').classList.remove('show');
-            stopTimer();
-            document.getElementById('progressBar').classList.remove('show');
+            stopTimer(); // 已包含隱藏進度條和計時顯示
             gameMode = null; // 重置模式
             gameStarted = false;
         }
