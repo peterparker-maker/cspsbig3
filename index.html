@@ -289,12 +289,60 @@ for(let i=0;i<80;i++){
   starsEl.appendChild(s);
 }
 
+// ── Audio Context 解鎖機制 ──
+let audioCtx=null;
+function initAudio(){
+  if(audioCtx) return;
+  try{
+    audioCtx=new(window.AudioContext||window.webkitAudioContext)();
+    if(audioCtx.state==='suspended') audioCtx.resume();
+  }catch(e){}
+  document.removeEventListener('click',initAudio);
+}
+document.addEventListener('click',initAudio,{once:true});
+
+// ── 清脆『滴』聲（開啟遊戲用） ──
+function playClickSound(){
+  if(!audioCtx) return;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.type='sine';
+  const t=audioCtx.currentTime;
+  osc.frequency.setValueAtTime(800,t);
+  osc.frequency.exponentialRampToValueAtTime(400,t+0.05);
+  gain.gain.setValueAtTime(0.3,t);
+  gain.gain.exponentialRampToValueAtTime(0.01,t+0.05);
+  osc.start(t);
+  osc.stop(t+0.05);
+}
+
+// ── 較輕微的關閉聲 ──
+function playCloseSound(){
+  if(!audioCtx) return;
+  const osc=audioCtx.createOscillator();
+  const gain=audioCtx.createGain();
+  osc.connect(gain);
+  gain.connect(audioCtx.destination);
+  osc.type='sine';
+  const t=audioCtx.currentTime;
+  osc.frequency.setValueAtTime(500,t);
+  osc.frequency.exponentialRampToValueAtTime(300,t+0.03);
+  gain.gain.setValueAtTime(0.15,t);
+  gain.gain.exponentialRampToValueAtTime(0.001,t+0.03);
+  osc.start(t);
+  osc.stop(t+0.03);
+}
+
 function openGame(src, title){
+  playClickSound();
   document.getElementById('frameTitle').textContent=title;
   document.getElementById('gameIframe').src=src;
   document.getElementById('gameFrame').classList.add('open');
 }
 function closeGame(){
+  playCloseSound();
   document.getElementById('gameFrame').classList.remove('open');
   document.getElementById('gameIframe').src='';
 }
