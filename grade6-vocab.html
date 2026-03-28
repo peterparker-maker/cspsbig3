@@ -197,13 +197,13 @@
         }
 
         .card-text {
-            /* 初始字體非常大，供 adjustFontSize 自動縮放 */
-            font-size: 120px;
+            /* 初始字體大小為 8vmin（約 100-120px），供 adjustFontSize 自動縮放 */
+            font-size: 8vmin;
             text-align: center;
-            line-height: 1.15;
+            line-height: 1.1;
             font-weight: 800;
-            /* 不換行以進行溢出偵測 */
-            white-space: nowrap;
+            /* 允許換行 */
+            white-space: normal;
             overflow: hidden;
             text-overflow: ellipsis;
             /* 撐滿卡片寬度 */
@@ -213,6 +213,7 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            text-align: center;
             flex-shrink: 1;
             min-height: 0;
         }
@@ -899,9 +900,9 @@
             lesson2: [
                 { emoji: '🏠', text: 'home' },
                 { emoji: '🏫', text: 'school' },
-                { emoji: '🏪', text: 'store' },
+                { emoji: '🏬', text: 'department store' },
                 { emoji: '🍴', text: 'restaurant' },
-                { emoji: '🎡', text: 'park' },
+                { emoji: '🎡', text: 'amusement park' },
                 { emoji: '🦁', text: 'zoo' },
                 { emoji: '📚', text: 'library' },
                 { emoji: '🛒', text: 'supermarket' }
@@ -1215,11 +1216,13 @@
 
         // ── 自動縮放字體大小 ──
         function adjustFontSize(element) {
-            // 初始字體大小設為 120px
-            element.style.fontSize = '120px';
+            // 初始字體大小設為 8vmin（相應於 CSS 設定）
+            const initialSize = Math.max(100, window.innerWidth * 0.08);
+            element.style.fontSize = initialSize + 'px';
 
-            // 迴圈檢查：若文字溢出，逐一縮小字體
-            while (element.scrollWidth > element.offsetWidth && parseInt(element.style.fontSize) > 12) {
+            // 迴圈檢查：若文字寬度或高度溢出，逐一縮小字體
+            // 檢查條件：scrollWidth > offsetWidth（寬度溢出）或 scrollHeight > offsetHeight（高度溢出）
+            while ((element.scrollWidth > element.offsetWidth || element.scrollHeight > element.offsetHeight) && parseInt(element.style.fontSize) > 12) {
                 const currentSize = parseInt(element.style.fontSize);
                 element.style.fontSize = (currentSize - 1) + 'px';
             }
