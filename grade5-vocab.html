@@ -1153,11 +1153,17 @@
                 const fill = document.getElementById('progressFill');
                 fill.style.width = percentage + '%';
 
+                // 更新計時顯示
+                const timerDisplay = document.getElementById('timerDisplay');
+                timerDisplay.textContent = `Time Left: ${timeRemaining}s`;
+
                 // 5 秒時變紅並閃爍
                 if (timeRemaining <= 5) {
                     fill.classList.add('danger');
+                    timerDisplay.classList.add('danger');
                 } else {
                     fill.classList.remove('danger');
+                    timerDisplay.classList.remove('danger');
                 }
 
                 // 時間到
