@@ -307,26 +307,39 @@
 
         .success-message, .freeze-message {
             background: white;
-            padding: 35px;
-            border-radius: 20px;
+            padding: clamp(35px, 5vw, 60px);
+            border-radius: 30px;
             text-align: center;
-            animation: popIn 0.5s ease;
+            animation: popIn 0.5s ease-out;
+            width: clamp(90%, 70vw, 800px);
+            max-width: 95%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 40px 120px rgba(0,0,0,0.2);
+            line-height: 1.6;
         }
 
         @keyframes popIn {
-            0% { transform: scale(0.5); opacity: 0; }
-            100% { transform: scale(1); opacity: 1; }
+            0% {
+                transform: scale(0.3) translateY(-50px);
+                opacity: 0;
+            }
+            50% {
+                transform: scale(1.05);
+            }
+            100% {
+                transform: scale(1) translateY(0);
+                opacity: 1;
+            }
         }
 
         .success-icon, .freeze-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
+            font-size: clamp(4rem, 10vw, 6rem);
+            margin-bottom: clamp(15px, 2vw, 25px);
         }
 
         .success-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.8rem, 5vw, 3rem);
             color: #11998e;
-            margin-bottom: 12px;
+            margin-bottom: clamp(12px, 2vw, 20px);
             font-weight: bold;
         }
 
@@ -347,9 +360,9 @@
         }
 
         .freeze-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.8rem, 5vw, 3rem);
             color: #f5576c;
-            margin-bottom: 10px;
+            margin-bottom: clamp(10px, 2vw, 20px);
             font-weight: bold;
         }
 
@@ -484,47 +497,50 @@
 
         .mode-dialog {
             background: white;
-            padding: 40px;
-            border-radius: 20px;
+            padding: clamp(40px, 5vw, 60px);
+            border-radius: 30px;
             text-align: center;
-            animation: popIn 0.5s ease;
-            max-width: 90%;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+            animation: popIn 0.5s ease-out;
+            width: clamp(90%, 70vw, 800px);
+            max-width: 95%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 40px 120px rgba(0,0,0,0.2);
         }
 
         .mode-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.8rem, 5vw, 3rem);
             color: #667eea;
-            margin-bottom: 10px;
+            margin-bottom: clamp(10px, 2vw, 20px);
             font-weight: bold;
         }
 
         .mode-subtitle {
-            font-size: 0.9rem;
+            font-size: clamp(0.9rem, 2vw, 1.1rem);
             color: #999;
-            margin-bottom: 30px;
+            margin-bottom: clamp(30px, 4vw, 40px);
         }
 
         .mode-buttons {
             display: flex;
-            gap: 15px;
+            gap: clamp(15px, 3vw, 25px);
             justify-content: center;
             flex-wrap: wrap;
         }
 
         .mode-btn {
-            padding: 16px 28px;
+            padding: clamp(16px 28px, 3vw 5vw, 30px 40px);
             border: none;
-            border-radius: 12px;
-            font-size: 1rem;
+            border-radius: 18px;
+            font-size: clamp(1rem, 2vw, 1.2rem);
             font-weight: bold;
             cursor: pointer;
             transition: all 0.3s ease;
-            min-width: 160px;
+            min-width: clamp(140px, 30vw, 280px);
+            min-height: clamp(80px, 20vw, 200px);
             display: flex;
             flex-direction: column;
             align-items: center;
-            gap: 8px;
+            justify-content: center;
+            gap: clamp(8px, 1.5vw, 16px);
         }
 
         .mode-btn.relax {
@@ -550,15 +566,16 @@
         }
 
         .mode-icon {
-            font-size: 2rem;
+            font-size: clamp(2rem, 8vw, 6rem);
         }
 
         .mode-text {
-            line-height: 1.3;
+            line-height: 1.4;
+            font-size: clamp(0.95rem, 2vw, 1.1rem);
         }
 
         .mode-label {
-            font-size: 0.85rem;
+            font-size: clamp(0.75rem, 1.5vw, 0.95rem);
             opacity: 0.85;
         }
 
@@ -582,21 +599,25 @@
 
         .timeout-message {
             background: white;
-            padding: 35px;
-            border-radius: 20px;
+            padding: clamp(35px, 5vw, 60px);
+            border-radius: 30px;
             text-align: center;
-            animation: popIn 0.5s ease;
+            animation: popIn 0.5s ease-out;
+            width: clamp(90%, 70vw, 800px);
+            max-width: 95%;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4), 0 40px 120px rgba(0,0,0,0.2);
+            line-height: 1.6;
         }
 
         .timeout-icon {
-            font-size: 4rem;
-            margin-bottom: 15px;
+            font-size: clamp(4rem, 10vw, 6rem);
+            margin-bottom: clamp(15px, 2vw, 25px);
         }
 
         .timeout-title {
-            font-size: 1.8rem;
+            font-size: clamp(1.8rem, 5vw, 3rem);
             color: #ff6b6b;
-            margin-bottom: 12px;
+            margin-bottom: clamp(12px, 2vw, 20px);
             font-weight: bold;
         }
 
@@ -687,6 +708,53 @@
             .card-emoji { font-size: 12vmin; }
             .card-back.mine { font-size: 12vmin; }
             .card-text { font-size: clamp(1.4rem, 4.5vmin, 3rem); }
+        }
+
+        /* ── 彈出視窗響應式優化 ── */
+        /* 手機直式（max-width: 600px）*/
+        @media (max-width: 600px) {
+            .mode-buttons {
+                flex-direction: column;
+                gap: 12px;
+            }
+
+            .mode-btn {
+                width: 100%;
+                min-height: 80px;
+            }
+        }
+
+        /* 小平板/手機橫式（600px - 900px）*/
+        @media (min-width: 600px) and (max-width: 900px) {
+            .mode-buttons {
+                gap: 12px;
+            }
+
+            .mode-btn {
+                min-width: 140px;
+                min-height: 120px;
+            }
+        }
+
+        /* 大平板及以上（min-width: 1024px）- 最大化視窗 */
+        @media (min-width: 1024px) {
+            .mode-dialog,
+            .success-message,
+            .freeze-message,
+            .timeout-message {
+                width: 800px;
+                padding: 60px;
+            }
+
+            .mode-buttons {
+                gap: 25px;
+            }
+
+            .mode-btn {
+                width: 280px;
+                height: 200px;
+                min-height: 200px;
+            }
         }
 
         </style>
