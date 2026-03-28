@@ -660,6 +660,47 @@
         </style>
 </head>
 <body>
+    <!-- 進度條 -->
+    <div class="progress-bar" id="progressBar">
+        <div class="progress-fill" id="progressFill"></div>
+    </div>
+
+    <!-- 模式選擇 Modal -->
+    <div class="mode-overlay" id="modeOverlay">
+        <div class="mode-dialog">
+            <div class="mode-title">🎮 選擇遊戲模式</div>
+            <div class="mode-subtitle">Choose your game mode</div>
+            <div class="mode-buttons">
+                <button class="mode-btn relax" onclick="selectMode('relax')">
+                    <div class="mode-icon">🌱</div>
+                    <div class="mode-text">
+                        <div>Relax Mode</div>
+                        <div class="mode-label">不計時・輕鬆練習</div>
+                    </div>
+                </button>
+                <button class="mode-btn challenge" onclick="selectMode('challenge')">
+                    <div class="mode-icon">🔥</div>
+                    <div class="mode-text">
+                        <div>Challenge Mode</div>
+                        <div class="mode-label">30秒挑戰・限時搶答</div>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </div>
+
+    <!-- 時間結束 Overlay -->
+    <div class="timeout-overlay" id="timeoutOverlay">
+        <div class="timeout-message">
+            <div class="timeout-icon">⏰</div>
+            <div class="timeout-title">Time Over! 時間到！</div>
+            <div class="timeout-stats" id="timeoutStats"></div>
+            <button class="timeout-btn" onclick="retryGame()">
+                🔄 重試・Retry
+            </button>
+        </div>
+    </div>
+
     <div class="container">
         <div class="header">
             <div class="title-section">
