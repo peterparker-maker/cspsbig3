@@ -120,25 +120,47 @@ iframe{flex:1;border:none;width:100%;background:#fff;}
 
 /* ── RESPONSIVE BREAKPOINTS ── */
 
+/* 手機直式 / 平板直式 < 1024px */
+@media(max-width:1023px){
+  .grades-row{flex-direction:column;gap:0;}
+  .vdivider{display:none;}
+  .hub{justify-content:flex-start;padding-top:clamp(16px,3vh,28px);}
+  .card-sub{white-space:normal;}
+  .grade-col{width:100%;}
+}
+
 /* 手機直式 < 600px */
 @media(max-width:600px){
-  .grades-row{flex-direction:column;}
-  .vdivider{width:100%;height:2px;align-self:auto;}
-  .hub{justify-content:flex-start;padding-top:16px;}
-  .card-sub{white-space:normal;}
+  .card{min-height:80px;padding:clamp(12px,1.5vh,16px) clamp(12px,2vw,18px);}
+  .card-icon{font-size:clamp(2rem,4vw,2.4rem);}
+  .card-title{font-size:clamp(.85rem,2vw,1rem);font-weight:900;}
+  .card-badge{padding:4px 10px;font-size:clamp(.6rem,.8vw,.68rem);}
+}
+
+/* 平板直式 600–1023px (11吋平板直式主要目標) */
+@media(min-width:600px) and (max-width:1023px){
+  .card{min-height:100px;padding:clamp(14px,2vh,20px) clamp(14px,1.8vw,22px);}
+  .card-icon{font-size:clamp(2.4rem,3.5vw,2.8rem);}
+  .card-title{font-size:clamp(.95rem,1.5vw,1.1rem);font-weight:900;}
+  .card-sub{font-size:clamp(.68rem,1.2vw,.78rem);}
+  .card-badge{padding:4px 11px;font-size:clamp(.62rem,.9vw,.72rem);}
+  .cards-row{gap:clamp(8px,1.2vh,14px);}
+  .hub{gap:clamp(12px,2vh,18px);}
 }
 
 /* 手機橫式 / 小平板 600–900px */
-@media(min-width:600px) and (max-width:900px){
+@media(min-width:600px) and (max-width:900px) and (orientation:landscape){
   .card-icon{font-size:1.6rem;}
   .card-title{font-size:.88rem;}
 }
 
-/* 11吋平板橫式 主要目標 1024–1200px */
+/* 11吋平板橫式 主要目標 >= 1024px */
 @media(min-width:1024px){
-  .hub{gap:24px;}
+  .grades-row{flex-direction:row;}
+  .vdivider{display:block;}
+  .hub{justify-content:center;gap:24px;}
   .cards-row{gap:14px;}
-  .card{padding:22px 28px;}
+  .card{padding:22px 28px;min-height:auto;}
   .card-icon{font-size:3.2rem;}
   .card-title{font-size:1.25rem;}
   .card-sub{font-size:.78rem;}
