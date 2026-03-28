@@ -1067,10 +1067,11 @@
 
         function restartRound() {
             if (!gameStarted) return;
-            
+
             moves = 0;
             matchedPairs = 0;
             flippedCards = [];
+            timeRemaining = 30;
             document.getElementById('moves').textContent = '0';
             document.getElementById('matches').textContent = '0';
 
@@ -1078,6 +1079,12 @@
             cards.forEach(card => {
                 card.classList.remove('flipped', 'matched', 'mine-hit');
             });
+
+            // Challenge Mode：重置進度條
+            if (gameMode === 'challenge') {
+                document.getElementById('progressFill').style.width = '100%';
+                startTimer();
+            }
 
             peekCards();
         }
