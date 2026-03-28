@@ -1121,9 +1121,12 @@
                 card.classList.remove('flipped', 'matched', 'mine-hit');
             });
 
-            // Challenge Mode：重置進度條
+            // Challenge Mode：重置進度條和計時顯示
             if (gameMode === 'challenge') {
                 document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('timerDisplay').textContent = 'Time Left: 30s';
+                document.getElementById('progressFill').classList.remove('danger');
+                document.getElementById('timerDisplay').classList.remove('danger');
                 startTimer();
             }
 
