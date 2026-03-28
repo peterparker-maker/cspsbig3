@@ -1179,6 +1179,10 @@
                 clearInterval(timerInterval);
                 timerInterval = null;
             }
+            document.getElementById('progressBar').classList.remove('show');
+            document.getElementById('timerDisplay').classList.remove('show');
+            document.getElementById('progressFill').classList.remove('danger');
+            document.getElementById('timerDisplay').classList.remove('danger');
         }
 
         function gameTimeout() {
