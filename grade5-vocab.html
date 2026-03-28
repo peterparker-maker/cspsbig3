@@ -927,18 +927,36 @@
                 return;
             }
 
+            // 顯示模式選擇
+            document.getElementById('modeOverlay').classList.add('show');
+        }
+
+        function selectMode(mode) {
+            gameMode = mode;
+            document.getElementById('modeOverlay').classList.remove('show');
+            startGameWithMode();
+        }
+
+        async function startGameWithMode() {
             moves = 0;
             matchedPairs = 0;
             flippedCards = [];
+            timeRemaining = 30;
             document.getElementById('moves').textContent = '0';
             document.getElementById('matches').textContent = '0';
 
             generateGameBoard();
             displayBoard();
 
+            // Challenge Mode：顯示進度條並啟動計時
+            if (gameMode === 'challenge') {
+                document.getElementById('progressBar').classList.add('show');
+                startTimer();
+            }
+
             await showCountdown();
             await peekCards();
-            
+
             gameStarted = true;
         }
 
