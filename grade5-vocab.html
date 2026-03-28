@@ -1061,6 +1061,8 @@
 
         function closeSuccess() {
             document.getElementById('successOverlay').classList.remove('show');
+            stopTimer();
+            document.getElementById('progressBar').classList.remove('show');
         }
 
         function restartRound() {
