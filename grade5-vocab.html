@@ -983,14 +983,19 @@
             generateGameBoard();
             displayBoard();
 
-            // Challenge Mode：顯示進度條並啟動計時
+            // Challenge Mode：顯示進度條
             if (gameMode === 'challenge') {
                 document.getElementById('progressBar').classList.add('show');
-                startTimer();
+                document.getElementById('timerDisplay').classList.add('show');
             }
 
             await showCountdown();
             await peekCards();
+
+            // Challenge Mode：學生開始操作時才正式啟動計時
+            if (gameMode === 'challenge') {
+                startTimer();
+            }
 
             gameStarted = true;
         }
