@@ -1,17 +1,1 @@
-{
-  "hooks": {
-    "PostToolUse": [
-      {
-        "matcher": "Write|Edit",
-        "hooks": [
-          {
-            "type": "command",
-            "command": "bash -c 'cd /c/Users/Peter\\ Kuo/cspsbig3 && git add -A && (git commit -m \"Auto-update\" || true) && git push origin main 2>&1 || true'",
-            "statusMessage": "自動提交和推送更改...",
-            "timeout": 30
-          }
-        ]
-      }
-    ]
-  }
-}
+{}
