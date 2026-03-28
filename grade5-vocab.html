@@ -1063,6 +1063,8 @@
             document.getElementById('successOverlay').classList.remove('show');
             stopTimer();
             document.getElementById('progressBar').classList.remove('show');
+            gameMode = null; // 重置模式
+            gameStarted = false;
         }
 
         function restartRound() {
