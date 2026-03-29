@@ -1,4 +1,7 @@
-const CACHE_NAME = 'changxing-english-v4';
+// ── 版本控制：使用版本號 + 時間戳確保強制更新 ──
+const CACHE_VERSION = 'v4';
+const CACHE_TIMESTAMP = '20260329-001'; // YYYYMMDD-HHmm 格式，每次更新時修改
+const CACHE_NAME = `changxing-english-${CACHE_VERSION}-${CACHE_TIMESTAMP}`;
 
 const FILES_TO_CACHE = [
   './index.html',

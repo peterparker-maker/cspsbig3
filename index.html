@@ -349,36 +349,67 @@ function closeGame(){
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeGame(); });
 
-// PWA Service Worker 註冊 + 自動更新檢測機制
+// PWA Service Worker 註冊 + 優化的自動更新檢測機制（平板友善）
 if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => {
-        console.log('SW registered:', reg.scope);
+  let swReg = null;
+  let updateCheckTimer = null;
 
-        // 定期檢查 Service Worker 更新（每 10 秒檢查一次）
-        setInterval(() => {
-          reg.update();
-        }, 10000);
+  // 立即嘗試註冊（不等待 load 事件），提供更快的更新檢測
+  navigator.serviceWorker.register('./service-worker.js?t=' + Date.now())
+    .then(reg => {
+      swReg = reg;
+      console.log('SW registered:', reg.scope);
 
-        // 當偵測到新的 Service Worker 已安裝且等待啟用
-        reg.addEventListener('updatefound', () => {
-          const newWorker = reg.installing;
-          newWorker.addEventListener('statechange', () => {
-            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-              // 新版本已安裝，舊版本仍在使用中 → 顯示更新提示
-              showUpdateNotification();
-            }
-          });
+      // 立即檢查一次更新
+      checkForUpdates();
+
+      // 設置定期檢查（改為每 5 秒檢查一次，對平板更友善）
+      if (updateCheckTimer) clearInterval(updateCheckTimer);
+      updateCheckTimer = setInterval(() => {
+        checkForUpdates();
+      }, 5000);
+
+      // 當偵測到新的 Service Worker 已安裝且等待啟用
+      reg.addEventListener('updatefound', () => {
+        const newWorker = reg.installing;
+        newWorker.addEventListener('statechange', () => {
+          if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+            // 新版本已安裝，舊版本仍在使用中 → 顯示更新提示
+            showUpdateNotification();
+          }
         });
-      })
-      .catch(err => console.log('SW registration failed:', err));
-  });
+      });
+    })
+    .catch(err => console.log('SW registration failed:', err));
 
-  // 更新通知提示函式
+  // 頁面可見時自動檢查更新（平板從睡眠喚醒時觸發）
+  if (document.hidden !== undefined) {
+    document.addEventListener('visibilitychange', () => {
+      if (!document.hidden && swReg) {
+        console.log('Page became visible, checking for updates...');
+        checkForUpdates();
+      }
+    });
+  }
+
+  // 優化的更新檢查函式，帶重試機制
+  function checkForUpdates() {
+    if (!swReg) return;
+
+    swReg.update().catch(err => {
+      console.warn('SW update check failed, will retry:', err);
+      // 失敗時會在下一個定時檢查時重試
+    });
+  }
+
+  // 增強的更新通知提示函式（不自動消失）
   function showUpdateNotification() {
     // 確保頁面上只有一個提示
-    if (document.getElementById('updateNotification')) return;
+    const existing = document.getElementById('updateNotification');
+    if (existing) {
+      existing.style.animation = 'pulse 0.5s ease';
+      return;
+    }
 
     const notif = document.createElement('div');
     notif.id = 'updateNotification';
@@ -388,30 +419,55 @@ if ('serviceWorker' in navigator) {
       right: 20px;
       background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
       color: white;
-      padding: 20px 24px;
+      padding: 16px 20px;
       border-radius: 12px;
-      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      box-shadow: 0 8px 32px rgba(0,0,0,0.4);
       font-family: 'Nunito', 'Microsoft JhengHei', sans-serif;
-      font-size: 0.95rem;
+      font-size: 0.9rem;
       font-weight: 700;
       z-index: 10000;
       display: flex;
-      align-items: center;
-      gap: 16px;
+      flex-direction: column;
+      gap: 12px;
       animation: slideIn 0.3s ease;
+      max-width: 320px;
     `;
 
     const message = document.createElement('div');
-    message.textContent = '✨ 發現新版本，請重新整理';
-    message.style.flex = '1';
+    message.innerHTML = '✨ <strong>發現新版本！</strong><br/>請點擊按鈕立即更新';
+    message.style.lineHeight = '1.4';
+
+    const buttonContainer = document.createElement('div');
+    buttonContainer.style.cssText = `
+      display: flex;
+      gap: 10px;
+      margin-top: 8px;
+    `;
 
     const reloadBtn = document.createElement('button');
-    reloadBtn.textContent = '重新整理';
+    reloadBtn.textContent = '立即更新';
     reloadBtn.style.cssText = `
-      background: rgba(255,255,255,0.25);
+      flex: 1;
+      background: rgba(255,255,255,0.3);
+      color: white;
+      border: none;
+      padding: 10px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      transition: all 0.2s;
+      white-space: nowrap;
+    `;
+
+    const dismissBtn = document.createElement('button');
+    dismissBtn.textContent = '稍後';
+    dismissBtn.style.cssText = `
+      background: transparent;
       color: white;
       border: 1px solid rgba(255,255,255,0.4);
-      padding: 8px 16px;
+      padding: 10px 16px;
       border-radius: 8px;
       cursor: pointer;
       font-family: 'Nunito', sans-serif;
@@ -426,23 +482,38 @@ if ('serviceWorker' in navigator) {
       reloadBtn.style.transform = 'scale(1.05)';
     };
     reloadBtn.onmouseout = () => {
-      reloadBtn.style.background = 'rgba(255,255,255,0.25)';
+      reloadBtn.style.background = 'rgba(255,255,255,0.3)';
       reloadBtn.style.transform = 'scale(1)';
+    };
+
+    dismissBtn.onmouseover = () => {
+      dismissBtn.style.background = 'rgba(255,255,255,0.1)';
+    };
+    dismissBtn.onmouseout = () => {
+      dismissBtn.style.background = 'transparent';
     };
 
     reloadBtn.addEventListener('click', () => {
       window.location.reload();
     });
 
-    notif.appendChild(message);
-    notif.appendChild(reloadBtn);
-    document.body.appendChild(notif);
-
-    // 10 秒後自動淡出
-    setTimeout(() => {
+    dismissBtn.addEventListener('click', () => {
       notif.style.animation = 'slideOut 0.3s ease forwards';
       setTimeout(() => notif.remove(), 300);
-    }, 10000);
+
+      // 30 秒後再次提示（持續提醒直到更新）
+      setTimeout(() => {
+        if (!document.getElementById('updateNotification')) {
+          showUpdateNotification();
+        }
+      }, 30000);
+    });
+
+    buttonContainer.appendChild(reloadBtn);
+    buttonContainer.appendChild(dismissBtn);
+    notif.appendChild(message);
+    notif.appendChild(buttonContainer);
+    document.body.appendChild(notif);
   }
 
   // 添加動畫樣式
@@ -467,6 +538,10 @@ if ('serviceWorker' in navigator) {
         transform: translateX(400px);
         opacity: 0;
       }
+    }
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.05); }
     }
   `;
   document.head.appendChild(style);

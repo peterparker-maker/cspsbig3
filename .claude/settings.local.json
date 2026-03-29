@@ -2,7 +2,12 @@
   "permissions": {
     "allow": [
       "Skill(update-config)",
-      "Skill(update-config:*)"
+      "Skill(update-config:*)",
+      "Bash(/tmp/pwa_check.md:*)",
+      "Read(//tmp/**)",
+      "Bash(/tmp/pwa_summary.txt:*)",
+      "Bash(/tmp/async_fix_summary.md:*)",
+      "Bash(/tmp/cache_diagnosis.md:*)"
     ]
   }
 }
