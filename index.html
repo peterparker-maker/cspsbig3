@@ -349,13 +349,127 @@ function closeGame(){
 }
 document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeGame(); });
 
-// PWA Service Worker 註冊
+// PWA Service Worker 註冊 + 自動更新檢測機制
 if ('serviceWorker' in navigator) {
   window.addEventListener('load', () => {
     navigator.serviceWorker.register('./service-worker.js')
-      .then(reg => console.log('SW registered:', reg.scope))
+      .then(reg => {
+        console.log('SW registered:', reg.scope);
+
+        // 定期檢查 Service Worker 更新（每 10 秒檢查一次）
+        setInterval(() => {
+          reg.update();
+        }, 10000);
+
+        // 當偵測到新的 Service Worker 已安裝且等待啟用
+        reg.addEventListener('updatefound', () => {
+          const newWorker = reg.installing;
+          newWorker.addEventListener('statechange', () => {
+            if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
+              // 新版本已安裝，舊版本仍在使用中 → 顯示更新提示
+              showUpdateNotification();
+            }
+          });
+        });
+      })
       .catch(err => console.log('SW registration failed:', err));
   });
+
+  // 更新通知提示函式
+  function showUpdateNotification() {
+    // 確保頁面上只有一個提示
+    if (document.getElementById('updateNotification')) return;
+
+    const notif = document.createElement('div');
+    notif.id = 'updateNotification';
+    notif.style.cssText = `
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+      background: linear-gradient(135deg, #1976D2 0%, #0D47A1 100%);
+      color: white;
+      padding: 20px 24px;
+      border-radius: 12px;
+      box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+      font-family: 'Nunito', 'Microsoft JhengHei', sans-serif;
+      font-size: 0.95rem;
+      font-weight: 700;
+      z-index: 10000;
+      display: flex;
+      align-items: center;
+      gap: 16px;
+      animation: slideIn 0.3s ease;
+    `;
+
+    const message = document.createElement('div');
+    message.textContent = '✨ 發現新版本，請重新整理';
+    message.style.flex = '1';
+
+    const reloadBtn = document.createElement('button');
+    reloadBtn.textContent = '重新整理';
+    reloadBtn.style.cssText = `
+      background: rgba(255,255,255,0.25);
+      color: white;
+      border: 1px solid rgba(255,255,255,0.4);
+      padding: 8px 16px;
+      border-radius: 8px;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      font-size: 0.85rem;
+      font-weight: 800;
+      transition: all 0.2s;
+      white-space: nowrap;
+    `;
+
+    reloadBtn.onmouseover = () => {
+      reloadBtn.style.background = 'rgba(255,255,255,0.4)';
+      reloadBtn.style.transform = 'scale(1.05)';
+    };
+    reloadBtn.onmouseout = () => {
+      reloadBtn.style.background = 'rgba(255,255,255,0.25)';
+      reloadBtn.style.transform = 'scale(1)';
+    };
+
+    reloadBtn.addEventListener('click', () => {
+      window.location.reload();
+    });
+
+    notif.appendChild(message);
+    notif.appendChild(reloadBtn);
+    document.body.appendChild(notif);
+
+    // 10 秒後自動淡出
+    setTimeout(() => {
+      notif.style.animation = 'slideOut 0.3s ease forwards';
+      setTimeout(() => notif.remove(), 300);
+    }, 10000);
+  }
+
+  // 添加動畫樣式
+  const style = document.createElement('style');
+  style.textContent = `
+    @keyframes slideIn {
+      from {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+      to {
+        transform: translateX(0);
+        opacity: 1;
+      }
+    }
+    @keyframes slideOut {
+      from {
+        transform: translateX(0);
+        opacity: 1;
+      }
+      to {
+        transform: translateX(400px);
+        opacity: 0;
+      }
+    }
+  `;
+  document.head.appendChild(style);
 }
 </script>
 </body>

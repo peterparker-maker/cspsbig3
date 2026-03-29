@@ -459,7 +459,7 @@
         .timer-display {
             position: fixed;
             top: 20px;
-            left: 20px;
+            left: 20px !important;
             font-size: clamp(1rem, 2.5vw, 1.4rem);
             font-weight: 900;
             color: #0d47a1;
@@ -885,6 +885,10 @@
     </div>
 
     <script>
+        // ── 版本控制：用於強制刷新緩存 ──
+        const VERSION = 'v2.1';
+        console.log('Grade 6 Vocab Version:', VERSION);
+
         let currentUnit = null;
         let currentCards = [];
         let flippedCards = [];
@@ -1217,8 +1221,11 @@
 
         // ── 自動縮放字體大小 ──
         function adjustFontSize(element) {
-            // 初始字體大小設為 160px，目的是讓所有單字都從「溢出狀態」開始縮小
-            element.style.fontSize = '160px';
+            // 強制顯示元素，以確保獲取正確的實體寬高（重要：用於解決緩存導致的渲染問題）
+            element.style.display = 'block';
+
+            // 初始字體大小設為 180px，目的是讓所有單字都從「溢出狀態」開始縮小
+            element.style.fontSize = '180px';
 
             // 迴圈檢查：若文字寬度或高度溢出，逐一縮小字體
             // 檢查條件：scrollWidth > offsetWidth（寬度溢出）或 scrollHeight > offsetHeight（高度溢出）
@@ -1328,6 +1335,18 @@
             textCards.forEach(element => {
                 adjustFontSize(element);
             });
+        });
+
+        // ── 頁面加載時強制執行一次字體縮放（解決緩存導致的渲染問題）──
+        window.addEventListener('load', () => {
+            // 延遲執行以確保 DOM 完全渲染
+            setTimeout(() => {
+                const textCards = document.querySelectorAll('.card-text');
+                textCards.forEach(element => {
+                    adjustFontSize(element);
+                });
+                console.log('Font size adjustment completed on load (Version: ' + VERSION + ')');
+            }, 100);
         });
 
     </script>
