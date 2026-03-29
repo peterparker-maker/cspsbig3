@@ -31,11 +31,11 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 }
 
 /* HEADER */
-.hdr{display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:6px;}
+.hdr{display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:4px;padding-bottom:2px;}
 .hdr-l{display:flex;align-items:center;gap:8px;}
 .hicon{font-size:clamp(1.4rem,2.2vw,2rem);}
 .htitle{font-size:clamp(.9rem,1.3vw,1.22rem);font-weight:900;color:var(--text);}
-.hsub{font-size:clamp(.58rem,.75vw,.72rem);color:#aaa;font-weight:600;}
+.hsub{display:none;}
 .tabs{display:flex;gap:6px;flex-wrap:nowrap;}
 .tab{padding:clamp(5px,.7vh,8px) clamp(10px,1.2vw,17px);border-radius:18px;border:2.5px solid transparent;font-family:'Nunito',sans-serif;font-size:clamp(.72rem,.95vw,.9rem);font-weight:800;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#bbb;line-height:1.3;white-space:nowrap;}
 .tl1{background:linear-gradient(135deg,#90CAF9,#1976D2);color:#fff;border-color:#1976D2;box-shadow:0 3px 10px rgba(25,118,210,.4);}
@@ -60,7 +60,7 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .qtip{font-size:clamp(.62rem,.76vw,.75rem);color:#ccc;margin-top:3px;}
 
 /* SENTENCE AREA */
-.sent-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#F8F9FA;border-radius:13px;padding:clamp(12px,1.5vh,18px) clamp(12px,1.5vw,18px);flex-grow:1;min-height:clamp(60px,8vh,90px);}
+.sent-wrap{display:flex;align-items:center;gap:12px;flex-wrap:wrap;background:#F8F9FA;border-radius:13px;padding:clamp(18px,2.5vh,28px) clamp(16px,2vw,26px);flex-grow:1;min-height:clamp(90px,15vh,140px);}
 .sent-wrap.two-lines{flex-direction:column;align-items:flex-start;gap:10px;}
 .sent-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;}
 .line-label{font-size:clamp(.6rem,.72vw,.7rem);font-weight:800;color:#bbb;text-transform:uppercase;letter-spacing:.5px;min-width:30px;}
@@ -68,21 +68,22 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .sword{font-size:clamp(1rem,1.6vw,1.4rem);font-weight:800;color:var(--text);}
 
 /* SLOT */
-.slot{min-width:clamp(80px,10vw,120px);height:auto;min-height:clamp(44px,6vh,58px);border-radius:11px;border:2.5px dashed #CCC;background:#FAFAFA;display:inline-flex;align-items:center;justify-content:center;font-size:clamp(1rem,1.4vw,1.25rem);font-weight:800;color:var(--text);transition:all .2s;cursor:default;padding:6px 12px;}
+.slot{min-width:clamp(160px,14vw,220px);height:auto;min-height:clamp(58px,8vh,80px);border-radius:11px;border:2.5px dashed #CCC;background:#FAFAFA;display:inline-flex;align-items:center;justify-content:center;font-size:clamp(1.2rem,2.5vw,2.8rem);font-weight:800;color:var(--text);transition:all .2s;cursor:default;padding:10px 18px;}
 .slot.occupied{border:2.5px solid #1976D2;background:#DDEEFF;cursor:pointer;}
 .slot.occupied:hover{background:#BBDEFB;transform:scale(1.03);}
-.slot.drag-over{border-color:#26C6DA;background:#E0F7FA;transform:scale(1.05);}
+.slot.drag-over{border-color:#0097A7;background:#00BCD4;color:#fff;transform:scale(1.1);box-shadow:0 0 0 4px rgba(0,151,167,.4);animation:flashBorder .5s ease infinite alternate;}
 .slot.ok{border-color:#4CAF50!important;background:#C8F5CA!important;animation:bSlot .4s ease;}
 .slot.bad{border-color:#F44336!important;background:#FFCDD2!important;animation:sSlot .4s ease;}
 .slot.hinted{border-color:#AB47BC!important;background:#F3E5F5!important;cursor:default;}
+@keyframes flashBorder{0%{box-shadow:0 0 0 3px rgba(0,151,167,.3);}100%{box-shadow:0 0 0 6px rgba(0,151,167,.7);}}
 @keyframes bSlot{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
 @keyframes sSlot{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
 /* CHIPS */
-.chips-wrap{flex-grow:1;min-height:clamp(60px,8vh,100px);}
+.chips-wrap{flex-grow:1;min-height:clamp(90px,12vh,140px);}
 .clabel{font-size:clamp(.6rem,.76vw,.72rem);font-weight:800;color:#ccc;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
 .chips-row{display:flex;gap:9px;flex-wrap:wrap;align-items:flex-start;}
-.chip{padding:clamp(9px,1.1vh,13px) clamp(14px,1.8vw,22px);border-radius:11px;font-size:clamp(1.2rem,2vw,2rem);font-weight:800;cursor:grab;user-select:none;transition:all .2s;touch-action:none;box-shadow:0 3px 10px rgba(0,0,0,.12);border:2.5px solid transparent;position:relative;z-index:1;}
+.chip{padding:clamp(12px,1.5vh,17px) clamp(18px,2.3vw,28px);border-radius:11px;font-size:clamp(1.4rem,2.5vw,2.8rem);font-weight:800;cursor:grab;user-select:none;transition:all .2s;touch-action:none;box-shadow:0 4px 14px rgba(0,0,0,.18);border:2.5px solid transparent;position:relative;z-index:1;}
 .chip:active{cursor:grabbing;transform:scale(1.07) rotate(2deg);z-index:500;}
 .chip.dragging{opacity:.4;transform:scale(.93);}
 .chip.used{opacity:.18;cursor:not-allowed;pointer-events:none;}
@@ -93,7 +94,7 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .cc4{background:#E1BEE7;border-color:#CE93D8;color:#4A148C;}
 .cc5{background:#B2EBF2;border-color:#80DEEA;color:#006064;}
 .cc6{background:#FFF9C4;border-color:#FFF176;color:#5D4037;}
-.drag-ghost{position:fixed;pointer-events:none;z-index:9999;transform:scale(1.12) rotate(3deg);opacity:.9;transition:none;}
+.drag-ghost{position:fixed;pointer-events:none;z-index:9999;transform:scale(1.3) rotate(5deg);opacity:.9;transition:none;}
 
 /* BUTTONS */
 .btn-row{display:flex;gap:9px;justify-content:flex-end;align-items:center;flex-shrink:0;}
@@ -113,10 +114,11 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .fb-ok{background:rgba(200,245,202,.96);}.fb-bad{background:rgba(255,205,210,.96);}
 .fb-emoji{font-size:clamp(3rem,6vw,4.5rem);animation:popIn .4s ease;}
 .fb-msg{font-size:clamp(1.3rem,2.4vw,2rem);font-weight:900;margin-top:8px;color:var(--text);animation:popIn .4s ease .08s both;}
-.fb-sent{font-size:clamp(.9rem,1.2vw,1.15rem);font-weight:700;color:var(--textm);margin-top:5px;max-width:86%;text-align:center;animation:popIn .4s ease .16s both;background:#fff;padding:10px 20px;border-radius:12px;box-shadow:0 2px 8px rgba(0,0,0,.1);}
+.fb-sent{font-size:clamp(1.5rem,5vw,3.5rem);font-weight:900;color:#3D2B1F;margin-top:12px;max-width:95%;text-align:center;animation:popIn .4s ease .16s both;background:#fff;padding:20px 32px;border-radius:14px;box-shadow:0 4px 16px rgba(0,0,0,.18);line-height:1.4;border:3px solid rgba(0,0,0,.08);}
 @keyframes popIn{from{transform:scale(.35);opacity:0}to{transform:scale(1);opacity:1}}
-.btn-next{margin-top:18px;padding:clamp(10px,1.2vh,14px) clamp(24px,3vw,36px);border-radius:14px;border:none;background:linear-gradient(135deg,#80DEEA,#26C6DA);color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(.9rem,1.15vw,1.05rem);font-weight:800;cursor:pointer;box-shadow:0 5px 16px rgba(38,198,218,.4);transition:all .2s;}
-.btn-next:hover{transform:translateY(-3px) scale(1.04);}
+@keyframes breathe{0%,100%{transform:scale(1);}50%{transform:scale(1.05);}}
+.btn-next{margin-top:24px;padding:clamp(14px,1.8vh,20px) clamp(36px,5vw,56px);border-radius:16px;border:none;background:linear-gradient(135deg,#80DEEA,#26C6DA);color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(38,198,218,.5);transition:all .2s;animation:breathe 2s ease-in-out infinite;}
+.btn-next:hover{transform:scale(1.08);animation:none;}
 
 /* ROUND COMPLETE */
 .rcscreen{position:absolute;inset:0;border-radius:26px;background:rgba(240,248,255,.97);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:200;animation:popIn .5s ease;}
@@ -144,6 +146,8 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
   .chip{font-size:clamp(1rem,4.5vw,1.5rem);padding:8px 12px;}
   .slot{font-size:clamp(.9rem,3.5vw,1.1rem);min-width:clamp(65px,22vw,100px);}
   .sword{font-size:clamp(.9rem,3.5vw,1.1rem);}
+  .fb-sent{font-size:clamp(1rem,5vw,1.8rem);padding:14px 20px;}
+  .btn-next{font-size:clamp(1rem,4vw,1.3rem);padding:12px 30px;}
 }
 @media(min-width:600px) and (max-width:900px){
   .card{min-height:auto;}
@@ -153,14 +157,20 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 }
 @media(min-width:1024px){
   body{padding:16px 0 28px;}
-  .card{padding:22px 28px 20px;gap:14px;}
+  .card{padding:22px 30px 22px;gap:14px;max-width:1250px;}
+  .hsub{display:none;}
   .tabs{flex-wrap:nowrap;gap:8px;}
   .tab{padding:7px 18px;font-size:.92rem;}
   .qzh{font-size:clamp(1.8rem,3vw,2.5rem);}
   .sword{font-size:clamp(1.1rem,1.8vw,1.5rem);}
-  .chip{font-size:clamp(1.3rem,2.2vw,2rem);padding:11px 20px;}
-  .slot{font-size:clamp(1.1rem,1.6vw,1.4rem);min-width:clamp(90px,11vw,130px);min-height:clamp(48px,6.5vh,64px);}
+  .sent-wrap{min-height:clamp(110px,16vh,160px);padding:24px 28px;gap:14px;}
+  .chip{font-size:clamp(1.5rem,2.8vw,3rem);padding:14px 28px;}
+  .chips-wrap{min-height:clamp(100px,13vh,155px);}
+  .chips-row{gap:14px;}
+  .slot{font-size:clamp(1.35rem,2.8vw,3rem);min-width:clamp(170px,15vw,240px);min-height:clamp(64px,8.5vh,88px);padding:12px 20px;}
   .dbadge{font-size:.78rem;padding:4px 14px;}
+  .fb-sent{font-size:clamp(1.6rem,4.5vw,3rem);padding:24px 40px;}
+  .btn-next{font-size:clamp(1.3rem,2.3vw,1.8rem);padding:18px 56px;}
 }
 </style>
 </head>
@@ -281,17 +291,17 @@ const QB = {
     ],
     hard:[
       // WHERE questions — full sentence split Q / A
-      {zh:"你昨天在哪裡？→ 我在公園。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"yesterday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the park"},{t:'s',v:"."}],              chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"yesterday?"},{v:"I"},{v:"was"},{v:"at the park"},{v:"."}]},
-      {zh:"你上星期天在哪裡？→ 我在動物園。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"last Sunday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the zoo"},{t:'s',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"last Sunday?"},{v:"I"},{v:"was"},{v:"at the zoo"},{v:"."}]},
-      {zh:"你今天早上在哪裡？→ 我在學校。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"this morning?"}],                     aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at school"},{t:'s',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"this morning?"},{v:"I"},{v:"was"},{v:"at school"},{v:"."}]},
-      {zh:"你一小時前在哪裡？→ 我在博物館。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"an hour ago?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'s',v:"."}],            chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"an hour ago?"},{v:"I"},{v:"was"},{v:"at the museum"},{v:"."}]},
-      {zh:"你十分鐘前在哪裡？→ 我在書店。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"ten minutes ago?"}],                   aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the bookstore"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"ten minutes ago?"},{v:"I"},{v:"was"},{v:"at the bookstore"},{v:"."}]},
+      {zh:"你昨天在哪裡？→ 我在公園。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"yesterday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the park"},{t:'w',v:"."}],              chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"yesterday?"},{v:"I"},{v:"was"},{v:"at the park"}]},
+      {zh:"你上星期天在哪裡？→ 我在動物園。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"last Sunday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the zoo"},{t:'w',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"last Sunday?"},{v:"I"},{v:"was"},{v:"at the zoo"}]},
+      {zh:"你今天早上在哪裡？→ 我在學校。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"this morning?"}],                     aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at school"},{t:'w',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"this morning?"},{v:"I"},{v:"was"},{v:"at school"}]},
+      {zh:"你一小時前在哪裡？→ 我在博物館。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"an hour ago?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'w',v:"."}],            chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"an hour ago?"},{v:"I"},{v:"was"},{v:"at the museum"}]},
+      {zh:"你十分鐘前在哪裡？→ 我在書店。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"ten minutes ago?"}],                   aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the bookstore"},{t:'w',v:"."}],         chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"ten minutes ago?"},{v:"I"},{v:"was"},{v:"at the bookstore"}]},
       // YES/NO questions — full sentence Q + short A
-      {zh:"你昨天在動物園嗎？→ 不，我在遊樂園。",   qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the zoo"},{t:'s',v:"yesterday?"}],                   aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the amusement park"},{t:'s',v:"."}], chips:[{v:"Were"},{v:"you"},{v:"at the zoo"},{v:"yesterday?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the amusement park"},{v:"."}]},
-      {zh:"你上星期天在博物館嗎？→ 是的，我是。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the museum"},{t:'s',v:"last Sunday?"}],               aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the museum"},{v:"last Sunday?"},{v:"Yes,"},{v:"I"},{v:"was"},{v:"."}]},
-      {zh:"你今天早上在超市嗎？→ 不，我在茶店。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the supermarket"},{t:'s',v:"this morning?"}],         aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the tea shop"},{t:'s',v:"."}],    chips:[{v:"Were"},{v:"you"},{v:"at the supermarket"},{v:"this morning?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the tea shop"},{v:"."}]},
-      {zh:"你一小時前在百貨公司嗎？→ 是的，我是。",  qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],     aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"I"},{v:"was"},{v:"."}]},
-      {zh:"你十分鐘前在學校嗎？→ 不，我在家。",      qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at school"},{t:'s',v:"ten minutes ago?"}],               aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at home"},{t:'s',v:"."}],          chips:[{v:"Were"},{v:"you"},{v:"at school"},{v:"ten minutes ago?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at home"},{v:"."}]},
+      {zh:"你昨天在動物園嗎？→ 不，我在遊樂園。",   qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the zoo"},{t:'s',v:"yesterday?"}],                   aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the amusement park"},{t:'w',v:"."}], chips:[{v:"Were"},{v:"you"},{v:"at the zoo"},{v:"yesterday?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the amusement park"}]},
+      {zh:"你上星期天在博物館嗎？→ 是的，我是。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the museum"},{t:'s',v:"last Sunday?"}],               aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'w',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the museum"},{v:"last Sunday?"},{v:"Yes,"},{v:"I"},{v:"was"}]},
+      {zh:"你今天早上在超市嗎？→ 不，我在茶店。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the supermarket"},{t:'s',v:"this morning?"}],         aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the tea shop"},{t:'w',v:"."}],    chips:[{v:"Were"},{v:"you"},{v:"at the supermarket"},{v:"this morning?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the tea shop"}]},
+      {zh:"你一小時前在百貨公司嗎？→ 是的，我是。",  qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],     aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'w',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"I"},{v:"was"}]},
+      {zh:"你十分鐘前在學校嗎？→ 不，我在家。",      qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at school"},{t:'s',v:"ten minutes ago?"}],               aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at home"},{t:'w',v:"."}],          chips:[{v:"Were"},{v:"you"},{v:"at school"},{v:"ten minutes ago?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at home"}]},
     ]
   },
 
@@ -324,16 +334,16 @@ const QB = {
       {zh:"她十分鐘前在學校嗎？→ 是的，她是。",       stem:[{t:'w',v:"Was she at school ten minutes ago? Yes, she"},{t:'s',v:"was"},{t:'w',v:"."}],                                           chips:[{v:"was"},{v:"wasn't",d:1},{v:"were",d:1}]},
     ],
     hard:[
-      {zh:"他昨天在哪裡？→ 他在餐廳。",              qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"yesterday?"}],                          aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the restaurant"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"yesterday?"},{v:"He"},{v:"was"},{v:"at the restaurant"},{v:"."}]},
-      {zh:"她上星期天在哪裡？→ 她在博物館。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"last Sunday?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'s',v:"."}],             chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"last Sunday?"},{v:"She"},{v:"was"},{v:"at the museum"},{v:"."}]},
-      {zh:"他今天早上在哪裡？→ 他在遊樂園。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"this morning?"}],                        aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the amusement park"},{t:'s',v:"."}],      chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"this morning?"},{v:"He"},{v:"was"},{v:"at the amusement park"},{v:"."}]},
-      {zh:"她一小時前在哪裡？→ 她在超市。",            qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"an hour ago?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the supermarket"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"an hour ago?"},{v:"She"},{v:"was"},{v:"at the supermarket"},{v:"."}]},
-      {zh:"他十分鐘前在哪裡？→ 他在百貨公司。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"ten minutes ago?"}],                     aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the department store"},{t:'s',v:"."}],     chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"ten minutes ago?"},{v:"He"},{v:"was"},{v:"at the department store"},{v:"."}]},
-      {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",        qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the museum"},{t:'s',v:"yesterday?"}],                  aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at the restaurant"},{t:'s',v:"."}], chips:[{v:"Was"},{v:"she"},{v:"at the museum"},{v:"yesterday?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at the restaurant"},{v:"."}]},
-      {zh:"他上星期天在動物園嗎？→ 是的，他是。",      qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the zoo"},{t:'s',v:"last Sunday?"}],                    aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'s',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the zoo"},{v:"last Sunday?"},{v:"Yes,"},{v:"he"},{v:"was"},{v:"."}]},
-      {zh:"她今天早上在超市嗎？→ 不，她在學校。",      qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the supermarket"},{t:'s',v:"this morning?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at school"},{t:'s',v:"."}],        chips:[{v:"Was"},{v:"she"},{v:"at the supermarket"},{v:"this morning?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at school"},{v:"."}]},
-      {zh:"他一小時前在百貨公司嗎？→ 是的，他是。",    qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],       aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'s',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"he"},{v:"was"},{v:"."}]},
-      {zh:"她十分鐘前在茶店嗎？→ 不，她在家。",        qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the tea shop"},{t:'s',v:"ten minutes ago?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at home"},{t:'s',v:"."}],          chips:[{v:"Was"},{v:"she"},{v:"at the tea shop"},{v:"ten minutes ago?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at home"},{v:"."}]},
+      {zh:"他昨天在哪裡？→ 他在餐廳。",              qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"yesterday?"}],                          aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"yesterday?"},{v:"He"},{v:"was"},{v:"at the restaurant"}]},
+      {zh:"她上星期天在哪裡？→ 她在博物館。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"last Sunday?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'w',v:"."}],             chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"last Sunday?"},{v:"She"},{v:"was"},{v:"at the museum"}]},
+      {zh:"他今天早上在哪裡？→ 他在遊樂園。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"this morning?"}],                        aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the amusement park"},{t:'w',v:"."}],      chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"this morning?"},{v:"He"},{v:"was"},{v:"at the amusement park"}]},
+      {zh:"她一小時前在哪裡？→ 她在超市。",            qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"an hour ago?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the supermarket"},{t:'w',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"an hour ago?"},{v:"She"},{v:"was"},{v:"at the supermarket"}]},
+      {zh:"他十分鐘前在哪裡？→ 他在百貨公司。",        qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"ten minutes ago?"}],                     aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the department store"},{t:'w',v:"."}],     chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"ten minutes ago?"},{v:"He"},{v:"was"},{v:"at the department store"}]},
+      {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",        qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the museum"},{t:'s',v:"yesterday?"}],                  aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at the restaurant"},{t:'w',v:"."}], chips:[{v:"Was"},{v:"she"},{v:"at the museum"},{v:"yesterday?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at the restaurant"}]},
+      {zh:"他上星期天在動物園嗎？→ 是的，他是。",      qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the zoo"},{t:'s',v:"last Sunday?"}],                    aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'w',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the zoo"},{v:"last Sunday?"},{v:"Yes,"},{v:"he"},{v:"was"}]},
+      {zh:"她今天早上在超市嗎？→ 不，她在學校。",      qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the supermarket"},{t:'s',v:"this morning?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at school"},{t:'w',v:"."}],        chips:[{v:"Was"},{v:"she"},{v:"at the supermarket"},{v:"this morning?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at school"}]},
+      {zh:"他一小時前在百貨公司嗎？→ 是的，他是。",    qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],       aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'w',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"he"},{v:"was"}]},
+      {zh:"她十分鐘前在茶店嗎？→ 不，她在家。",        qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the tea shop"},{t:'s',v:"ten minutes ago?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at home"},{t:'w',v:"."}],          chips:[{v:"Was"},{v:"she"},{v:"at the tea shop"},{v:"ten minutes ago?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at home"}]},
     ]
   }
 };
@@ -372,17 +382,17 @@ const QB_MIX = {
   ],
   hard:[
     // L1
-    {zh:"你昨天在哪裡？→ 我在公園。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"yesterday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the park"},{t:'s',v:"."}],              chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"yesterday?"},{v:"I"},{v:"was"},{v:"at the park"},{v:"."}]},
-    {zh:"你今天早上在哪裡？→ 我在學校。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"this morning?"}],                     aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at school"},{t:'s',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"this morning?"},{v:"I"},{v:"was"},{v:"at school"},{v:"."}]},
-    {zh:"你昨天在動物園嗎？→ 不，我在遊樂園。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the zoo"},{t:'s',v:"yesterday?"}],                   aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the amusement park"},{t:'s',v:"."}], chips:[{v:"Were"},{v:"you"},{v:"at the zoo"},{v:"yesterday?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the amusement park"},{v:"."}]},
-    {zh:"你一小時前在博物館嗎？→ 是的，我是。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the museum"},{t:'s',v:"an hour ago?"}],              aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the museum"},{v:"an hour ago?"},{v:"Yes,"},{v:"I"},{v:"was"},{v:"."}]},
-    {zh:"你十分鐘前在學校嗎？→ 不，我在家。",      qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at school"},{t:'s',v:"ten minutes ago?"}],              aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at home"},{t:'s',v:"."}],          chips:[{v:"Were"},{v:"you"},{v:"at school"},{v:"ten minutes ago?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at home"},{v:"."}]},
+    {zh:"你昨天在哪裡？→ 我在公園。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"yesterday?"}],                      aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at the park"},{t:'w',v:"."}],              chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"yesterday?"},{v:"I"},{v:"was"},{v:"at the park"}]},
+    {zh:"你今天早上在哪裡？→ 我在學校。",          qLine:[{t:'s',v:"Where"},{t:'s',v:"were"},{t:'s',v:"you"},{t:'s',v:"this morning?"}],                     aLine:[{t:'s',v:"I"},{t:'s',v:"was"},{t:'s',v:"at school"},{t:'w',v:"."}],               chips:[{v:"Where"},{v:"were"},{v:"you"},{v:"this morning?"},{v:"I"},{v:"was"},{v:"at school"}]},
+    {zh:"你昨天在動物園嗎？→ 不，我在遊樂園。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the zoo"},{t:'s',v:"yesterday?"}],                   aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at the amusement park"},{t:'w',v:"."}], chips:[{v:"Were"},{v:"you"},{v:"at the zoo"},{v:"yesterday?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at the amusement park"}]},
+    {zh:"你一小時前在博物館嗎？→ 是的，我是。",    qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at the museum"},{t:'s',v:"an hour ago?"}],              aLine:[{t:'s',v:"Yes,"},{t:'s',v:"I"},{t:'s',v:"was"},{t:'w',v:"."}],                    chips:[{v:"Were"},{v:"you"},{v:"at the museum"},{v:"an hour ago?"},{v:"Yes,"},{v:"I"},{v:"was"}]},
+    {zh:"你十分鐘前在學校嗎？→ 不，我在家。",      qLine:[{t:'s',v:"Were"},{t:'s',v:"you"},{t:'s',v:"at school"},{t:'s',v:"ten minutes ago?"}],              aLine:[{t:'s',v:"No,"},{t:'s',v:"I"},{t:'s',v:"wasn't."},{t:'s',v:"I was at home"},{t:'w',v:"."}],          chips:[{v:"Were"},{v:"you"},{v:"at school"},{v:"ten minutes ago?"},{v:"No,"},{v:"I"},{v:"wasn't."},{v:"I was at home"}]},
     // L2
-    {zh:"他昨天在哪裡？→ 他在餐廳。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"yesterday?"}],                          aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the restaurant"},{t:'s',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"yesterday?"},{v:"He"},{v:"was"},{v:"at the restaurant"},{v:"."}]},
-    {zh:"她上星期天在哪裡？→ 她在博物館。",         qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"last Sunday?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'s',v:"."}],             chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"last Sunday?"},{v:"She"},{v:"was"},{v:"at the museum"},{v:"."}]},
-    {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",       qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the museum"},{t:'s',v:"yesterday?"}],                  aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at the restaurant"},{t:'s',v:"."}], chips:[{v:"Was"},{v:"she"},{v:"at the museum"},{v:"yesterday?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at the restaurant"},{v:"."}]},
-    {zh:"他一小時前在百貨公司嗎？→ 是的，他是。",   qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],       aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'s',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"he"},{v:"was"},{v:"."}]},
-    {zh:"她十分鐘前在茶店嗎？→ 不，她在家。",       qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the tea shop"},{t:'s',v:"ten minutes ago?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at home"},{t:'s',v:"."}],          chips:[{v:"Was"},{v:"she"},{v:"at the tea shop"},{v:"ten minutes ago?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at home"},{v:"."}]},
+    {zh:"他昨天在哪裡？→ 他在餐廳。",             qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"he"},{t:'s',v:"yesterday?"}],                          aLine:[{t:'s',v:"He"},{t:'s',v:"was"},{t:'s',v:"at the restaurant"},{t:'w',v:"."}],         chips:[{v:"Where"},{v:"was"},{v:"he"},{v:"yesterday?"},{v:"He"},{v:"was"},{v:"at the restaurant"}]},
+    {zh:"她上星期天在哪裡？→ 她在博物館。",         qLine:[{t:'s',v:"Where"},{t:'s',v:"was"},{t:'s',v:"she"},{t:'s',v:"last Sunday?"}],                        aLine:[{t:'s',v:"She"},{t:'s',v:"was"},{t:'s',v:"at the museum"},{t:'w',v:"."}],             chips:[{v:"Where"},{v:"was"},{v:"she"},{v:"last Sunday?"},{v:"She"},{v:"was"},{v:"at the museum"}]},
+    {zh:"她昨天在博物館嗎？→ 不，她在餐廳。",       qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the museum"},{t:'s',v:"yesterday?"}],                  aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at the restaurant"},{t:'w',v:"."}], chips:[{v:"Was"},{v:"she"},{v:"at the museum"},{v:"yesterday?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at the restaurant"}]},
+    {zh:"他一小時前在百貨公司嗎？→ 是的，他是。",   qLine:[{t:'s',v:"Was"},{t:'s',v:"he"},{t:'s',v:"at the department store"},{t:'s',v:"an hour ago?"}],       aLine:[{t:'s',v:"Yes,"},{t:'s',v:"he"},{t:'s',v:"was"},{t:'w',v:"."}],                       chips:[{v:"Was"},{v:"he"},{v:"at the department store"},{v:"an hour ago?"},{v:"Yes,"},{v:"he"},{v:"was"}]},
+    {zh:"她十分鐘前在茶店嗎？→ 不，她在家。",       qLine:[{t:'s',v:"Was"},{t:'s',v:"she"},{t:'s',v:"at the tea shop"},{t:'s',v:"ten minutes ago?"}],          aLine:[{t:'s',v:"No,"},{t:'s',v:"she"},{t:'s',v:"wasn't."},{t:'s',v:"She was at home"},{t:'w',v:"."}],          chips:[{v:"Was"},{v:"she"},{v:"at the tea shop"},{v:"ten minutes ago?"},{v:"No,"},{v:"she"},{v:"wasn't."},{v:"She was at home"}]},
   ]
 };
 
@@ -475,11 +485,17 @@ function buildStemTwoLines(){
   let si=0;
   const qRow=document.createElement('div'); qRow.className='sent-line';
   const qL=document.createElement('span'); qL.className='line-label'; qL.textContent='Q:'; qRow.appendChild(qL);
-  curQ.qLine.forEach(()=>{ qRow.appendChild(makeSlot(si)); si++; });
+  curQ.qLine.forEach(p=>{
+    if(p.t==='w'){ const sp=document.createElement('span'); sp.className='sword'; sp.textContent=p.v; qRow.appendChild(sp); }
+    else { qRow.appendChild(makeSlot(si)); si++; }
+  });
   wrap.appendChild(qRow);
   const aRow=document.createElement('div'); aRow.className='sent-line';
   const aL=document.createElement('span'); aL.className='line-label'; aL.textContent='A:'; aRow.appendChild(aL);
-  curQ.aLine.forEach(()=>{ aRow.appendChild(makeSlot(si)); si++; });
+  curQ.aLine.forEach(p=>{
+    if(p.t==='w'){ const sp=document.createElement('span'); sp.className='sword'; sp.textContent=p.v; aRow.appendChild(sp); }
+    else { aRow.appendChild(makeSlot(si)); si++; }
+  });
   wrap.appendChild(aRow);
 }
 
@@ -556,7 +572,7 @@ function tEnd(e,ci){
 
 function useHint(){
   if(hintsLeft<=0) return;
-  const answers=[...curQ.qLine,...curQ.aLine].map(p=>p.v);
+  const answers=[...curQ.qLine,...curQ.aLine].filter(p=>p.t==='s').map(p=>p.v);
   for(let i=0;i<slotVals.length;i++){
     if(slotVals[i]!==null) continue;
     const ans=answers[i];
@@ -581,7 +597,7 @@ function clearAll(){
 function checkAnswer(){
   const d=cDiff();
   const answers=d==='hard'
-    ?[...curQ.qLine,...curQ.aLine].map(p=>p.v)
+    ?[...curQ.qLine,...curQ.aLine].filter(p=>p.t==='s').map(p=>p.v)
     :curQ.stem.filter(p=>p.t==='s').map(p=>p.v);
   let ok=true;
   for(let i=0;i<answers.length;i++) if(slotVals[i]!==answers[i]){ok=false;break;}
