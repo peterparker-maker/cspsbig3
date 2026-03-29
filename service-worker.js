@@ -1,8 +1,12 @@
-// ── 版本控制：使用版本號 + 自動時間戳確保快速更新 ──
+// ── 版本控制：使用版本號 + 固定時間戳 ──
 const CACHE_VERSION = 'v5';
-// 使用當前時間戳（自動更新，無需手動修改）
-const CACHE_TIMESTAMP = new Date().toISOString().substring(0, 16).replace(/[-:]/g, '');
+const CACHE_TIMESTAMP = '20260329-auto'; // 固定鍵，避免每次都新建快取
 const CACHE_NAME = `changxing-english-${CACHE_VERSION}-${CACHE_TIMESTAMP}`;
+
+// 【關鍵】獲取分鐘級時間戳，每分鐘更新一次（確保 HTML 每分鐘拉一次最新版本）
+function getVersionTimestamp() {
+  return Math.floor(Date.now() / 60000); // 每 60 秒更新一次
+}
 
 const FILES_TO_CACHE = [
   './index.html',
@@ -41,7 +45,7 @@ self.addEventListener('activate', event => {
 });
 
 // ── 核心策略：網路優先（最新版本） ──
-// HTML 檔案：始終優先網路（確保最新），失敗才用快取
+// HTML 檔案：強制每分鐘檢查一次網路（添加時間戳參數繞過快取）
 // 其他資源：快取優先，但後台更新
 self.addEventListener('fetch', event => {
   if (event.request.method !== 'GET') return;
@@ -51,23 +55,29 @@ self.addEventListener('fetch', event => {
 
   event.respondWith(
     isHtml
-      ? // HTML 檔案：網路優先（確保每次都拿最新內容）
-        fetch(event.request)
-          .then(networkResponse => {
-            if (networkResponse && networkResponse.status === 200) {
-              const responseClone = networkResponse.clone();
-              caches.open(CACHE_NAME).then(cache => {
-                cache.put(event.request, responseClone);
+      ? // HTML 檔案：添加時間戳參數強制拉取最新版本（每分鐘更新一次）
+        (() => {
+          const htmlUrl = new URL(event.request.url);
+          htmlUrl.searchParams.set('v', getVersionTimestamp());
+          const versionedRequest = new Request(htmlUrl, event.request);
+
+          return fetch(versionedRequest)
+            .then(networkResponse => {
+              if (networkResponse && networkResponse.status === 200) {
+                const responseClone = networkResponse.clone();
+                caches.open(CACHE_NAME).then(cache => {
+                  cache.put(event.request, responseClone);
+                });
+              }
+              return networkResponse;
+            })
+            .catch(() => {
+              // 網路失敗：使用最新的快取版本
+              return caches.match(event.request).then(cachedResponse => {
+                return cachedResponse || caches.match('./index.html');
               });
-            }
-            return networkResponse;
-          })
-          .catch(() => {
-            // 網路失敗：使用最新的快取版本
-            return caches.match(event.request).then(cachedResponse => {
-              return cachedResponse || caches.match('./index.html');
             });
-          })
+        })()
       : // 其他資源：快取優先，後台更新
         caches.match(event.request).then(cachedResponse => {
           const fetchPromise = fetch(event.request).then(networkResponse => {
