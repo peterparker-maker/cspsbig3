@@ -370,11 +370,11 @@ if ('serviceWorker' in navigator) {
       // 立即檢查一次更新
       checkForUpdates();
 
-      // 設置定期檢查（改為每 5 秒檢查一次，對平板更友善）
+      // 設置定期檢查（每 2 秒檢查一次，確保快速拉取最新版本）
       if (updateCheckTimer) clearInterval(updateCheckTimer);
       updateCheckTimer = setInterval(() => {
         checkForUpdates();
-      }, 5000);
+      }, 2000);
 
       // 當偵測到新的 Service Worker 已安裝且等待啟用
       reg.addEventListener('updatefound', () => {
@@ -411,30 +411,28 @@ if ('serviceWorker' in navigator) {
 
   // 【核心修復】檢查版本號，只有在真正有新版本時才通知
   function checkAndNotifyUpdate() {
-    // 【策略】使用 Service Worker 控制器的存在和更新狀態來判斷版本變化
-    // 只有當有新的 installing worker 且與當前控制器不同時，才認為有新版本
-
+    // 【策略】偵測到新版本時自動刷新，無需用戶手動操作
     if (!swReg || !swReg.installing) return;
 
     const currentController = navigator.serviceWorker.controller;
     const newWorker = swReg.installing;
 
-    // 【關鍵判斷】如果有新的 installing worker，且已經不是首次加載
-    // 且還沒有為這次更新彈出通知過，才顯示通知
+    // 若有新的 installing worker，自動刷新以載入最新版本
     if (currentController && newWorker) {
-      // 使用 registration 物件作為版本識別
       const newVersionId = swReg.scope + '-' + new Date().getTime();
 
-      // 檢查是否已經通知過這次更新
+      // 檢查是否已經處理過這次更新
       if (newVersionId !== notifiedVersion) {
-        // 確保不是重複通知
         const lastCheck = localStorage.getItem('lastUpdateCheck') || '';
         if (lastCheck !== newVersionId) {
           notifiedVersion = newVersionId;
           localStorage.setItem('lastUpdateCheck', newVersionId);
 
-          console.log('✅ 偵測到新版本，顯示更新提示');
-          showUpdateNotification();
+          // 🔄 自動刷新頁面以載入最新版本（無提示）
+          console.log('✅ 偵測到新版本，自動刷新載入最新版本...');
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
         }
       }
     }
