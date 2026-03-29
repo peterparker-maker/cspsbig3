@@ -592,7 +592,7 @@
         <div class="top-section">
             <div class="header">
                 <h1 class="title">🎧 Phonics 發音聽力挑戰</h1>
-                <p class="subtitle">答對5題就過關！小心錯誤懲罰喔！</p>
+                <p class="subtitle">答對3題就過關！小心錯誤懲罰喔！</p>
             </div>
 
             <div class="mode-selectors">
@@ -635,7 +635,7 @@
                 </div>
 
                 <div class="progress-container">
-                    <div class="progress-label">Progress 過關進度：<span id="progressText">0 / 5</span></div>
+                    <div class="progress-label">Progress 過關進度：<span id="progressText">0 / 3</span></div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill" style="width: 0%">
                             <span id="progressPercent">0%</span>
@@ -683,7 +683,7 @@
         <div class="success-content">
             <div class="success-icon">🎉</div>
             <div class="success-title">恭喜過關！</div>
-            <div class="success-message">你答對了 5 題！太厲害了！</div>
+            <div class="success-message">你答對了 3 題！太厲害了！</div>
             <button class="control-btn" onclick="restartGame()">再玩一次</button>
         </div>
     </div>
@@ -911,7 +911,7 @@
                 updateProgress();
                 playSuccessSound();
 
-                if (correctCount >= 5) {
+                if (correctCount >= 3) {
                     setTimeout(() => showSuccess(), 1500);
                 } else {
                     setTimeout(() => nextQuestion(), 1500);
@@ -936,10 +936,10 @@
         }
 
         function updateProgress() {
-            const percentage = (correctCount / 5) * 100;
+            const percentage = (correctCount / 3) * 100;
             document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('progressPercent').textContent = Math.round(percentage) + '%';
-            document.getElementById('progressText').textContent = correctCount + ' / 5';
+            document.getElementById('progressText').textContent = correctCount + ' / 3';
         }
 
         function showPunishment() {
@@ -1032,7 +1032,7 @@
         }
 
         function nextQuestion() {
-            if (correctCount >= 5) {
+            if (correctCount >= 3) {
                 showSuccess();
                 return;
             }
