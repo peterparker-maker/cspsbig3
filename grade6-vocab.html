@@ -1037,17 +1037,22 @@
             document.getElementById('modeOverlay').classList.add('show');
         }
 
-        function selectMode(mode) {
+        async function selectMode(mode) {
             gameMode = mode;
             document.getElementById('modeOverlay').classList.remove('show');
-            startGameWithMode();
+            await startGameWithMode();
         }
 
         async function startGameWithMode() {
+            // 【第一步】停止並清除所有舊的計時器
+            stopTimer();
+
+            // 【初始化遊戲狀態】
             moves = 0;
             matchedPairs = 0;
             flippedCards = [];
             timeRemaining = 30;
+            canFlip = true;  // 確保玩家可以翻牌
             document.getElementById('moves').textContent = '0';
             document.getElementById('matches').textContent = '0';
 
@@ -1058,12 +1063,19 @@
             if (gameMode === 'challenge') {
                 document.getElementById('progressBar').classList.add('show');
                 document.getElementById('timerDisplay').classList.add('show');
+                document.getElementById('progressFill').style.width = '100%';
+                document.getElementById('timerDisplay').textContent = 'Time Left: 30s';
+                document.getElementById('progressFill').classList.remove('danger');
+                document.getElementById('timerDisplay').classList.remove('danger');
             }
 
+            // 【第二步】顯示 3-2-1 倒數動畫
             await showCountdown();
+
+            // 【第三步】全體翻開牌面讓玩家『偷看』3 秒
             await peekCards();
 
-            // Challenge Mode：學生開始操作時才正式啟動計時
+            // 【第四步】牌面完全蓋回去後，才正式啟動遊戲的倒數計時器
             if (gameMode === 'challenge') {
                 startTimer();
             }
@@ -1177,13 +1189,18 @@
             gameStarted = false;
         }
 
-        function restartRound() {
+        async function restartRound() {
             if (!gameStarted) return;
 
+            // 【第一步】停止並清除所有舊的計時器
+            stopTimer();
+
+            // 【重置遊戲狀態】
             moves = 0;
             matchedPairs = 0;
             flippedCards = [];
             timeRemaining = 30;
+            canFlip = true;
             document.getElementById('moves').textContent = '0';
             document.getElementById('matches').textContent = '0';
 
@@ -1198,18 +1215,33 @@
                 document.getElementById('timerDisplay').textContent = 'Time Left: 30s';
                 document.getElementById('progressFill').classList.remove('danger');
                 document.getElementById('timerDisplay').classList.remove('danger');
+            }
+
+            // 【第二步】顯示 3-2-1 倒數動畫
+            await showCountdown();
+
+            // 【第三步】全體翻開牌面讓玩家『偷看』3 秒
+            await peekCards();
+
+            // 【第四步】牌面完全蓋回去後，才正式啟動遊戲的倒數計時器
+            if (gameMode === 'challenge') {
                 startTimer();
             }
 
-            peekCards();
+            gameStarted = true;
         }
 
-        function newRound() {
+        async function newRound() {
             if (!currentUnit) {
                 alert('Please select a lesson first! 請先選擇單元！');
                 return;
             }
-            stopTimer(); // 已包含隱藏進度條和計時顯示
+            // 停止並清除所有舊的計時器
+            stopTimer();
+            // 重置遊戲狀態
+            gameMode = null;
+            gameStarted = false;
+            // 顯示模式選擇界面
             startGame();
         }
 
@@ -1268,9 +1300,9 @@
             document.getElementById('timeoutOverlay').classList.add('show');
         }
 
-        function retryGame() {
+        async function retryGame() {
             document.getElementById('timeoutOverlay').classList.remove('show');
-            startGameWithMode();
+            await startGameWithMode();
         }
 
         // ── SOUND EFFECTS (Web Audio API) ──
