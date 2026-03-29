@@ -353,6 +353,13 @@ document.addEventListener('keydown',e=>{ if(e.key==='Escape') closeGame(); });
 if ('serviceWorker' in navigator) {
   let swReg = null;
   let updateCheckTimer = null;
+  let notifiedVersion = localStorage.getItem('lastNotifiedSWVersion') || null;
+
+  // 【初始化】檢查是否是首次加載
+  // 如果沒有存儲當前版本，說明這是首次加載，設定初始版本
+  if (!localStorage.getItem('currentSWVersion')) {
+    localStorage.setItem('currentSWVersion', Date.now().toString());
+  }
 
   // 立即嘗試註冊（不等待 load 事件），提供更快的更新檢測
   navigator.serviceWorker.register('./service-worker.js?t=' + Date.now())
@@ -374,8 +381,8 @@ if ('serviceWorker' in navigator) {
         const newWorker = reg.installing;
         newWorker.addEventListener('statechange', () => {
           if (newWorker.state === 'installed' && navigator.serviceWorker.controller) {
-            // 新版本已安裝，舊版本仍在使用中 → 顯示更新提示
-            showUpdateNotification();
+            // 新版本已安裝，舊版本仍在使用中 → 檢查版本號後再決定是否顯示提示
+            checkAndNotifyUpdate();
           }
         });
       });
@@ -400,6 +407,37 @@ if ('serviceWorker' in navigator) {
       console.warn('SW update check failed, will retry:', err);
       // 失敗時會在下一個定時檢查時重試
     });
+  }
+
+  // 【核心修復】檢查版本號，只有在真正有新版本時才通知
+  function checkAndNotifyUpdate() {
+    // 【策略】使用 Service Worker 控制器的存在和更新狀態來判斷版本變化
+    // 只有當有新的 installing worker 且與當前控制器不同時，才認為有新版本
+
+    if (!swReg || !swReg.installing) return;
+
+    const currentController = navigator.serviceWorker.controller;
+    const newWorker = swReg.installing;
+
+    // 【關鍵判斷】如果有新的 installing worker，且已經不是首次加載
+    // 且還沒有為這次更新彈出通知過，才顯示通知
+    if (currentController && newWorker) {
+      // 使用 registration 物件作為版本識別
+      const newVersionId = swReg.scope + '-' + new Date().getTime();
+
+      // 檢查是否已經通知過這次更新
+      if (newVersionId !== notifiedVersion) {
+        // 確保不是重複通知
+        const lastCheck = localStorage.getItem('lastUpdateCheck') || '';
+        if (lastCheck !== newVersionId) {
+          notifiedVersion = newVersionId;
+          localStorage.setItem('lastUpdateCheck', newVersionId);
+
+          console.log('✅ 偵測到新版本，顯示更新提示');
+          showUpdateNotification();
+        }
+      }
+    }
   }
 
   // 增強的更新通知提示函式（不自動消失）
@@ -494,6 +532,9 @@ if ('serviceWorker' in navigator) {
     };
 
     reloadBtn.addEventListener('click', () => {
+      // 【關鍵】在重新加載前，記錄新版本為當前版本
+      // 這樣重新加載後就不會再顯示相同版本的更新提示
+      localStorage.setItem('currentSWVersion', notifiedVersion || Date.now().toString());
       window.location.reload();
     });
 
