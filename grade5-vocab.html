@@ -198,7 +198,7 @@
 
         .card-text {
             /* 基準字體大，用 clamp 控制範圍 */
-            font-size: clamp(1rem, 4vmin, 2.8rem);
+            font-size: clamp(1rem, 4vmin, 2.5rem);
             text-align: center;
             line-height: 1.15;
             font-weight: 800;
@@ -656,7 +656,7 @@
 
         /* Container Query：卡片內文字依卡片寬度自動縮放 */
         @container game-area (min-width: 500px) {
-            .card-text { font-size: clamp(1.2rem, 4cqi, 2.4rem); }
+            .card-text { font-size: clamp(1.2rem, 4cqi, 2.2rem); }
         }
 
         /* 手機直式 */
@@ -695,7 +695,7 @@
             .card-front { font-size: 10vmin; }
             .card-emoji { font-size: 10vmin; }
             .card-back.mine { font-size: 10vmin; }
-            .card-text { font-size: clamp(1.1rem, 4vmin, 2.2rem); }
+            .card-text { font-size: clamp(1.1rem, 4vmin, 2rem); }
         }
 
         /* 11吋平板橫式（主要目標）*/
@@ -713,7 +713,7 @@
             .card-front { font-size: 12vmin; }
             .card-emoji { font-size: 12vmin; }
             .card-back.mine { font-size: 12vmin; }
-            .card-text { font-size: clamp(1.4rem, 4.5vmin, 3rem); }
+            .card-text { font-size: clamp(1.4rem, 4.5vmin, 2.6rem); }
         }
 
         /* ── 彈出視窗響應式優化 ── */
