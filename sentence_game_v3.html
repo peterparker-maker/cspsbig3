@@ -31,13 +31,13 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 }
 
 /* HEADER */
-.hdr{display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:6px;}
+.hdr{display:flex;align-items:center;justify-content:space-between;flex-shrink:0;flex-wrap:wrap;gap:4px;padding-bottom:2px;}
 .hdr-l{display:flex;align-items:center;gap:8px;}
 .hicon{font-size:clamp(1.4rem,2.2vw,2rem);}
-.htitle{font-size:clamp(.9rem,1.3vw,1.22rem);font-weight:900;color:var(--text);}
+.htitle{font-size:clamp(.85rem,1.2vw,1.1rem);font-weight:900;color:var(--text);}
 .hsub{font-size:clamp(.58rem,.75vw,.72rem);color:#aaa;font-weight:600;}
-.tabs{display:flex;gap:6px;flex-wrap:nowrap;}
-.tab{padding:clamp(5px,.7vh,8px) clamp(10px,1.2vw,17px);border-radius:18px;border:2.5px solid transparent;font-family:'Nunito',sans-serif;font-size:clamp(.72rem,.95vw,.9rem);font-weight:800;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#bbb;line-height:1.3;white-space:nowrap;}
+.tabs{display:flex;gap:5px;flex-wrap:nowrap;}
+.tab{padding:clamp(4px,.6vh,7px) clamp(8px,1vw,14px);border-radius:18px;border:2.5px solid transparent;font-family:'Nunito',sans-serif;font-size:clamp(.68rem,.88vw,.85rem);font-weight:800;cursor:pointer;transition:all .2s;background:#f0f0f0;color:#bbb;line-height:1.3;white-space:nowrap;}
 .tl1{background:linear-gradient(135deg,#A8E6CF,#5CBC8E);color:#fff;border-color:#5CBC8E;box-shadow:0 3px 10px rgba(92,188,142,.4);}
 .tl2{background:linear-gradient(135deg,#FFD6E0,#FF8FAB);color:#fff;border-color:#FF8FAB;box-shadow:0 3px 10px rgba(255,143,171,.4);}
 .tlmix{background:linear-gradient(135deg,#C5CAE9,#7986CB);color:#fff;border-color:#7986CB;box-shadow:0 3px 10px rgba(121,134,203,.4);}
@@ -60,7 +60,7 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .qtip{font-size:clamp(.62rem,.76vw,.75rem);color:#ccc;margin-top:3px;}
 
 /* SENTENCE AREA */
-.sent-wrap{display:flex;align-items:center;gap:8px;flex-wrap:wrap;background:#F8F9FA;border-radius:13px;padding:clamp(12px,1.5vh,18px) clamp(12px,1.5vw,18px);flex-grow:1;min-height:clamp(60px,8vh,90px);}
+.sent-wrap{display:flex;align-items:center;gap:10px;flex-wrap:wrap;background:#F8F9FA;border-radius:13px;padding:clamp(14px,2vh,22px) clamp(14px,1.8vw,22px);flex-grow:1;min-height:clamp(75px,10vh,110px);}
 .sent-wrap.two-lines{flex-direction:column;align-items:flex-start;gap:10px;}
 .sent-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;}
 .line-label{font-size:clamp(.6rem,.72vw,.7rem);font-weight:800;color:#bbb;text-transform:uppercase;letter-spacing:.5px;min-width:30px;}
@@ -68,20 +68,20 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .sword{font-size:clamp(1rem,1.6vw,1.4rem);font-weight:800;color:var(--text);}
 
 /* SLOT */
-.slot{min-width:clamp(80px,10vw,120px);height:auto;min-height:clamp(44px,6vh,58px);border-radius:11px;border:2.5px dashed #CCC;background:#FAFAFA;display:inline-flex;align-items:center;justify-content:center;font-size:clamp(1rem,1.4vw,1.25rem);font-weight:800;color:var(--text);transition:all .2s;cursor:default;padding:6px 12px;}
+.slot{min-width:clamp(90px,11vw,135px);height:auto;min-height:clamp(52px,7vh,66px);border-radius:11px;border:2.5px dashed #CCC;background:#FAFAFA;display:inline-flex;align-items:center;justify-content:center;font-size:clamp(1.05rem,1.5vw,1.35rem);font-weight:800;color:var(--text);transition:all .2s;cursor:default;padding:8px 14px;}
 .slot.occupied{border:2.5px solid #5CBC8E;background:#D4F5E4;cursor:pointer;}
 .slot.occupied:hover{background:#B8EED4;transform:scale(1.03);}
-.slot.drag-over{border-color:#26C6DA;background:#E0F7FA;transform:scale(1.05);}
+.slot.drag-over{border-color:#0097A7;background:#B2EBF2;transform:scale(1.08);box-shadow:0 0 0 3px rgba(0,151,167,.35);}
 .slot.ok{border-color:#4CAF50!important;background:#C8F5CA!important;animation:bSlot .4s ease;}
 .slot.bad{border-color:#F44336!important;background:#FFCDD2!important;animation:sSlot .4s ease;}
 @keyframes bSlot{0%,100%{transform:scale(1)}50%{transform:scale(1.09)}}
 @keyframes sSlot{0%,100%{transform:translateX(0)}25%{transform:translateX(-6px)}75%{transform:translateX(6px)}}
 
 /* CHIPS */
-.chips-wrap{flex-grow:1;min-height:clamp(60px,8vh,100px);}
+.chips-wrap{flex-grow:1;min-height:clamp(80px,10vh,120px);}
 .clabel{font-size:clamp(.6rem,.76vw,.72rem);font-weight:800;color:#ccc;text-transform:uppercase;letter-spacing:1px;margin-bottom:7px;}
 .chips-row{display:flex;gap:9px;flex-wrap:wrap;align-items:flex-start;}
-.chip{padding:clamp(9px,1.1vh,13px) clamp(14px,1.8vw,22px);border-radius:11px;font-size:clamp(1.2rem,2vw,2rem);font-weight:800;cursor:grab;user-select:none;transition:all .2s;touch-action:none;box-shadow:0 3px 10px rgba(0,0,0,.12);border:2.5px solid transparent;position:relative;z-index:1;}
+.chip{padding:clamp(10px,1.3vh,15px) clamp(15px,2vw,24px);border-radius:11px;font-size:clamp(1.25rem,2.1vw,2.1rem);font-weight:800;cursor:grab;user-select:none;transition:all .2s;touch-action:none;box-shadow:0 3px 10px rgba(0,0,0,.12);border:2.5px solid transparent;position:relative;z-index:1;}
 .chip:active{cursor:grabbing;transform:scale(1.07) rotate(2deg);z-index:500;}
 .chip.dragging{opacity:.4;transform:scale(.93);}
 .chip.used{opacity:.18;cursor:not-allowed;pointer-events:none;}
@@ -93,7 +93,7 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .cc5{background:#FFCCBC;border-color:#FFAB91;color:#BF360C;}
 .cc6{background:#B2EBF2;border-color:#80DEEA;color:#006064;}
 /* drag ghost: 無 transition 避免拖曳延遲 */
-.drag-ghost{position:fixed;pointer-events:none;z-index:9999;transform:scale(1.12) rotate(3deg);opacity:.9;transition:none;}
+.drag-ghost{position:fixed;pointer-events:none;z-index:9999;transform:scale(1.2) rotate(4deg);opacity:.9;transition:none;}
 
 /* BUTTONS */
 .btn-row{display:flex;gap:9px;justify-content:flex-end;align-items:center;flex-shrink:0;}
@@ -154,13 +154,29 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 @media(min-width:1024px){
   body{padding:16px 0 28px;}
   .card{padding:22px 28px 20px;gap:14px;}
+  .hsub{display:none;}
   .tabs{flex-wrap:nowrap;gap:8px;}
   .tab{padding:7px 18px;font-size:.92rem;}
   .qzh{font-size:clamp(1.8rem,3vw,2.5rem);}
   .sword{font-size:clamp(1.1rem,1.8vw,1.5rem);}
-  .chip{font-size:clamp(1.3rem,2.2vw,2rem);padding:11px 20px;}
-  .slot{font-size:clamp(1.1rem,1.6vw,1.4rem);min-width:clamp(90px,11vw,130px);min-height:clamp(48px,6.5vh,64px);}
+  .sent-wrap{min-height:clamp(90px,11vh,120px);padding:20px 24px;gap:12px;}
+  .chip{font-size:clamp(1.4rem,2.3vw,2.2rem);padding:13px 24px;}
+  .chips-wrap{min-height:clamp(90px,11vh,130px);}
+  .chips-row{gap:12px;}
+  .slot{font-size:clamp(1.2rem,1.8vw,1.5rem);min-width:clamp(100px,12vw,150px);min-height:clamp(56px,7.5vh,72px);padding:10px 18px;}
   .dbadge{font-size:.78rem;padding:4px 14px;}
+}
+@media(orientation:portrait){
+  body{padding:8px 0 20px;}
+  .card{width:99vw;padding:12px 12px 14px;gap:8px;}
+  .hdr{flex-direction:column;align-items:flex-start;}
+  .tabs{width:100%;flex-wrap:wrap;}
+  .tab{flex:1;text-align:center;min-width:80px;}
+  .qzh{font-size:clamp(1.3rem,4.5vw,2rem);}
+  .sent-wrap{gap:8px;padding:12px;}
+  .chips-row{gap:8px;justify-content:center;}
+  .chip{font-size:clamp(1rem,4vw,1.5rem);padding:8px 14px;}
+  .slot{min-width:clamp(70px,20vw,110px);font-size:clamp(.9rem,3.5vw,1.1rem);}
 }
 </style>
 </head>
@@ -277,16 +293,16 @@ const QB = {
     ],
     hard:[
       // ALL slots, split question/answer into two lines via hardBreak
-      {zh:"她在幹嘛？她正在讀書。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"studying"},{t:'s',v:"."}], chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"studying"},{v:"."}]},
-      {zh:"他在幹嘛？他正在跑步。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"running"},{t:'s',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"running"},{v:"."}]},
-      {zh:"你在幹嘛？我正在跳舞。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"dancing"},{t:'s',v:"."}], chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"dancing"},{v:"."}]},
-      {zh:"她在幹嘛？她正在煮飯。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"cooking"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"cooking"},{v:"."}]},
-      {zh:"他在幹嘛？他正在睡覺。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"sleeping"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"sleeping"},{v:"."}]},
-      {zh:"你在幹嘛？我正在寫字。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"writing"},{t:'s',v:"."}],  chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"writing"},{v:"."}]},
-      {zh:"她在幹嘛？她正在跑步。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"running"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"running"},{v:"."}]},
-      {zh:"他在幹嘛？他正在寫字。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"writing"},{t:'s',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"writing"},{v:"."}]},
-      {zh:"你在幹嘛？我正在跳躍。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"jumping"},{t:'s',v:"."}], chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"jumping"},{v:"."}]},
-      {zh:"他在幹嘛？他正在跳舞。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"dancing"},{t:'s',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"dancing"},{v:"."}]},
+      {zh:"她在幹嘛？她正在讀書。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"studying"},{t:'w',v:"."}], chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"studying"}]},
+      {zh:"他在幹嘛？他正在跑步。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"running"},{t:'w',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"running"}]},
+      {zh:"你在幹嘛？我正在跳舞。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"dancing"},{t:'w',v:"."}], chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"dancing"}]},
+      {zh:"她在幹嘛？她正在煮飯。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"cooking"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"cooking"}]},
+      {zh:"他在幹嘛？他正在睡覺。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"sleeping"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"sleeping"}]},
+      {zh:"你在幹嘛？我正在寫字。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"writing"},{t:'w',v:"."}],  chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"writing"}]},
+      {zh:"她在幹嘛？她正在跑步。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"running"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"running"}]},
+      {zh:"他在幹嘛？他正在寫字。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"writing"},{t:'w',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"writing"}]},
+      {zh:"你在幹嘛？我正在跳躍。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"jumping"},{t:'w',v:"."}], chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"jumping"}]},
+      {zh:"他在幹嘛？他正在跳舞。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"dancing"},{t:'w',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"dancing"}]},
     ]
   },
   2:{
@@ -315,16 +331,16 @@ const QB = {
       {zh:"怎麼了？我的眼睛痛。",        stem:[{t:'w',v:"What's wrong? My"},{t:'s',v:"eyes"},{t:'s',v:"hurt"},{t:'w',v:"."}],                       chips:[{v:"eyes"},{v:"hurt"},{v:"has",d:1}]},
     ],
     hard:[
-      {zh:"怎麼了？我有流鼻水。",        qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"I"},{t:'s',v:"have"},{t:'s',v:"a"},{t:'s',v:"runny nose"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"I"},{v:"have"},{v:"a"},{v:"runny nose"},{v:"."}]},
-      {zh:"怎麼了？他有頭痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"He"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"headache"},{t:'s',v:"."}],    chips:[{v:"What's"},{v:"wrong?"},{v:"He"},{v:"has"},{v:"a"},{v:"headache"},{v:"."}]},
-      {zh:"怎麼了？她有發燒。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"She"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"fever"},{t:'s',v:"."}],      chips:[{v:"What's"},{v:"wrong?"},{v:"She"},{v:"has"},{v:"a"},{v:"fever"},{v:"."}]},
-      {zh:"怎麼了？我有牙痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"I"},{t:'s',v:"have"},{t:'s',v:"a"},{t:'s',v:"toothache"},{t:'s',v:"."}],   chips:[{v:"What's"},{v:"wrong?"},{v:"I"},{v:"have"},{v:"a"},{v:"toothache"},{v:"."}]},
-      {zh:"怎麼了？他有流鼻水。",        qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"He"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"runny nose"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"He"},{v:"has"},{v:"a"},{v:"runny nose"},{v:"."}]},
-      {zh:"怎麼了？她有牙痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"She"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"toothache"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"She"},{v:"has"},{v:"a"},{v:"toothache"},{v:"."}]},
-      {zh:"怎麼了？我的手痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"hands"},{t:'s',v:"hurt"},{t:'s',v:"."}],                    chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"hands"},{v:"hurt"},{v:"."}]},
-      {zh:"怎麼了？我的腳痛。（單腳）",  qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"foot"},{t:'s',v:"hurts"},{t:'s',v:"."}],                    chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"foot"},{v:"hurts"},{v:"."}]},
-      {zh:"怎麼了？我的腿痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"legs"},{t:'s',v:"hurt"},{t:'s',v:"."}],                     chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"legs"},{v:"hurt"},{v:"."}]},
-      {zh:"怎麼了？我的眼睛痛。",        qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"eyes"},{t:'s',v:"hurt"},{t:'s',v:"."}],                     chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"eyes"},{v:"hurt"},{v:"."}]},
+      {zh:"怎麼了？我有流鼻水。",        qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"I"},{t:'s',v:"have"},{t:'s',v:"a"},{t:'s',v:"runny nose"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"I"},{v:"have"},{v:"a"},{v:"runny nose"}]},
+      {zh:"怎麼了？他有頭痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"He"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"headache"},{t:'w',v:"."}],    chips:[{v:"What's"},{v:"wrong?"},{v:"He"},{v:"has"},{v:"a"},{v:"headache"}]},
+      {zh:"怎麼了？她有發燒。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"She"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"fever"},{t:'w',v:"."}],      chips:[{v:"What's"},{v:"wrong?"},{v:"She"},{v:"has"},{v:"a"},{v:"fever"}]},
+      {zh:"怎麼了？我有牙痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"I"},{t:'s',v:"have"},{t:'s',v:"a"},{t:'s',v:"toothache"},{t:'w',v:"."}],   chips:[{v:"What's"},{v:"wrong?"},{v:"I"},{v:"have"},{v:"a"},{v:"toothache"}]},
+      {zh:"怎麼了？他有流鼻水。",        qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"He"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"runny nose"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"He"},{v:"has"},{v:"a"},{v:"runny nose"}]},
+      {zh:"怎麼了？她有牙痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"She"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"toothache"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"She"},{v:"has"},{v:"a"},{v:"toothache"}]},
+      {zh:"怎麼了？我的手痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"hands"},{t:'s',v:"hurt"},{t:'w',v:"."}],                    chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"hands"},{v:"hurt"}]},
+      {zh:"怎麼了？我的腳痛。（單腳）",  qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"foot"},{t:'s',v:"hurts"},{t:'w',v:"."}],                    chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"foot"},{v:"hurts"}]},
+      {zh:"怎麼了？我的腿痛。",          qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"legs"},{t:'s',v:"hurt"},{t:'w',v:"."}],                     chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"legs"},{v:"hurt"}]},
+      {zh:"怎麼了？我的眼睛痛。",        qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"eyes"},{t:'s',v:"hurt"},{t:'w',v:"."}],                     chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"eyes"},{v:"hurt"}]},
     ]
   }
 };
@@ -363,17 +379,17 @@ const QB_MIX = {
   ],
   hard: [
     // from L1
-    {zh:"她在幹嘛？她正在讀書。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"studying"},{t:'s',v:"."}], chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"studying"},{v:"."}]},
-    {zh:"他在幹嘛？他正在跑步。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"running"},{t:'s',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"running"},{v:"."}]},
-    {zh:"你在幹嘛？我正在跳舞。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"dancing"},{t:'s',v:"."}], chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"dancing"},{v:"."}]},
-    {zh:"他在幹嘛？他正在睡覺。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"sleeping"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"sleeping"},{v:"."}]},
-    {zh:"她在幹嘛？她正在煮飯。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"cooking"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"cooking"},{v:"."}]},
+    {zh:"她在幹嘛？她正在讀書。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"studying"},{t:'w',v:"."}], chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"studying"}]},
+    {zh:"他在幹嘛？他正在跑步。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"running"},{t:'w',v:"."}],   chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"running"}]},
+    {zh:"你在幹嘛？我正在跳舞。",  qLine:[{t:'s',v:"What"},{t:'s',v:"are"},{t:'s',v:"you"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"I'm"},{t:'s',v:"dancing"},{t:'w',v:"."}], chips:[{v:"What"},{v:"are"},{v:"you"},{v:"doing?"},{v:"I'm"},{v:"dancing"}]},
+    {zh:"他在幹嘛？他正在睡覺。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"he"},{t:'s',v:"doing?"}],  aLine:[{t:'s',v:"He's"},{t:'s',v:"sleeping"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"he"},{v:"doing?"},{v:"He's"},{v:"sleeping"}]},
+    {zh:"她在幹嘛？她正在煮飯。",  qLine:[{t:'s',v:"What's"},{t:'s',v:"she"},{t:'s',v:"doing?"}], aLine:[{t:'s',v:"She's"},{t:'s',v:"cooking"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"she"},{v:"doing?"},{v:"She's"},{v:"cooking"}]},
     // from L2
-    {zh:"怎麼了？他有頭痛。",         qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"He"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"headache"},{t:'s',v:"."}],   chips:[{v:"What's"},{v:"wrong?"},{v:"He"},{v:"has"},{v:"a"},{v:"headache"},{v:"."}]},
-    {zh:"怎麼了？我有流鼻水。",       qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"I"},{t:'s',v:"have"},{t:'s',v:"a"},{t:'s',v:"runny nose"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"I"},{v:"have"},{v:"a"},{v:"runny nose"},{v:"."}]},
-    {zh:"怎麼了？她有牙痛。",         qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"She"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"toothache"},{t:'s',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"She"},{v:"has"},{v:"a"},{v:"toothache"},{v:"."}]},
-    {zh:"怎麼了？我的腿痛。",         qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"legs"},{t:'s',v:"hurt"},{t:'s',v:"."}],                     chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"legs"},{v:"hurt"},{v:"."}]},
-    {zh:"怎麼了？我的腳痛。（單腳）", qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"foot"},{t:'s',v:"hurts"},{t:'s',v:"."}],                    chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"foot"},{v:"hurts"},{v:"."}]},
+    {zh:"怎麼了？他有頭痛。",         qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"He"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"headache"},{t:'w',v:"."}],   chips:[{v:"What's"},{v:"wrong?"},{v:"He"},{v:"has"},{v:"a"},{v:"headache"}]},
+    {zh:"怎麼了？我有流鼻水。",       qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"I"},{t:'s',v:"have"},{t:'s',v:"a"},{t:'s',v:"runny nose"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"I"},{v:"have"},{v:"a"},{v:"runny nose"}]},
+    {zh:"怎麼了？她有牙痛。",         qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"She"},{t:'s',v:"has"},{t:'s',v:"a"},{t:'s',v:"toothache"},{t:'w',v:"."}],  chips:[{v:"What's"},{v:"wrong?"},{v:"She"},{v:"has"},{v:"a"},{v:"toothache"}]},
+    {zh:"怎麼了？我的腿痛。",         qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"legs"},{t:'s',v:"hurt"},{t:'w',v:"."}],                     chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"legs"},{v:"hurt"}]},
+    {zh:"怎麼了？我的腳痛。（單腳）", qLine:[{t:'s',v:"What's"},{t:'s',v:"wrong?"}], aLine:[{t:'s',v:"My"},{t:'s',v:"foot"},{t:'s',v:"hurts"},{t:'w',v:"."}],                    chips:[{v:"What's"},{v:"wrong?"},{v:"My"},{v:"foot"},{v:"hurts"}]},
   ]
 };
 
@@ -495,13 +511,13 @@ function buildStemTwoLines(){
   // Question line
   const qRow=document.createElement('div'); qRow.className='sent-line';
   const qLbl=document.createElement('span'); qLbl.className='line-label'; qLbl.textContent='Q:'; qRow.appendChild(qLbl);
-  curQ.qLine.forEach(p=>{ const slot=makeSlot(si); qRow.appendChild(slot); si++; });
+  curQ.qLine.forEach(p=>{ if(p.t==='w'){ const sp=document.createElement('span'); sp.className='sword'; sp.textContent=p.v; qRow.appendChild(sp); } else { const slot=makeSlot(si); qRow.appendChild(slot); si++; } });
   wrap.appendChild(qRow);
 
   // Answer line
   const aRow=document.createElement('div'); aRow.className='sent-line';
   const aLbl=document.createElement('span'); aLbl.className='line-label'; aLbl.textContent='A:'; aRow.appendChild(aLbl);
-  curQ.aLine.forEach(p=>{ const slot=makeSlot(si); aRow.appendChild(slot); si++; });
+  curQ.aLine.forEach(p=>{ if(p.t==='w'){ const sp=document.createElement('span'); sp.className='sword'; sp.textContent=p.v; aRow.appendChild(sp); } else { const slot=makeSlot(si); aRow.appendChild(slot); si++; } });
   wrap.appendChild(aRow);
 }
 
@@ -638,7 +654,7 @@ function checkAnswer(){
   const d=cDiff();
   let answers;
   if(d==='hard'){
-    answers=[...curQ.qLine,...curQ.aLine].map(p=>p.v);
+    answers=[...curQ.qLine,...curQ.aLine].filter(p=>p.t==='s').map(p=>p.v);
   } else {
     answers=curQ.stem.filter(p=>p.t==='s').map(p=>p.v);
   }
