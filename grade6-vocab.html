@@ -197,24 +197,22 @@
         }
 
         .card-text {
-            /* 初始字體大小由 adjustFontSize 設定為 160px */
-            font-size: 160px;
+            /* 基準字體大，用 clamp 控制範圍 */
+            font-size: clamp(1rem, 4vmin, 2.8rem);
             text-align: center;
-            line-height: 1.0;
+            line-height: 1.15;
             font-weight: 800;
-            /* 允許換行：優先在空格處換行，不強制擠成一行 */
+            /* 優先在空格處換行，只有長單字才分成兩行 */
             white-space: normal;
             word-break: keep-all;
             overflow-wrap: break-word;
-            overflow: hidden;
-            /* 撐滿卡片寬度 */
+            /* 撐滿卡片寬度，讓文字置中 */
             width: 100%;
             padding: 0 8px;
-            /* flex 垂直置中 */
+            /* flex 讓文字垂直置中 */
             display: flex;
             align-items: center;
             justify-content: center;
-            text-align: center;
             flex-shrink: 1;
             min-height: 0;
         }
@@ -686,7 +684,7 @@
             .card-front { font-size: 10vw; }
             .card-emoji { font-size: 10vw; }
             .card-back.mine { font-size: 10vw; }
-            .card-text { font-size: 120px; }
+            .card-text { font-size: clamp(0.85rem, 3.8vw, 1.5rem); }
         }
 
         /* 小平板 / 手機橫式 */
@@ -700,7 +698,7 @@
             .card-front { font-size: 10vmin; }
             .card-emoji { font-size: 10vmin; }
             .card-back.mine { font-size: 10vmin; }
-            .card-text { font-size: 120px; }
+            .card-text { font-size: clamp(1.1rem, 4vmin, 2.2rem); }
         }
 
         /* 11吋平板橫式（主要目標）*/
@@ -718,7 +716,7 @@
             .card-front { font-size: 12vmin; }
             .card-emoji { font-size: 12vmin; }
             .card-back.mine { font-size: 12vmin; }
-            .card-text { font-size: 120px; }
+            .card-text { font-size: clamp(1.4rem, 4.5vmin, 3rem); }
         }
 
         /* ── 彈出視窗響應式優化 ── */
@@ -1027,12 +1025,6 @@
                 card.onclick = () => flipCard(card, i);
                 board.appendChild(card);
             }
-
-            // 對所有文字卡片執行自動縮放
-            const textCards = board.querySelectorAll('.card-text');
-            textCards.forEach(element => {
-                adjustFontSize(element);
-            });
         }
 
         async function startGame() {
@@ -1225,23 +1217,6 @@
             return new Promise(resolve => setTimeout(resolve, ms));
         }
 
-        // ── 自動縮放字體大小 ──
-        function adjustFontSize(element) {
-            // 強制顯示元素，以確保獲取正確的實體寬高（重要：用於解決緩存導致的渲染問題）
-            element.style.display = 'block';
-
-            // 初始字體大小設為 180px，目的是讓所有單字都從「溢出狀態」開始縮小
-            element.style.fontSize = '180px';
-
-            // 迴圈檢查：若文字寬度或高度溢出，逐一縮小字體
-            // 檢查條件：scrollWidth > offsetWidth（寬度溢出）或 scrollHeight > offsetHeight（高度溢出）
-            // 長單字會自動折行成兩行，但如果高度仍然超出卡片，則繼續縮小字體
-            while ((element.scrollWidth > element.offsetWidth || element.scrollHeight > element.offsetHeight) && parseInt(element.style.fontSize) > 12) {
-                const currentSize = parseInt(element.style.fontSize);
-                element.style.fontSize = (currentSize - 1) + 'px';
-            }
-        }
-
         // ── 計時邏輯 ──
         function startTimer() {
             if (timerInterval) clearInterval(timerInterval);
@@ -1334,26 +1309,6 @@
                 });
             } catch(e) {}
         }
-
-        // ── 視窗縮放監聽：當瀏覽器視窗大小改變時，自動重新縮放所有卡片文字 ──
-        window.addEventListener('resize', () => {
-            const textCards = document.querySelectorAll('.card-text');
-            textCards.forEach(element => {
-                adjustFontSize(element);
-            });
-        });
-
-        // ── 頁面加載時強制執行一次字體縮放（解決緩存導致的渲染問題）──
-        window.addEventListener('load', () => {
-            // 延遲執行以確保 DOM 完全渲染
-            setTimeout(() => {
-                const textCards = document.querySelectorAll('.card-text');
-                textCards.forEach(element => {
-                    adjustFontSize(element);
-                });
-                console.log('Font size adjustment completed on load (Version: ' + VERSION + ')');
-            }, 100);
-        });
 
     </script>
 </body>
