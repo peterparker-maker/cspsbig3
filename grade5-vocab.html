@@ -202,10 +202,10 @@
             text-align: center;
             line-height: 1.15;
             font-weight: 800;
-            /* 超長單字自動斷行，不溢出 */
+            /* 優先在空格處換行，只有長單字才分成兩行 */
+            white-space: normal;
+            word-break: keep-all;
             overflow-wrap: break-word;
-            word-break: break-word;
-            hyphens: auto;
             /* 撐滿卡片寬度，讓文字置中 */
             width: 100%;
             padding: 0 8px;
