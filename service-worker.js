@@ -3,9 +3,9 @@ const CACHE_VERSION = 'v5';
 const CACHE_TIMESTAMP = '20260329-auto'; // 固定鍵，避免每次都新建快取
 const CACHE_NAME = `changxing-english-${CACHE_VERSION}-${CACHE_TIMESTAMP}`;
 
-// 【關鍵】獲取分鐘級時間戳，每分鐘更新一次（確保 HTML 每分鐘拉一次最新版本）
+// 【關鍵】獲取時間戳，每 5 秒更新一次（確保 HTML 每 5 秒拉一次最新版本）
 function getVersionTimestamp() {
-  return Math.floor(Date.now() / 60000); // 每 60 秒更新一次
+  return Math.floor(Date.now() / 5000); // 每 5 秒更新一次
 }
 
 const FILES_TO_CACHE = [
