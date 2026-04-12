@@ -280,6 +280,29 @@
             margin-bottom: 10px;
         }
 
+        .speed-btn {
+            padding: 6px 12px;
+            background: #f5f5f5;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            color: #666;
+            font-size: 0.8rem;
+            font-weight: bold;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .speed-btn:hover {
+            background: #e8f0ff;
+            border-color: #667eea;
+        }
+
+        .speed-btn.active {
+            background: #667eea;
+            color: white;
+            border-color: #667eea;
+        }
+
         .feedback {
             text-align: center;
             font-size: 1.8rem;
@@ -651,6 +674,11 @@
                         <div class="speaker-icon">🔊</div>
                     </button>
                     <div class="replay-hint">可以重複點擊聆聽</div>
+                    <div style="margin-top: 8px; display: flex; gap: 6px; justify-content: center; flex-wrap: wrap;">
+                        <button class="speed-btn" data-rate="0.75" onclick="setPlaybackRate(0.75)">🐢 慢</button>
+                        <button class="speed-btn active" data-rate="0.5" onclick="setPlaybackRate(0.5)">🐇 更慢</button>
+                        <button class="speed-btn" data-rate="0.35" onclick="setPlaybackRate(0.35)">🚫 超慢</button>
+                    </div>
                 </div>
 
                 <div class="feedback" id="feedback"></div>
@@ -699,6 +727,7 @@
         let answered = false;
         let currentPunishmentIndex = 0;
         let usedQuestions = [];
+        let currentPlaybackRate = 0.5;  // 預設播放速率
 
         // 懲罰內容（5種輪流）
         const punishments = [
@@ -881,15 +910,34 @@
 
             const utterance = new SpeechSynthesisUtterance(currentWord);
             utterance.lang = 'en-US';
-            utterance.rate = 0.8;
+            utterance.rate = currentPlaybackRate;  // 使用用戶選擇的播放速率
             utterance.pitch = 1;
-            
+            utterance.volume = 1;      // 最大音量（0-1）
+
+            // 選擇清晰的女性英文語音
+            const voices = speechSynthesis.getVoices();
+            const englishVoice = voices.find(v => v.lang.includes('en') && v.name.includes('Female'))
+                              || voices.find(v => v.lang.includes('en'))
+                              || voices[0];
+            if (englishVoice) utterance.voice = englishVoice;
+
             utterance.onend = () => {
                 speakerBtn.classList.remove('playing');
             };
 
             speechSynthesis.cancel();
             speechSynthesis.speak(utterance);
+        }
+
+        function setPlaybackRate(rate) {
+            currentPlaybackRate = rate;
+            document.querySelectorAll('.speed-btn').forEach(btn => {
+                if (parseFloat(btn.dataset.rate) === rate) {
+                    btn.classList.add('active');
+                } else {
+                    btn.classList.remove('active');
+                }
+            });
         }
 
         function checkAnswer(selectedWord, button) {
