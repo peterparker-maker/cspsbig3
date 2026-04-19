@@ -198,40 +198,19 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 /* BRICK REVEAL SYSTEM */
 /* ════════════════════════════════════════════════════════════════ */
 .chip-brick {
-  background-color: #f39c12 !important;
+  background-color: #e67e22 !important;
   background-image:
-    repeating-linear-gradient(0deg, transparent 0, transparent 42px, #ffffff 42px, #ffffff 45px),
-    repeating-linear-gradient(90deg, #ffffff 0, #ffffff 2px, transparent 2px, transparent 44px),
-    linear-gradient(90deg, transparent 0, transparent 88px, #ffffff 88px, #ffffff 90px) !important;
-  border: 2px solid #000 !important; color: transparent !important;
-  text-shadow: none !important; cursor: pointer !important;
-  box-shadow: 0 4px 12px rgba(0,0,0,.25) !important;
-  position: relative; overflow: visible; user-select: none;
+    repeating-linear-gradient(0deg, transparent 0, transparent 41px, #ffffff 41px, #ffffff 45px),
+    repeating-linear-gradient(90deg, #ffffff 0, #ffffff 3px, transparent 3px, transparent 87px),
+    linear-gradient(90deg, transparent 0, transparent 177px, #ffffff 177px, #ffffff 180px) !important;
+  background-size: 180px 45px, 180px 90px, 180px 90px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.2), inset 0 0 0 2px #000 !important;
+  border: none !important; color: transparent !important; text-shadow: none !important;
+  cursor: pointer !important; position: relative; overflow: visible; user-select: none;
   width: 180px; height: 90px;
   display: flex; align-items: center; justify-content: center;
   box-sizing: border-box;
 }
-.chip-brick.crack-1 { animation: brickShakeBig .35s ease; }
-@keyframes brickShakeBig {
-  0%,100%{transform:translate(0,0) rotate(0)}
-  15%{transform:translate(-5px,2px) rotate(-4deg)}
-  30%{transform:translate(5px,-2px) rotate(3deg)}
-  50%{transform:translate(-4px,1px) rotate(-3deg)}
-  70%{transform:translate(3px,-1px) rotate(2deg)}
-  85%{transform:translate(-2px,1px) rotate(-1deg)}
-}
-.chip-brick.crack-1::after {
-  content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
-  background:
-    linear-gradient(52deg, transparent 38%, rgba(0,0,0,.7) 42%, rgba(0,0,0,.7) 44%, transparent 48%, transparent 64%, rgba(0,0,0,.55) 68%, rgba(0,0,0,.55) 69%, transparent 73%),
-    linear-gradient(128deg, transparent 30%, rgba(0,0,0,.5) 34%, rgba(0,0,0,.5) 35%, transparent 39%);
-}
-@keyframes brickCrumble {
-  0%  { transform:scale(1); opacity:1; }
-  30% { transform:scale(1.15) rotate(2deg); }
-  100%{ transform:scale(0) rotate(15deg); opacity:0; }
-}
-.chip-crumbling { animation:brickCrumble .4s ease forwards !important; pointer-events:none !important; }
 
 /* ════════════════════════════════════════════════════════════════ */
 /* CONFETTI */
@@ -620,7 +599,7 @@ function buildChips(chipsArr){
   shuffled.forEach((c,i)=>{
     const chip=document.createElement('div');
     chip.className='chip cc'+(i%7)+' chip-brick';
-    chip.dataset.ci=i; chip.dataset.word=c.v; chip.dataset.hits='0';
+    chip.dataset.ci=i; chip.dataset.word=c.v;
     chip.draggable=false;
     chip.textContent='';
     chip.addEventListener('click',()=>hitBrick(chip,c.v,i));
@@ -639,22 +618,10 @@ function buildChips(chipsArr){
 function hitBrick(chip,word,ci){
   if(!chip.classList.contains('chip-brick')) return;
   initAudio();
-  const hits=parseInt(chip.dataset.hits||'0')+1;
-  chip.dataset.hits=hits;
-  if(hits===1){
-    playKnockSound();
-    chip.classList.remove('crack-1'); void chip.offsetWidth;
-    chip.classList.add('crack-1');
-  } else {
-    playKnockSound();
-    chip.classList.add('chip-crumbling');
-    setTimeout(()=>{
-      chip.classList.remove('chip-brick','crack-1','chip-crumbling');
-      chip.style.animation='';
-      chip.textContent=word;
-      chip.draggable=true;
-    },350);
-  }
+  playCrackSound();
+  chip.classList.remove('chip-brick');
+  chip.textContent=word;
+  chip.draggable=true;
 }
 
 // =====================================================================
