@@ -1149,6 +1149,7 @@
                     setTimeout(showSuccess, 500);
                 }
             } else {
+                playErrorSound();
                 setTimeout(() => {
                     card1.classList.remove('flipped');
                     card2.classList.remove('flipped');
@@ -1160,6 +1161,7 @@
 
         async function hitMine() {
             canFlip = false;
+            playExplosionSound();
             const overlay = document.getElementById('freezeOverlay');
             const countdown = document.getElementById('freezeCountdown');
 
@@ -1347,6 +1349,68 @@
                     gain.gain.exponentialRampToValueAtTime(0.001, t + 0.3);
                     osc.start(t); osc.stop(t + 0.3);
                 });
+            } catch(e) {}
+        }
+
+        // 配對錯誤音效：簡短的低沉音效
+        function playErrorSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const osc = ctx.createOscillator();
+                const gain = ctx.createGain();
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                osc.type = 'sawtooth';
+                // 頻率從 200Hz 快速降至 100Hz
+                osc.frequency.setValueAtTime(200, ctx.currentTime);
+                osc.frequency.exponentialRampToValueAtTime(100, ctx.currentTime + 0.3);
+                // 音量快速衰減
+                gain.gain.setValueAtTime(0.3, ctx.currentTime);
+                gain.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.3);
+                osc.start(ctx.currentTime);
+                osc.stop(ctx.currentTime + 0.3);
+            } catch(e) {}
+        }
+
+        // 地雷爆炸音效：強烈的爆炸聲（結合白噪音與低頻）
+        function playExplosionSound() {
+            try {
+                const ctx = new (window.AudioContext || window.webkitAudioContext)();
+                const now = ctx.currentTime;
+
+                // 白噪音層：製造爆炸的衝擊感
+                const bufferSize = ctx.sampleRate * 1;
+                const buffer = ctx.createBuffer(1, bufferSize, ctx.sampleRate);
+                const data = buffer.getChannelData(0);
+                for (let i = 0; i < bufferSize; i++) {
+                    data[i] = Math.random() * 2 - 1;
+                }
+                const noiseSource = ctx.createBufferSource();
+                noiseSource.buffer = buffer;
+                const noiseGain = ctx.createGain();
+                noiseSource.connect(noiseGain);
+                noiseGain.connect(ctx.destination);
+                // 白噪音在開始時音量大，快速衰減
+                noiseGain.gain.setValueAtTime(0.6, now);
+                noiseGain.gain.exponentialRampToValueAtTime(0.001, now + 0.4);
+                noiseSource.start(now);
+                noiseSource.stop(now + 0.4);
+
+                // 低頻 Sine 波層：製造爆炸的低沉聲
+                const subOsc = ctx.createOscillator();
+                const subGain = ctx.createGain();
+                subOsc.connect(subGain);
+                subGain.connect(ctx.destination);
+                subOsc.type = 'sine';
+                // 低頻從 150Hz 快速下降，製造爆炸餘韻效果
+                subOsc.frequency.setValueAtTime(150, now);
+                subOsc.frequency.exponentialRampToValueAtTime(40, now + 0.8);
+                // 低頻音量緩升再衰減（製造餘韻）
+                subGain.gain.setValueAtTime(0, now);
+                subGain.gain.linearRampToValueAtTime(0.4, now + 0.1);
+                subGain.gain.exponentialRampToValueAtTime(0.001, now + 1);
+                subOsc.start(now);
+                subOsc.stop(now + 1);
             } catch(e) {}
         }
 
