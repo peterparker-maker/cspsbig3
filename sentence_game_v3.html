@@ -618,7 +618,7 @@ function buildChips(chipsArr){
 function hitBrick(chip,word,ci){
   if(!chip.classList.contains('chip-brick')) return;
   initAudio();
-  playCrackSound();
+  playKnockSound();
   chip.classList.remove('chip-brick');
   chip.textContent=word;
   chip.draggable=true;
