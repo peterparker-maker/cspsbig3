@@ -237,6 +237,12 @@
             font-size: 12vmin;
         }
 
+        /* 配對錯誤樣式：紅色漸層 + 快速抖動 */
+        .card-back.mismatch {
+            background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
+            animation: mismatchShake 0.5s ease;
+        }
+
         .flip-card.mine-hit .card-inner {
             animation: mineShake 0.5s ease;
         }
@@ -245,6 +251,20 @@
             0%, 100% { transform: rotateY(180deg) translateX(0); }
             25% { transform: rotateY(180deg) translateX(-10px); }
             75% { transform: rotateY(180deg) translateX(10px); }
+        }
+
+        /* 配對錯誤動畫：左右快速抖動 */
+        @keyframes mismatchShake {
+            0%, 100% { transform: rotateY(180deg) translateX(0); }
+            10% { transform: rotateY(180deg) translateX(-8px); }
+            20% { transform: rotateY(180deg) translateX(8px); }
+            30% { transform: rotateY(180deg) translateX(-8px); }
+            40% { transform: rotateY(180deg) translateX(8px); }
+            50% { transform: rotateY(180deg) translateX(-8px); }
+            60% { transform: rotateY(180deg) translateX(8px); }
+            70% { transform: rotateY(180deg) translateX(-4px); }
+            80% { transform: rotateY(180deg) translateX(4px); }
+            90% { transform: rotateY(180deg) translateX(-2px); }
         }
 
         .control-panel {
@@ -1150,7 +1170,16 @@
                 }
             } else {
                 playErrorSound();
+                // 立即為卡片背面添加錯誤樣式（紅色 + 抖動動畫）
+                const back1 = card1.querySelector('.card-back');
+                const back2 = card2.querySelector('.card-back');
+                back1.classList.add('mismatch');
+                back2.classList.add('mismatch');
+
                 setTimeout(() => {
+                    // 移除錯誤樣式後才蓋回卡片
+                    back1.classList.remove('mismatch');
+                    back2.classList.remove('mismatch');
                     card1.classList.remove('flipped');
                     card2.classList.remove('flipped');
                 }, 1000);
