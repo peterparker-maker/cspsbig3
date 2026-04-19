@@ -537,6 +537,77 @@
             margin-bottom: 25px;
         }
 
+        /* Combo 彈出文字特效 */
+        .combo-popup {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%) scale(0);
+            font-size: 3rem;
+            font-weight: bold;
+            color: #ff9500;
+            text-shadow: 0 0 20px rgba(255, 149, 0, 0.8);
+            z-index: 2000;
+            pointer-events: none;
+            white-space: nowrap;
+            animation: comboPopIn 1.2s ease forwards;
+        }
+
+        .combo-popup.on-fire {
+            color: #ff3b30;
+            font-size: 3.8rem;
+            text-shadow: 0 0 30px rgba(255, 59, 48, 0.9), 0 0 60px rgba(255, 59, 48, 0.5);
+        }
+
+        @keyframes comboPopIn {
+            0% {
+                transform: translate(-50%, -50%) scale(0);
+                opacity: 0;
+            }
+            40% {
+                transform: translate(-50%, -50%) scale(1.3);
+                opacity: 1;
+            }
+            70% {
+                transform: translate(-50%, -50%) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translate(-50%, -50%) scale(0.8);
+                opacity: 0;
+            }
+        }
+
+        /* 星星閃亮特效 */
+        .success-stars {
+            font-size: 3rem;
+            letter-spacing: 10px;
+            margin: 15px 0;
+            filter: drop-shadow(0 0 10px rgba(255, 215, 0, 0.9));
+            animation: starShine 1s ease 0.5s both;
+        }
+
+        .success-score {
+            font-size: 1.6rem;
+            color: #764ba2;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+
+        @keyframes starShine {
+            0% {
+                opacity: 0;
+                transform: scale(0.5);
+            }
+            60% {
+                transform: scale(1.3);
+            }
+            100% {
+                opacity: 1;
+                transform: scale(1);
+            }
+        }
+
         /* 平板直式模式調整 */
         @media (orientation: portrait) {
             .main-content {
@@ -655,10 +726,17 @@
                         </span>
                         <span class="score-value" id="wrongScore">0</span>
                     </div>
+                    <div class="score-item">
+                        <span class="score-label">
+                            <span class="score-label-en">⭐ Score</span>
+                            <span class="score-label-ch">積分</span>
+                        </span>
+                        <span class="score-value" id="totalScore">0</span>
+                    </div>
                 </div>
 
                 <div class="progress-container">
-                    <div class="progress-label">Progress 過關進度：<span id="progressText">0 / 3</span></div>
+                    <div class="progress-label">Progress 過關進度：<span id="progressText">0 / 5</span></div>
                     <div class="progress-bar">
                         <div class="progress-fill" id="progressFill" style="width: 0%">
                             <span id="progressPercent">0%</span>
@@ -711,7 +789,9 @@
         <div class="success-content">
             <div class="success-icon">🎉</div>
             <div class="success-title">恭喜過關！</div>
-            <div class="success-message">你答對了 3 題！太厲害了！</div>
+            <div class="success-stars" id="successStars"></div>
+            <div class="success-score" id="successScore"></div>
+            <div class="success-message">你答對了 5 題！太厲害了！</div>
             <button class="control-btn" onclick="restartGame()">再玩一次</button>
         </div>
     </div>
@@ -728,6 +808,9 @@
         let currentPunishmentIndex = 0;
         let usedQuestions = [];
         let currentPlaybackRate = 0.5;  // 預設播放速率
+        let totalScore = 0;
+        let combo = 0;
+        let soundEndTime = null;
 
         // 懲罰內容（5種輪流）
         const punishments = [
@@ -923,6 +1006,7 @@
 
             utterance.onend = () => {
                 speakerBtn.classList.remove('playing');
+                soundEndTime = Date.now();
             };
 
             speechSynthesis.cancel();
@@ -951,28 +1035,46 @@
 
             if (selectedWord === correctAnswer) {
                 button.classList.add('correct');
-                document.getElementById('feedback').textContent = '✅ 正確！';
+
+                // 計算速度加成
+                const elapsed = soundEndTime ? Date.now() - soundEndTime : 9999;
+                const speedBonus = elapsed < 2000 ? 50 : elapsed < 4000 ? 30 : 0;
+
+                // 遞增 combo 獎勵
+                combo++;
+                const comboBonus = combo >= 2 ? combo * 20 : 0;
+                const earned = 100 + speedBonus + comboBonus;
+
+                totalScore += earned;
+                document.getElementById('totalScore').textContent = totalScore;
+                document.getElementById('feedback').textContent = `✅ 正確！ +${earned}分`;
                 document.getElementById('feedback').className = 'feedback correct';
                 correctCount++;
                 document.getElementById('correctScore').textContent = correctCount;
-                
+
+                // 顯示 combo 特效
+                if (combo >= 2) {
+                    showComboEffect(combo);
+                }
+
                 updateProgress();
                 playSuccessSound();
 
-                if (correctCount >= 3) {
+                if (correctCount >= 5) {
                     setTimeout(() => showSuccess(), 1500);
                 } else {
                     setTimeout(() => nextQuestion(), 1500);
                 }
             } else {
                 button.classList.add('wrong');
+                combo = 0; // 答錯時 combo 歸零
                 document.getElementById('feedback').textContent = '❌ 錯誤！';
                 document.getElementById('feedback').className = 'feedback wrong';
                 wrongCount++;
                 lives--;
                 document.getElementById('wrongScore').textContent = wrongCount;
                 document.getElementById('lives').textContent = lives;
-                
+
                 playErrorSound();
 
                 if (lives < 0) {
@@ -984,10 +1086,10 @@
         }
 
         function updateProgress() {
-            const percentage = (correctCount / 3) * 100;
+            const percentage = (correctCount / 5) * 100;
             document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('progressPercent').textContent = Math.round(percentage) + '%';
-            document.getElementById('progressText').textContent = correctCount + ' / 3';
+            document.getElementById('progressText').textContent = correctCount + ' / 5';
         }
 
         function showPunishment() {
@@ -1012,6 +1114,18 @@
         }
 
         function showSuccess() {
+            // 計算星星
+            let stars;
+            if (totalScore >= 950) {
+                stars = '⭐⭐⭐';
+            } else if (totalScore >= 780) {
+                stars = '⭐⭐';
+            } else {
+                stars = '⭐';
+            }
+
+            document.getElementById('successStars').textContent = stars;
+            document.getElementById('successScore').textContent = totalScore + ' 分';
             document.getElementById('successOverlay').classList.add('show');
             playVictorySound();
         }
@@ -1079,8 +1193,27 @@
             });
         }
 
+        function showComboEffect(comboCount) {
+            // 移除既有的 combo popup
+            const existing = document.getElementById('comboPopup');
+            if (existing) existing.remove();
+
+            // 建立新的 popup
+            const popup = document.createElement('div');
+            popup.id = 'comboPopup';
+            popup.className = 'combo-popup' + (comboCount >= 4 ? ' on-fire' : '');
+            popup.textContent = `COMBO ×${comboCount}`;
+
+            document.body.appendChild(popup);
+
+            // 動畫結束後移除
+            setTimeout(() => {
+                if (popup.parentNode) popup.remove();
+            }, 1200);
+        }
+
         function nextQuestion() {
-            if (correctCount >= 3) {
+            if (correctCount >= 5) {
                 showSuccess();
                 return;
             }
@@ -1091,9 +1224,13 @@
             correctCount = 0;
             wrongCount = 0;
             lives = 2;
+            totalScore = 0;
+            combo = 0;
+            soundEndTime = null;
             document.getElementById('correctScore').textContent = '0';
             document.getElementById('wrongScore').textContent = '0';
             document.getElementById('lives').textContent = '2';
+            document.getElementById('totalScore').textContent = '0';
             document.getElementById('successOverlay').classList.remove('show');
             updateProgress();
             generateQuestion();
