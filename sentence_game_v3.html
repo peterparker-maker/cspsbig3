@@ -198,11 +198,14 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 /* BRICK REVEAL SYSTEM */
 /* ════════════════════════════════════════════════════════════════ */
 .chip-brick {
-  background: linear-gradient(145deg, #b22222, #8b0000) !important;
-  border-color: #5a0000 !important; color: transparent !important;
+  background-color: #f39c12 !important;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0, transparent 42px, #ffffff 42px, #ffffff 45px),
+    repeating-linear-gradient(90deg, #ffffff 0, #ffffff 2px, transparent 2px, transparent 44px),
+    linear-gradient(90deg, transparent 0, transparent 88px, #ffffff 88px, #ffffff 90px) !important;
+  border: 2px solid #000 !important; color: transparent !important;
   text-shadow: none !important; cursor: pointer !important;
-  box-shadow: 0 7px 0 #4a0000, 0 10px 18px rgba(0,0,0,.55) !important;
-  background-image: none !important;
+  box-shadow: 0 4px 12px rgba(0,0,0,.25) !important;
   position: relative; overflow: visible; user-select: none;
   width: 180px; height: 90px;
   display: flex; align-items: center; justify-content: center;
@@ -220,8 +223,8 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .chip-brick.crack-1::after {
   content:''; position:absolute; inset:0; border-radius:inherit; pointer-events:none;
   background:
-    linear-gradient(52deg, transparent 38%, rgba(30,10,10,.8) 42%, rgba(30,10,10,.8) 44%, transparent 48%, transparent 64%, rgba(20,5,5,.65) 68%, rgba(20,5,5,.65) 69%, transparent 73%),
-    linear-gradient(128deg, transparent 30%, rgba(20,5,5,.6) 34%, rgba(20,5,5,.6) 35%, transparent 39%);
+    linear-gradient(52deg, transparent 38%, rgba(0,0,0,.7) 42%, rgba(0,0,0,.7) 44%, transparent 48%, transparent 64%, rgba(0,0,0,.55) 68%, rgba(0,0,0,.55) 69%, transparent 73%),
+    linear-gradient(128deg, transparent 30%, rgba(0,0,0,.5) 34%, rgba(0,0,0,.5) 35%, transparent 39%);
 }
 @keyframes brickCrumble {
   0%  { transform:scale(1); opacity:1; }
