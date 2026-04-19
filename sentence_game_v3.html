@@ -65,7 +65,7 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .sent-line{display:flex;align-items:center;gap:8px;flex-wrap:wrap;width:100%;}
 .line-label{font-size:clamp(.6rem,.72vw,.7rem);font-weight:800;color:#bbb;text-transform:uppercase;letter-spacing:.5px;min-width:30px;}
 .slabel{font-size:clamp(.6rem,.76vw,.72rem);font-weight:800;color:#ccc;text-transform:uppercase;letter-spacing:1px;width:100%;margin-bottom:2px;}
-.sword{font-size:clamp(1.2rem,2vw,1.8rem);font-weight:800;color:var(--text);}
+.sword{font-size:clamp(1.4rem,2.5vw,1.8rem);font-weight:800;color:var(--text);margin:0 8px;}
 
 /* SLOT */
 .slot{min-width:clamp(120px,14vw,180px);height:auto;min-height:clamp(68px,9vh,90px);border-radius:14px;border:2.5px dashed #CCC;background:#FAFAFA;display:inline-flex;align-items:center;justify-content:center;font-size:clamp(1.2rem,2.2vw,1.8rem);font-weight:800;color:var(--text);transition:all .2s;cursor:default;padding:12px 18px;}
@@ -142,6 +142,7 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 
 /* ── RESPONSIVE BREAKPOINTS ── */
 @media(max-width:600px){
+  .sent-wrap .sword{font-size:clamp(1.4rem,3.5vw,1.6rem);font-weight:900;}
   body{padding:8px 0 20px;}
   .card{min-height:auto;border-radius:14px;width:99vw;padding:12px 12px 14px;}
   .hdr{flex-direction:column;align-items:flex-start;}
@@ -168,7 +169,7 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
   .tabs{flex-wrap:nowrap;gap:8px;}
   .tab{padding:7px 18px;font-size:.92rem;}
   .qzh{font-size:clamp(2.1rem,3.5vw,3.1rem);}
-  .sword{font-size:clamp(1.3rem,2.2vw,1.9rem);}
+  .sent-wrap .sword{font-size:clamp(2.6rem,4.2vw,3rem);font-weight:900;margin:0 12px;}
   .sent-wrap{min-height:clamp(120px,16vh,160px);padding:26px 32px;gap:18px;}
   .chip{font-size:clamp(1.6rem,2.8vw,3rem);padding:16px 32px;box-shadow:0 7px 22px rgba(0,0,0,.2), 0 2px 8px rgba(0,0,0,.12);}
   .chips-wrap{min-height:clamp(110px,14vh,150px);}
