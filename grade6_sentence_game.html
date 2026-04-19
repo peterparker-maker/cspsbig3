@@ -142,6 +142,38 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .btn-cont.l2{background:linear-gradient(135deg,#FFCC80,#F57C00);box-shadow:0 6px 18px rgba(245,124,0,.45);}
 .btn-cont.lmix{background:linear-gradient(135deg,#CE93D8,#7B1FA2);box-shadow:0 6px 18px rgba(123,31,162,.45);}
 
+/* ════════════════════════════════════════════════════════════════ */
+/* BRICK REVEAL SYSTEM */
+/* ════════════════════════════════════════════════════════════════ */
+.chip-brick {
+  background-color: #e67e22 !important;
+  background-image:
+    repeating-linear-gradient(0deg, transparent 0, transparent 41px, #ffffff 41px, #ffffff 45px),
+    repeating-linear-gradient(90deg, #ffffff 0, #ffffff 3px, transparent 3px, transparent 87px),
+    linear-gradient(90deg, transparent 0, transparent 177px, #ffffff 177px, #ffffff 180px) !important;
+  background-size: 180px 45px, 180px 90px, 180px 90px;
+  box-shadow: 0 2px 6px rgba(0,0,0,.2), inset 0 0 0 2px #000 !important;
+  border: none !important; color: transparent !important; text-shadow: none !important;
+  cursor: pointer !important; position: relative; overflow: visible; user-select: none;
+  width: 180px; height: 90px;
+  display: flex; align-items: center; justify-content: center;
+  box-sizing: border-box;
+}
+
+/* ════════════════════════════════════════════════════════════════ */
+/* CONFETTI */
+/* ════════════════════════════════════════════════════════════════ */
+.confetti-p {
+  position:fixed; width:10px; height:10px; border-radius:2px;
+  pointer-events:none; z-index:9999;
+  animation:confettiFall linear forwards;
+}
+@keyframes confettiFall {
+  0%   { transform:translateY(-20px) rotate(0deg); opacity:1; }
+  80%  { opacity:1; }
+  100% { transform:translateY(110vh) rotate(720deg); opacity:0; }
+}
+
 /* ── RESPONSIVE BREAKPOINTS ── */
 @media(max-width:600px){
   body{padding:8px 0 20px;}
@@ -526,13 +558,16 @@ function makeSlot(si){
 }
 
 function buildChips(arr){
-  document.getElementById('chipsWrap').style.display='';
+  const wrap=document.getElementById('chipsWrap'); wrap.style.display='';
   const row=document.getElementById('chipsRow'); row.innerHTML='';
-  [...arr].sort(()=>Math.random()-.5).forEach((c,i)=>{
+  const shuffled=[...arr].sort(()=>Math.random()-.5);
+  shuffled.forEach((c,i)=>{
     const chip=document.createElement('div');
-    chip.className='chip cc'+(i%7);
-    chip.textContent=c.v; chip.dataset.ci=i; chip.dataset.word=c.v;
-    chip.draggable=true;
+    chip.className='chip cc'+(i%7)+' chip-brick';
+    chip.dataset.ci=i; chip.dataset.word=c.v;
+    chip.draggable=false;
+    chip.textContent='';
+    chip.addEventListener('click',()=>hitBrick(chip,c.v,i));
     chip.addEventListener('dragstart',e=>{dragIdx=i;chip.classList.add('dragging');e.dataTransfer.effectAllowed='move';});
     chip.addEventListener('dragend',()=>chip.classList.remove('dragging'));
     chip.addEventListener('touchstart',e=>tStart(e,i),{passive:false});
@@ -540,6 +575,18 @@ function buildChips(arr){
     chip.addEventListener('touchend',e=>tEnd(e,i));
     row.appendChild(chip);
   });
+}
+
+// =====================================================================
+// BRICK HITTING
+// =====================================================================
+function hitBrick(chip,word,ci){
+  if(!chip.classList.contains('chip-brick')) return;
+  initAudio();
+  playKnockSound();
+  chip.classList.remove('chip-brick');
+  chip.textContent=word;
+  chip.draggable=true;
 }
 
 function dropOn(si){
@@ -749,6 +796,49 @@ function playVictorySound(){
       osc.start(t); osc.stop(t+0.4);
     });
   } catch(e){}
+}
+
+// 敲磚聲：低沉木頭悶擊
+function playKnockSound(){
+  try{ initAudio();
+    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type='sine'; osc.frequency.setValueAtTime(140,audioCtx.currentTime);
+    osc.frequency.exponentialRampToValueAtTime(80,audioCtx.currentTime+0.18);
+    gain.gain.setValueAtTime(0.45,audioCtx.currentTime);
+    gain.gain.exponentialRampToValueAtTime(0.001,audioCtx.currentTime+0.2);
+    osc.start(audioCtx.currentTime); osc.stop(audioCtx.currentTime+0.22);
+  }catch(e){}
+}
+
+// 碎裂聲：雜訊脈衝 + 下墜音調
+function playCrackSound(){
+  try{ initAudio(); const t=audioCtx.currentTime;
+    const buf=audioCtx.createBuffer(1,audioCtx.sampleRate*0.15,audioCtx.sampleRate);
+    const data=buf.getChannelData(0); for(let i=0;i<data.length;i++) data[i]=(Math.random()*2-1);
+    const src=audioCtx.createBufferSource(), gain=audioCtx.createGain();
+    src.buffer=buf; src.connect(gain); gain.connect(audioCtx.destination);
+    gain.gain.setValueAtTime(0.6,t); gain.gain.exponentialRampToValueAtTime(0.001,t+0.15);
+    src.start(t); src.stop(t+0.15);
+    const osc=audioCtx.createOscillator(), g2=audioCtx.createGain();
+    osc.connect(g2); g2.connect(audioCtx.destination);
+    osc.type='sawtooth'; osc.frequency.setValueAtTime(380,t);
+    osc.frequency.exponentialRampToValueAtTime(60,t+0.2);
+    g2.gain.setValueAtTime(0.3,t); g2.gain.exponentialRampToValueAtTime(0.001,t+0.22);
+    osc.start(t); osc.stop(t+0.22);
+  }catch(e){}
+}
+
+// 地基入位：低頻厚實砰聲
+function playThumpSound(){
+  try{ initAudio(); const t=audioCtx.currentTime;
+    const osc=audioCtx.createOscillator(), gain=audioCtx.createGain();
+    osc.connect(gain); gain.connect(audioCtx.destination);
+    osc.type='sine'; osc.frequency.setValueAtTime(75,t);
+    osc.frequency.exponentialRampToValueAtTime(40,t+0.25);
+    gain.gain.setValueAtTime(0.7,t); gain.gain.exponentialRampToValueAtTime(0.001,t+0.28);
+    osc.start(t); osc.stop(t+0.3);
+  }catch(e){}
 }
 
 // 平板解鎖：第一次觸碰即解鎖 AudioContext
