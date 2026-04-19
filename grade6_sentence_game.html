@@ -120,6 +120,13 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
 .btn-next{margin-top:24px;padding:clamp(14px,1.8vh,20px) clamp(36px,5vw,56px);border-radius:16px;border:none;background:linear-gradient(135deg,#80DEEA,#26C6DA);color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(1.2rem,2.5vw,1.6rem);font-weight:900;cursor:pointer;box-shadow:0 6px 18px rgba(38,198,218,.5);transition:all .2s;animation:breathe 2s ease-in-out infinite;}
 .btn-next:hover{transform:scale(1.08);animation:none;}
 
+/* SPEAK CONTAINER & BUTTON */
+.speak-container{display:flex;flex-direction:column;align-items:center;margin-top:20px;animation:popIn .4s ease .2s both;}
+.btn-speak{padding:15px 30px;border-radius:18px;border:none;background:linear-gradient(135deg,#FF7043,#FF5252);color:#fff;font-family:'Nunito',sans-serif;font-size:clamp(1rem,1.8vw,1.25rem);font-weight:700;cursor:pointer;box-shadow:0 6px 20px rgba(255,82,82,.5);transition:all .2s;display:flex;align-items:center;gap:10px;}
+.btn-speak:hover{transform:translateY(-3px) scale(1.05);box-shadow:0 8px 25px rgba(255,82,82,.7);}
+.btn-speak:active{transform:translateY(-1px) scale(1.02);}
+.speak-hint{font-size:clamp(0.8rem,1.5vw,0.95rem);color:#FF5252;margin-top:8px;font-weight:600;}
+
 /* ROUND COMPLETE */
 .rcscreen{position:absolute;inset:0;border-radius:26px;background:rgba(240,248,255,.97);display:none;flex-direction:column;align-items:center;justify-content:center;z-index:200;animation:popIn .5s ease;}
 .rcscreen.show{display:flex;}
@@ -237,6 +244,10 @@ body{font-family:'Nunito','Microsoft JhengHei',sans-serif;background:linear-grad
     <div class="fb-emoji" id="fbEmoji"></div>
     <div class="fb-msg" id="fbMsg"></div>
     <div class="fb-sent" id="fbSent"></div>
+    <div class="speak-container" id="speakContainer" style="display:none;">
+      <button class="btn-speak" id="btnSpeak" onclick="speakSentence()">🔊 Click to Listen & Repeat</button>
+      <div class="speak-hint">點擊聆聽並跟讀</div>
+    </div>
     <button class="btn-next" id="btnNext" onclick="nextQ()">▶ Next 下一題</button>
   </div>
 
@@ -618,14 +629,40 @@ function checkAnswer(){
   if(ok){
     playCorrectSound();
     document.getElementById('btnNext').style.display='';
+    document.getElementById('speakContainer').style.display='flex';
   } else {
     playWrongSound();
     document.getElementById('btnNext').style.display='none';
+    document.getElementById('speakContainer').style.display='none';
     setTimeout(()=>{
       ov.className='feedback';
       retryQ();
     }, 2000);
   }
+}
+
+// =====================================================================
+// SPEAK SENTENCE — 手動朗讀句子
+// =====================================================================
+function speakSentence(){
+  // 取得正確句子 (fbSent 的文本)
+  const sentenceText=document.getElementById('fbSent').textContent;
+
+  // 替換斜線為空格，避免系統唸出「slash」
+  let textToSpeak=sentenceText.replace(/\s*\/\s*/g,' , ');
+
+  // 先取消之前的朗讀，避免聲音重疊
+  speechSynthesis.cancel();
+
+  // 建立朗讀物件
+  const utterance=new SpeechSynthesisUtterance(textToSpeak);
+  utterance.lang='en-US';
+  utterance.rate=0.6;  // 清晰慢速
+  utterance.pitch=1;
+  utterance.volume=1;
+
+  // 開始朗讀
+  speechSynthesis.speak(utterance);
 }
 
 function retryQ(){
