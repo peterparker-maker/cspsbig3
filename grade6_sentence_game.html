@@ -606,8 +606,15 @@ function returnChip(si){
 }
 
 function tStart(e,ci){
+  const ch=e.currentTarget;
+  // 優先檢查磚塊：如果是磚塊，立即解鎖並return，不執行拖曳邏輯
+  if(ch.classList.contains('chip-brick')){
+    e.preventDefault();
+    hitBrick(ch, ch.dataset.word, ci);
+    return;
+  }
   e.preventDefault(); dragIdx=ci;
-  const ch=e.currentTarget,t=e.touches[0];
+  const t=e.touches[0];
   dragGhost=ch.cloneNode(true); dragGhost.className=ch.className+' drag-ghost';
   dragGhost.style.width=ch.offsetWidth+'px';
   dragGhost.style.left=(t.clientX-ch.offsetWidth/2)+'px';
