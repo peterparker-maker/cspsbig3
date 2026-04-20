@@ -1,11 +1,15 @@
 // 長興國小英文學習中心 - Service Worker
-// 目標：穩定的離線功能 + GitHub 更新立即生效
+// 目標：100% 離線可用性 + GitHub Pages 環境完全相容
 
-const CACHE_NAME = 'changxing-english-v1';
+const CACHE_NAME = 'changxing-english-v2';
 const PRECACHE_FILES = [
   './',
   './index.html',
+  './grade5-vocab.html',
+  './grade5-phonics.html',
   './sentence_game_v3.html',
+  './grade6-vocab.html',
+  './grade6-phonics.html',
   './grade6_sentence_game.html',
   './manifest.json',
   './icon-192.png',
@@ -76,22 +80,21 @@ self.addEventListener('fetch', (event) => {
 // 優先嘗試從網路抓取最新版本，失敗時才用快取
 // ============================================================
 async function networkFirstStrategy(request) {
-  const cacheKey = new URL(request.url).pathname;
-
   try {
     // 從網路抓取最新版本（不添加任何時間戳參數）
     const networkResponse = await fetch(request);
 
-    // 若請求成功，同步更新快取
+    // 若請求成功，同步更新快取（使用原始 request 作為 Key）
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
-      await cache.put(cacheKey, networkResponse.clone());
+      // 直接使用 request 物件，確保路徑正確匹配（包含 Repo 名稱）
+      await cache.put(request, networkResponse.clone());
     }
 
     return networkResponse;
   } catch (err) {
-    // 網路失敗：從快取提取最後儲存的版本
-    const cachedResponse = await caches.match(cacheKey);
+    // 網路失敗：從快取提取最後儲存的版本（使用原始 request 作為 Key）
+    const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
     }
@@ -106,26 +109,36 @@ async function networkFirstStrategy(request) {
 // 立刻返回快取版本，同時在背景檢查更新
 // ============================================================
 async function staleWhileRevalidateStrategy(request) {
-  const cacheKey = new URL(request.url).pathname;
-
   try {
-    // 從快取取得版本（若有的話）
-    const cachedResponse = await caches.match(cacheKey);
+    // 從快取取得版本（若有的話）使用原始 request 作為 Key
+    const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       // 異步在背景更新快取（不阻止當前響應）
-      updateCacheInBackground(request, cacheKey);
+      updateCacheInBackground(request);
       return cachedResponse;
     }
 
-    // 快取中沒有：從網路抓取並儲存
+    // 快取中沒有：從網路抓取並儲存（雙重保險：動態快取）
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
-      await cache.put(cacheKey, networkResponse.clone());
+      // 直接使用 request 物件，自動快取網路上取得的資源
+      await cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   } catch (err) {
-    // 網路失敗且無快取：返回通用離線回應
+    // 網路失敗且無快取：嘗試返回 .html 首頁或離線頁面
+    const cachedResponse = await caches.match(request);
+    if (cachedResponse) {
+      return cachedResponse;
+    }
+
+    // 若沒有被請求過的資源快取，嘗試返回首頁
+    const indexResponse = await caches.match('./index.html');
+    if (indexResponse && request.destination === 'document') {
+      return indexResponse;
+    }
+
     return createOfflineResponse();
   }
 }
@@ -134,12 +147,13 @@ async function staleWhileRevalidateStrategy(request) {
 // 背景更新快取
 // 在不影響當前頁面的情況下，檢查並更新資源
 // ============================================================
-async function updateCacheInBackground(request, cacheKey) {
+async function updateCacheInBackground(request) {
   try {
     const networkResponse = await fetch(request);
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
-      await cache.put(cacheKey, networkResponse.clone());
+      // 直接使用 request 物件確保一致性
+      await cache.put(request, networkResponse.clone());
     }
   } catch (err) {
     // 背景更新失敗無須處理（快取版本已提供給用戶）
@@ -197,7 +211,7 @@ function createOfflineResponse() {
         <div class="icon">📡</div>
         <h1>目前離線</h1>
         <p>無法連接網路，請檢查您的網際網路連接</p>
-        <p style="font-size: 14px; color: #999;">請重新整理頁面重試</p>
+        <p style="font-size: 14px; color: #999;">已快取的內容仍可正常使用</p>
       </div>
     </body>
     </html>`,
