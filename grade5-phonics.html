@@ -445,7 +445,8 @@
             text-align: center;
             max-width: 600px;
             width: 80%;
-            animation: bounceIn 0.5s ease;
+            /* 懲罰視窗速度優化：動畫由 0.5s → 0.3s */
+            animation: bounceIn 0.3s ease;
         }
 
         @keyframes bounceIn {
@@ -998,14 +999,12 @@
 
             // 先清空，讓瀏覽器完整渲染後再建立新按鈕，避免動畫殘留
             document.getElementById('optionsArea').innerHTML = '';
-            requestAnimationFrame(() => {
-                displayOptions(options);
-            });
+            displayOptions(options);
 
             document.getElementById('feedback').textContent = '';
             document.getElementById('feedback').className = 'feedback';
-            
-            setTimeout(() => playSound(), 500);
+
+            setTimeout(() => playSound(), 100);
         }
 
         function displayOptions(options) {
@@ -1099,10 +1098,10 @@
                 updateProgress();
                 playSuccessSound();
 
-                if (correctCount >= 5) {
-                    setTimeout(() => showSuccess(), 1500);
+                if (correctCount >= 4) {
+                    setTimeout(() => showSuccess(), 800);
                 } else {
-                    setTimeout(() => nextQuestion(), 1500);
+                    setTimeout(() => nextQuestion(), 800);
                 }
             } else {
                 button.classList.add('wrong');
@@ -1117,18 +1116,18 @@
                 playErrorSound();
 
                 if (lives < 0) {
-                    setTimeout(() => showPunishment(), 1500);
+                    setTimeout(() => showPunishment(), 800);
                 } else {
-                    setTimeout(() => nextQuestion(), 1500);
+                    setTimeout(() => nextQuestion(), 800);
                 }
             }
         }
 
         function updateProgress() {
-            const percentage = (correctCount / 5) * 100;
+            const percentage = (correctCount / 4) * 100;
             document.getElementById('progressFill').style.width = percentage + '%';
             document.getElementById('progressPercent').textContent = Math.round(percentage) + '%';
-            document.getElementById('progressText').textContent = correctCount + ' / 5';
+            document.getElementById('progressText').textContent = correctCount + ' / 4';
         }
 
         function showPunishment() {
@@ -1252,7 +1251,7 @@
         }
 
         function nextQuestion() {
-            if (correctCount >= 5) {
+            if (correctCount >= 4) {
                 showSuccess();
                 return;
             }
