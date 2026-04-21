@@ -149,7 +149,8 @@
             position: relative;
             width: 100%;
             height: 100%;
-            transition: transform 0.6s;
+            /* CSS 動畫加速：transition 由 0.6s → 0.4s */
+            transition: transform 0.4s;
             transform-style: preserve-3d;
         }
 
@@ -240,7 +241,8 @@
         /* 配對錯誤樣式：紅色漸層 + 快速抖動 */
         .card-back.mismatch {
             background: linear-gradient(135deg, #ff4b2b 0%, #ff416c 100%);
-            animation: mismatchShake 0.5s ease;
+            /* 抖動動畫加速：0.5s → 0.3s */
+            animation: mismatchShake 0.3s ease;
         }
 
         .flip-card.mine-hit .card-inner {
@@ -1111,20 +1113,22 @@
         async function showCountdown() {
             const overlay = document.getElementById('countdownOverlay');
             const number = document.getElementById('countdownNumber');
-            
-            for (let i = 3; i > 0; i--) {
+
+            // 遊戲前倒數：3-2-1 改為 2-1（共 2 秒）
+            for (let i = 2; i > 0; i--) {
                 number.textContent = i;
                 overlay.classList.add('show');
                 await sleep(1000);
                 overlay.classList.remove('show');
-                await sleep(100);
+                await sleep(50);
             }
         }
 
         async function peekCards() {
             const cards = document.querySelectorAll('.flip-card');
             cards.forEach(card => card.classList.add('flipped'));
-            await sleep(3000);
+            // 偷看記憶時間：3000ms → 2000ms
+            await sleep(2000);
             cards.forEach(card => card.classList.remove('flipped'));
         }
 
@@ -1146,7 +1150,8 @@
             if (flippedCards.length === 2) {
                 moves++;
                 document.getElementById('moves').textContent = moves;
-                setTimeout(checkMatch, 800);
+                // 翻牌邏輯優化：延遲由 800ms → 400ms
+                setTimeout(checkMatch, 400);
             }
         }
 
@@ -1163,7 +1168,8 @@
                 document.getElementById('matches').textContent = matchedPairs;
 
                 if (matchedPairs === 4) {
-                    setTimeout(showSuccess, 500);
+                    // 加速成功回饋：延遲由 500ms → 300ms
+                    setTimeout(showSuccess, 300);
                 }
             } else {
                 playErrorSound();
@@ -1173,13 +1179,14 @@
                 back1.classList.add('mismatch');
                 back2.classList.add('mismatch');
 
+                // 配對失敗蓋回延迟：1000ms → 500ms
                 setTimeout(() => {
                     // 移除錯誤樣式後才蓋回卡片
                     back1.classList.remove('mismatch');
                     back2.classList.remove('mismatch');
                     card1.classList.remove('flipped');
                     card2.classList.remove('flipped');
-                }, 1000);
+                }, 500);
             }
 
             flippedCards = [];
@@ -1197,17 +1204,18 @@
                 navigator.vibrate([200, 100, 200]);
             }
 
-            for (let i = 3; i > 0; i--) {
+            // 地雷爆炸停留：倒數 3 秒改為 1 秒
+            for (let i = 1; i > 0; i--) {
                 countdown.textContent = i;
                 await sleep(1000);
             }
 
             overlay.classList.remove('show');
-            
+
             const cards = document.querySelectorAll('.flip-card');
             cards[minePosition].classList.remove('flipped');
             cards[minePosition].classList.remove('mine-hit');
-            
+
             canFlip = true;
         }
 
@@ -1223,6 +1231,8 @@
             stopTimer(); // 已包含隱藏進度條和計時顯示
             gameMode = null; // 重置模式
             gameStarted = false;
+            // 點擊繼續後，直接重置狀態並顯示模式選擇，移除不必要的視覺等待感
+            displayModeSelection();
         }
 
         async function restartRound() {
