@@ -1231,8 +1231,8 @@
             stopTimer(); // 已包含隱藏進度條和計時顯示
             gameMode = null; // 重置模式
             gameStarted = false;
-            // 點擊繼續後，直接重置狀態並顯示模式選擇，移除不必要的視覺等待感
-            displayModeSelection();
+            // 點擊繼續後，直接重置狀態並顯示模式選擇
+            startGame();
         }
 
         async function restartRound() {
