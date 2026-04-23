@@ -1,16 +1,21 @@
-// 長興國小英文學習中心 - Service Worker
-// 目標：100% 離線可用性 + GitHub Pages 環境完全相容
+// 長興國小英文學習中心 - Service Worker v3
+// 目標：Lie-Fi 防禦 + 100% 離線可用性 + GitHub Pages 完全相容
 
-const CACHE_NAME = 'changxing-english-v2';
+// ============================================================
+// 全域狀態管理：單次會話離線鎖定機制
+// ============================================================
+let isOfflineLocked = false;
+
+const CACHE_NAME = 'changxing-english-v3';
 const PRECACHE_FILES = [
   './',
   './index.html',
+  './sentence_game_v3.html',
+  './grade6_sentence_game.html',
   './grade5-vocab.html',
   './grade5-phonics.html',
-  './sentence_game_v3.html',
   './grade6-vocab.html',
   './grade6-phonics.html',
-  './grade6_sentence_game.html',
   './manifest.json',
   './icon-192.png',
   './icon-512.png'
@@ -28,6 +33,7 @@ self.addEventListener('install', (event) => {
       });
     }).catch((err) => {
       // 若預載失敗，仍允許 Service Worker 安裝（後續可從網路取得）
+      console.warn('Service Worker 預載失敗:', err);
     })
   );
 });
@@ -42,6 +48,7 @@ self.addEventListener('activate', (event) => {
       return Promise.all(
         cacheNames.map((cacheName) => {
           if (cacheName !== CACHE_NAME) {
+            console.log('刪除舊版快取:', cacheName);
             return caches.delete(cacheName);
           }
         })
@@ -54,7 +61,28 @@ self.addEventListener('activate', (event) => {
 });
 
 // ============================================================
+// 帶超時的 Fetch 輔助函式
+// 使用 Promise.race 實現精密超時控制
+// ============================================================
+async function fetchWithTimeout(request, timeoutMs) {
+  const controller = new AbortController();
+  const timeoutId = setTimeout(() => controller.abort(), timeoutMs);
+
+  try {
+    const response = await fetch(request, {
+      signal: controller.signal
+    });
+    clearTimeout(timeoutId);
+    return response;
+  } catch (err) {
+    clearTimeout(timeoutId);
+    throw err;
+  }
+}
+
+// ============================================================
 // FETCH 事件：智能策略分發
+// 優先檢查離線鎖定狀態
 // ============================================================
 self.addEventListener('fetch', (event) => {
   const { request } = event;
@@ -65,35 +93,60 @@ self.addEventListener('fetch', (event) => {
     return;
   }
 
-  // 判斷是否為 HTML 檔案（Network First 策略）
-  if (request.destination === 'document' || url.pathname.endsWith('.html')) {
-    event.respondWith(networkFirstStrategy(request));
+  // 若已進入離線鎖定模式，直接返回快取
+  if (isOfflineLocked) {
+    event.respondWith(
+      caches.match(request).then((response) => {
+        if (response) {
+          return response;
+        }
+        // 快取中找不到，嘗試返回首頁
+        return caches.match('./index.html').then((indexResponse) => {
+          return indexResponse || createOfflineResponse();
+        });
+      })
+    );
+    return;
   }
-  // 靜態資源（CSS、JS、圖片等）：Stale-While-Revalidate 策略
+
+  // 判斷是否為 HTML 檔案（Network First 策略，帶精密超時）
+  if (request.destination === 'document' || url.pathname.endsWith('.html')) {
+    event.respondWith(networkFirstStrategyWithTimeout(request));
+  }
+  // 靜態資源（CSS、JS、圖片等）：Stale-While-Revalidate 策略（帶超時保護）
   else {
-    event.respondWith(staleWhileRevalidateStrategy(request));
+    event.respondWith(staleWhileRevalidateWithTimeout(request));
   }
 });
 
 // ============================================================
-// Network First 策略（HTML 檔案）
-// 優先嘗試從網路抓取最新版本，失敗時才用快取
+// Network First 策略 - 帶兩階段超時
+// 第一階段 (啟動期)：index.html 或 ./ → 3000ms
+// 第二階段 (執行期)：其他 HTML → 1500ms
 // ============================================================
-async function networkFirstStrategy(request) {
-  try {
-    // 從網路抓取最新版本（不添加任何時間戳參數）
-    const networkResponse = await fetch(request);
+async function networkFirstStrategyWithTimeout(request) {
+  // 判定超時時間：啟動期 vs 執行期
+  const url = new URL(request.url);
+  const isBootPhase = url.pathname === '/' || url.pathname.endsWith('index.html') || url.pathname === '';
+  const timeoutMs = isBootPhase ? 3000 : 1500;
 
-    // 若請求成功，同步更新快取（使用原始 request 作為 Key）
+  try {
+    // 嘗試從網路抓取（帶超時保護）
+    const networkResponse = await fetchWithTimeout(request, timeoutMs);
+
+    // 若請求成功，同步更新快取
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
-      // 直接使用 request 物件，確保路徑正確匹配（包含 Repo 名稱）
       await cache.put(request, networkResponse.clone());
     }
 
     return networkResponse;
   } catch (err) {
-    // 網路失敗：從快取提取最後儲存的版本（使用原始 request 作為 Key）
+    // 超時或網路錯誤：啟動離線鎖定機制
+    console.warn('[Lie-Fi 防禦] 網路延遲或超時，啟動離線模式:', request.url, err.message);
+    isOfflineLocked = true;
+
+    // 從快取提取資源
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
@@ -105,29 +158,32 @@ async function networkFirstStrategy(request) {
 }
 
 // ============================================================
-// Stale-While-Revalidate 策略（靜態資源）
-// 立刻返回快取版本，同時在背景檢查更新
+// Stale-While-Revalidate 策略 - 帶超時保護
+// 立刻返回快取版本，同時在背景檢查更新（1500ms 超時）
 // ============================================================
-async function staleWhileRevalidateStrategy(request) {
+async function staleWhileRevalidateWithTimeout(request) {
   try {
-    // 從快取取得版本（若有的話）使用原始 request 作為 Key
+    // 優先從快取取得版本（若有的話）
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
-      // 異步在背景更新快取（不阻止當前響應）
-      updateCacheInBackground(request);
+      // 異步在背景更新快取（帶超時保護）
+      updateCacheInBackgroundWithTimeout(request, 1500);
       return cachedResponse;
     }
 
-    // 快取中沒有：從網路抓取並儲存（雙重保險：動態快取）
-    const networkResponse = await fetch(request);
+    // 快取中沒有：從網路抓取並儲存（帶超時）
+    const networkResponse = await fetchWithTimeout(request, 1500);
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
-      // 直接使用 request 物件，自動快取網路上取得的資源
       await cache.put(request, networkResponse.clone());
     }
     return networkResponse;
   } catch (err) {
-    // 網路失敗且無快取：嘗試返回 .html 首頁或離線頁面
+    // 網路失敗或超時：啟動離線鎖定
+    console.warn('[Lie-Fi 防禦] 靜態資源超時，啟動離線模式:', request.url);
+    isOfflineLocked = true;
+
+    // 嘗試從快取提取
     const cachedResponse = await caches.match(request);
     if (cachedResponse) {
       return cachedResponse;
@@ -144,19 +200,23 @@ async function staleWhileRevalidateStrategy(request) {
 }
 
 // ============================================================
-// 背景更新快取
+// 背景更新快取 - 帶超時保護
 // 在不影響當前頁面的情況下，檢查並更新資源
 // ============================================================
-async function updateCacheInBackground(request) {
+async function updateCacheInBackgroundWithTimeout(request, timeoutMs) {
   try {
-    const networkResponse = await fetch(request);
+    const networkResponse = await fetchWithTimeout(request, timeoutMs);
     if (networkResponse.ok) {
       const cache = await caches.open(CACHE_NAME);
-      // 直接使用 request 物件確保一致性
       await cache.put(request, networkResponse.clone());
     }
   } catch (err) {
     // 背景更新失敗無須處理（快取版本已提供給用戶）
+    // 但若超時，也應啟動離線鎖定
+    if (err.name === 'AbortError') {
+      console.warn('[背景更新超時]', request.url);
+      isOfflineLocked = true;
+    }
   }
 }
 
@@ -204,14 +264,24 @@ function createOfflineResponse() {
           line-height: 1.6;
           margin: 10px 0;
         }
+        .info {
+          font-size: 14px;
+          color: #999;
+          margin-top: 15px;
+          padding-top: 15px;
+          border-top: 1px solid #eee;
+        }
       </style>
     </head>
     <body>
       <div class="offline-box">
         <div class="icon">📡</div>
         <h1>目前離線</h1>
-        <p>無法連接網路，請檢查您的網際網路連接</p>
-        <p style="font-size: 14px; color: #999;">已快取的內容仍可正常使用</p>
+        <p>網路連接中斷或不可用</p>
+        <div class="info">
+          <p style="margin: 5px 0;">已快取的內容仍可正常使用</p>
+          <p style="margin: 5px 0; font-size: 12px;">💡 提示：若 Wi-Fi 訊號不穩定，請考慮更換位置或使用行動網路</p>
+        </div>
       </div>
     </body>
     </html>`,
